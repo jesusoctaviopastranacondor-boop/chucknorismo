@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Chucknorismo Business</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:430px;
+    padding:20px;
+}
+
+a{
+    color:#60a5fa;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.logo{
+    text-align:center;
+    font-size:38px;
+    font-weight:900;
+    margin-bottom:10px;
+}
+
+.menu{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+button{
+    border:none;
+    border-radius:14px;
+    padding:12px 15px;
+    background:#1e293b;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+.card{
+    background:white;
+    color:black;
+    border-radius:25px;
+    padding:25px;
+}
+
+.company{
+    color:#2563eb;
+    font-weight:bold;
+}
+
+.title{
+    font-size:30px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.type{
+    color:gray;
+}
+
+.mainBtn{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    margin-top:20px;
+    font-size:17px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="index.html">← Volver al inicio</a>
+
+<div class="logo">TECH NEWS</div>
+
+<div class="menu">
+    <button onclick="filterCompany('Oracle')">ORACLE</button>
+    <button onclick="filterCompany('NVIDIA')">NVIDIA</button>
+    <button onclick="filterCompany('Microsoft')">MICROSOFT</button>
+</div>
+
+<div class="card">
+    <div class="company" id="company"></div>
+    <div class="title" id="title"></div>
+    <div class="type" id="type"></div>
+
+    <h3>Resumen</h3>
+    <p id="summary"></p>
+
+    <h3>Dato estratégico</h3>
+    <p id="fact"></p>
+
+    <button class="mainBtn" onclick="randomData()">Otro dato</button>
+</div>
+
+</div>
+
+<script>
+let currentCompany = "Oracle";
+let lastTitle = "";
+
+const data = [
+    {
+        company:"Oracle",
+        title:"Oracle Database",
+        type:"Base de datos empresarial",
+        summary:"Oracle Database es una de las plataformas de base de datos más usadas en entornos empresariales críticos.",
+        fact:"Es clave en sectores como banca, telecomunicaciones, gobierno y ERP."
+    },
+    {
+        company:"Oracle",
+        title:"Oracle Cloud Infrastructure",
+        type:"Cloud empresarial",
+        summary:"OCI es la nube empresarial de Oracle orientada a cargas críticas, bases de datos y aplicaciones corporativas.",
+        fact:"Tiene fuerte integración con Oracle Database, Exadata y E-Business Suite."
+    },
+    {
+        company:"Oracle",
+        title:"Oracle E-Business Suite",
+        type:"ERP",
+        summary:"Oracle EBS es una suite empresarial para finanzas, compras, inventario, recursos humanos y operaciones.",
+        fact:"Muchas empresas grandes la usan para procesos administrativos críticos."
+    },
+    {
+        company:"NVIDIA",
+        title:"GPU",
+        type:"Hardware / IA",
+        summary:"NVIDIA es líder en unidades de procesamiento gráfico utilizadas para videojuegos, cómputo científico e inteligencia artificial.",
+        fact:"Sus GPUs son fundamentales para entrenar y ejecutar modelos de IA."
+    },
+    {
+        company:"NVIDIA",
+        title:"CUDA",
+        type:"Plataforma de cómputo",
+        summary:"CUDA permite usar GPUs NVIDIA para procesamiento paralelo de alto rendimiento.",
+        fact:"Es una de las bases técnicas del ecosistema moderno de inteligencia artificial."
+    },
+    {
+        company:"NVIDIA",
+        title:"Data Center AI",
+        type:"Infraestructura IA",
+        summary:"NVIDIA ofrece plataformas para centros de datos orientados a IA, HPC y análisis avanzado.",
+        fact:"Sus soluciones se usan en supercómputo, modelos generativos y analítica empresarial."
+    },
+    {
+        company:"Microsoft",
+        title:"Azure",
+        type:"Cloud",
+        summary:"Microsoft Azure es una plataforma cloud para infraestructura, aplicaciones, datos e inteligencia artificial.",
+        fact:"Compite directamente con AWS, Google Cloud y Oracle Cloud."
+    },
+    {
+        company:"Microsoft",
+        title:"Microsoft 365",
+        type:"Productividad empresarial",
+        summary:"Microsoft 365 integra Office, Teams, Outlook, SharePoint y servicios de colaboración empresarial.",
+        fact:"Es una de las suites de productividad más usadas en empresas."
+    },
+    {
+        company:"Microsoft",
+        title:"GitHub",
+        type:"Desarrollo de software",
+        summary:"GitHub es una plataforma para control de versiones, colaboración y automatización de desarrollo.",
+        fact:"Es clave para equipos DevOps y desarrollo moderno."
+    }
+];
+
+function randomData(){
+    const filtered = data.filter(item => item.company === currentCompany);
+
+    let item;
+
+    do{
+        item = filtered[Math.floor(Math.random() * filtered.length)];
+    }while(item.title === lastTitle && filtered.length > 1);
+
+    lastTitle = item.title;
+
+    document.getElementById("company").innerText = item.company;
+    document.getElementById("title").innerText = item.title;
+    document.getElementById("type").innerText = item.type;
+    document.getElementById("summary").innerText = item.summary;
+    document.getElementById("fact").innerText = item.fact;
+}
+
+function filterCompany(company){
+    currentCompany = company;
+    lastTitle = "";
+    randomData();
+}
+
+randomData();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chucknorismo</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background-image:url('halofondor.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    transition:1s;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(2,6,23,0.72);
+    z-index:-1;
+}
+
+.container{
+    width:430px;
+    padding:20px;
+}
+
+.logo{
+    text-align:center;
+    font-size:48px;
+    font-weight:900;
+    margin-bottom:10px;
+    color:#60a5fa;
+    text-shadow:0 0 10px #2563eb, 0 0 30px #2563eb;
+}
+
+.subtitle{
+    text-align:center;
+    color:#e5e7eb;
+    margin-bottom:25px;
+}
+
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.menuBtn{
+    background:#1e293b;
+    color:white;
+    border:none;
+    padding:12px 15px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.menuBtn:hover{
+    background:#2563eb;
+}
+
+.card{
+    background:white;
+    color:black;
+    border-radius:28px;
+    padding:25px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.5);
+}
+
+.loreImage{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:20px;
+    background:#111827;
+}
+
+.universe{
+    color:#2563eb;
+    font-weight:bold;
+    font-size:14px;
+    text-transform:uppercase;
+}
+
+.title{
+    font-size:34px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.type{
+    color:gray;
+    margin-top:5px;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section h3{
+    margin-bottom:10px;
+}
+
+p{
+    line-height:1.6;
+}
+
+.source{
+    margin-top:18px;
+    font-size:12px;
+    color:#6b7280;
+}
+
+.source a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.mainBtn{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.mainBtn:hover{
+    background:#1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">CHUCKNORISMO</div>
+
+    <div class="subtitle">
+        La biblioteca del conocimiento geek
+    </div>
+
+    <div class="menu">
+        <button class="menuBtn" onclick="filterUniverse('Halo')">HALO</button>
+        <button class="menuBtn" onclick="filterUniverse('Warhammer 40K')">WARHAMMER</button>
+        <button class="menuBtn" onclick="filterUniverse('Star Wars')">STAR WARS</button>
+    </div>
+
+    <div class="card">
+
+        <img id="image" class="loreImage" alt="Imagen del lore">
+
+        <div class="universe" id="universe">HALO</div>
+        <div class="title" id="title">Cargando...</div>
+        <div class="type" id="type">Dato Geek</div>
+
+        <div class="section">
+            <h3>Resumen</h3>
+            <p id="summary">Cargando información...</p>
+        </div>
+
+        <div class="section">
+            <h3>Dato curioso</h3>
+            <p id="fact">Preparando dato...</p>
+        </div>
+
+        <div class="source" id="source"></div>
+
+        <button class="mainBtn" onclick="randomLore()">Otro dato</button>
+
+    </div>
+
+</div>
+
+<script>
+let currentUniverse = "Halo";
+let lastTitle = "";
+
+const lore = [
+    {
+        universe:"Halo",
+        title:"Master Chief",
+        wikiTitle:"Master_Chief",
+        type:"Personaje / Aliado",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Master_Chief",
+        backupSummary:"Master Chief, también conocido como John-117, es un supersoldado Spartan-II y uno de los personajes principales del universo Halo.",
+        backupFact:"Es reconocido por su armadura Mjolnir y por su papel clave en la guerra contra el Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Cortana",
+        wikiTitle:"Cortana",
+        type:"Inteligencia Artificial / Aliada",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Cortana",
+        backupSummary:"Cortana es una inteligencia artificial avanzada creada para apoyar operaciones militares y estratégicas del UNSC.",
+        backupFact:"Su relación con Master Chief es uno de los pilares narrativos de Halo."
+    },
+    {
+        universe:"Halo",
+        title:"The Flood",
+        wikiTitle:"Flood",
+        type:"Enemigo / Amenaza biológica",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Flood",
+        backupSummary:"El Flood es una forma de vida parasitaria capaz de consumir y asimilar organismos vivos.",
+        backupFact:"Es una de las amenazas más peligrosas del universo Halo."
+    },
+    {
+        universe:"Halo",
+        title:"Covenant",
+        wikiTitle:"Covenant",
+        type:"Facción enemiga",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Covenant",
+        backupSummary:"El Covenant es una alianza alienígena religiosa y militar que declaró la guerra a la humanidad.",
+        backupFact:"Está formado por varias especies como Élites, Grunts, Jackals y Profetas."
+    },
+    {
+        universe:"Halo",
+        title:"UNSC",
+        wikiTitle:"United_Nations_Space_Command",
+        type:"Organización / Aliados",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/United_Nations_Space_Command",
+        backupSummary:"El UNSC es la principal fuerza militar humana dentro del universo Halo.",
+        backupFact:"Fue clave en la defensa de la humanidad durante la guerra contra el Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Energy Sword",
+        wikiTitle:"Energy_Sword",
+        type:"Arma",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Energy_Sword",
+        backupSummary:"La Energy Sword es un arma cuerpo a cuerpo usada principalmente por los Sangheili.",
+        backupFact:"Es una de las armas más icónicas del Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Halo Array",
+        wikiTitle:"Halo_Array",
+        type:"Tecnología / Megaconstrucción",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Halo_Array",
+        backupSummary:"El Halo Array es un conjunto de anillos creados como arma extrema contra el Flood.",
+        backupFact:"Su activación puede eliminar vida sensible a gran escala."
+    },
+
+    {
+        universe:"Warhammer 40K",
+        title:"Space Marines",
+        wikiTitle:"Space_Marines",
+        type:"Facción / Aliados del Imperio",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Space_Marines",
+        backupSummary:"Los Space Marines son guerreros modificados genéticamente al servicio del Imperio de la Humanidad.",
+        backupFact:"También son conocidos como Adeptus Astartes."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"El Emperador",
+        wikiTitle:"Emperor_of_Mankind",
+        type:"Personaje / Figura central",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Emperor_of_Mankind",
+        backupSummary:"El Emperador de la Humanidad es la figura central del Imperio en Warhammer 40K.",
+        backupFact:"Permanece conectado al Trono Dorado para sostener al Imperio."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Orkos",
+        wikiTitle:"Orks",
+        type:"Enemigos / Facción",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Orks",
+        backupSummary:"Los Orkos son una especie brutal, numerosa y extremadamente guerrera.",
+        backupFact:"Su tecnología funciona de manera extraña, influenciada por su creencia colectiva."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Necrons",
+        wikiTitle:"Necrons",
+        type:"Enemigos / Raza antigua",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Necrons",
+        backupSummary:"Los Necrons son una raza ancestral de guerreros mecánicos que despiertan de tumbas milenarias.",
+        backupFact:"Son una de las civilizaciones más antiguas y peligrosas de la galaxia."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Tyranids",
+        wikiTitle:"Tyranids",
+        type:"Enemigos / Enjambre biológico",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Tyranids",
+        backupSummary:"Los Tyranids son una amenaza extragaláctica que consume mundos enteros para alimentar su enjambre.",
+        backupFact:"Actúan bajo una mente colmena conocida como Hive Mind."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Bolter",
+        wikiTitle:"Bolter",
+        type:"Arma",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Bolter",
+        backupSummary:"El Bolter es un arma icónica del Imperio, usada especialmente por los Space Marines.",
+        backupFact:"Dispara proyectiles autopropulsados de alto poder destructivo."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Imperio de la Humanidad",
+        wikiTitle:"Imperium_of_Man",
+        type:"Civilización / Facción",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Imperium_of_Man",
+        backupSummary:"El Imperio de la Humanidad domina millones de mundos bajo una estructura militar, religiosa y autoritaria.",
+        backupFact:"Su existencia se sostiene en guerra constante y fe absoluta en el Emperador."
+    },
+
+    {
+        universe:"Star Wars",
+        title:"Darth Vader",
+        wikiTitle:"Darth_Vader",
+        type:"Personaje / Enemigo",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Darth_Vader",
+        backupSummary:"Darth Vader fue un antiguo Jedi llamado Anakin Skywalker, corrompido por el lado oscuro y convertido en aprendiz de Darth Sidious.",
+        backupFact:"Es uno de los Sith más reconocidos y temidos de la galaxia."
+    },
+    {
+        universe:"Star Wars",
+        title:"Darth Maul",
+        wikiTitle:"Darth_Maul",
+        type:"Personaje / Sith",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Darth_Maul",
+        backupSummary:"Darth Maul fue un guerrero Sith entrenado por Darth Sidious y conocido por su sable de luz doble.",
+        backupFact:"Su apariencia y estilo de combate lo hicieron uno de los Sith más icónicos."
+    },
+    {
+        universe:"Star Wars",
+        title:"La Fuerza",
+        wikiTitle:"The_Force",
+        type:"Concepto / Energía",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/The_Force",
+        backupSummary:"La Fuerza es un campo de energía místico que conecta a todos los seres vivos de la galaxia.",
+        backupFact:"Los Jedi la usan para equilibrio y defensa; los Sith la usan para poder y dominio."
+    },
+    {
+        universe:"Star Wars",
+        title:"Orden Jedi",
+        wikiTitle:"Jedi_Order",
+        type:"Facción / Aliados",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Jedi_Order",
+        backupSummary:"La Orden Jedi fue una organización de guardianes de la paz entrenados en el uso de la Fuerza.",
+        backupFact:"Su templo principal estuvo en Coruscant."
+    },
+    {
+        universe:"Star Wars",
+        title:"Sith",
+        wikiTitle:"Sith",
+        type:"Facción / Enemigos",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Sith",
+        backupSummary:"Los Sith son usuarios del lado oscuro de la Fuerza enfocados en poder, dominio y ambición.",
+        backupFact:"Históricamente han sido enemigos de los Jedi."
+    },
+    {
+        universe:"Star Wars",
+        title:"Estrella de la Muerte",
+        wikiTitle:"Death_Star",
+        type:"Arma / Estación espacial",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Death_Star",
+        backupSummary:"La Estrella de la Muerte fue una estación espacial imperial capaz de destruir planetas.",
+        backupFact:"Representó el poder militar absoluto del Imperio Galáctico."
+    },
+    {
+        universe:"Star Wars",
+        title:"Millennium Falcon",
+        wikiTitle:"Millennium_Falcon",
+        type:"Nave",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Millennium_Falcon",
+        backupSummary:"El Millennium Falcon es una nave Corelliana modificada, famosa por su velocidad y papel en la Rebelión.",
+        backupFact:"Fue pilotada por Han Solo y Chewbacca."
+    }
+];
+
+function changeBackground(universe){
+    if(universe === "Halo"){
+        document.body.style.backgroundImage = "url('halofondor.jpg')";
+    }
+
+    if(universe === "Warhammer 40K"){
+        document.body.style.backgroundImage = "url('warhammerfondo.jpg')";
+    }
+
+    if(universe === "Star Wars"){
+        document.body.style.backgroundImage = "url('starwarsfondor.jpg')";
+    }
+}
+
+function cleanText(text){
+    if(!text || text.trim() === ""){
+        return "";
+    }
+
+    return text
+        .replace(/\s+/g, " ")
+        .replace(/\[[0-9]+\]/g, "")
+        .trim();
+}
+
+function shortText(text, maxLength){
+    if(!text || text.trim() === ""){
+        return "";
+    }
+
+    if(text.length <= maxLength){
+        return text;
+    }
+
+    return text.substring(0, maxLength) + "...";
+}
+
+async function randomLore(){
+    const filteredLore = lore.filter(
+        item => item.universe === currentUniverse
+    );
+
+    let item;
+
+    do{
+        const random = Math.floor(Math.random() * filteredLore.length);
+        item = filteredLore[random];
+    }while(item.title === lastTitle && filteredLore.length > 1);
+
+    lastTitle = item.title;
+
+    document.getElementById("image").src = item.image;
+    document.getElementById("image").alt = item.title;
+    document.getElementById("universe").innerText = item.universe;
+    document.getElementById("title").innerText = item.title;
+    document.getElementById("type").innerText = item.type;
+    document.getElementById("summary").innerText = "Consultando wiki...";
+    document.getElementById("fact").innerText = "Preparando dato...";
+    document.getElementById("source").innerHTML = "";
+
+    const url =
+        item.wiki +
+        "?origin=*" +
+        "&action=query" +
+        "&prop=extracts" +
+        "&exintro=1" +
+        "&explaintext=1" +
+        "&format=json" +
+        "&titles=" + encodeURIComponent(item.wikiTitle);
+
+    try{
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const pageId = Object.keys(data.query.pages)[0];
+        const page = data.query.pages[pageId];
+
+        const resumenWiki = cleanText(page.extract);
+        const resumenFinal = resumenWiki || item.backupSummary;
+
+        document.getElementById("summary").innerText =
+            shortText(resumenFinal, 650);
+
+        document.getElementById("fact").innerText =
+            item.backupFact;
+
+        document.getElementById("source").innerHTML =
+            'Fuente: <a href="' + item.source + '" target="_blank">' +
+            item.universe + ' Wiki</a>';
+
+    }catch(error){
+        document.getElementById("summary").innerText =
+            item.backupSummary;
+
+        document.getElementById("fact").innerText =
+            item.backupFact;
+
+        document.getElementById("source").innerHTML =
+            'Fuente: <a href="' + item.source + '" target="_blank">' +
+            item.universe + ' Wiki</a>';
+
+        console.log(error);
+    }
+}
+
+function filterUniverse(universe){
+    currentUniverse = universe;
+    lastTitle = "";
+    changeBackground(universe);
+    randomLore();
+}
+
+changeBackground(currentUniverse);
+randomLore();
+</script>
+
+</body>
+</html>

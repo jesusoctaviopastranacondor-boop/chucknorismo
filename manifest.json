@@ -1,0 +1,17 @@
+{
+  "name": "Chucknorismo",
+  "short_name": "Chucknorismo",
+  "description": "Portal geek, tech news y empresa",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "halofondor.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

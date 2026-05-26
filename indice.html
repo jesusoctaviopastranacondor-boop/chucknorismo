@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#2563eb">
+
+<title>Chucknorismo</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#020617,#111827,#1e293b);
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:900px;
+    padding:30px;
+    text-align:center;
+}
+
+.logo{
+    font-size:58px;
+    font-weight:900;
+    color:#60a5fa;
+    text-shadow:0 0 15px #2563eb,0 0 40px #2563eb;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#cbd5e1;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:25px;
+    padding:30px;
+    text-decoration:none;
+    color:white;
+    box-shadow:0 15px 45px rgba(0,0,0,0.45);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    background:rgba(37,99,235,0.35);
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.card h2{
+    margin:10px 0;
+    font-size:28px;
+}
+
+.card p{
+    color:#d1d5db;
+    line-height:1.5;
+}
+
+@media(max-width:800px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .logo{
+        font-size:42px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        CHUCKNORISMO
+    </div>
+
+    <div class="subtitle">
+        Portal de conocimiento geek, tecnología empresarial y proyectos propios
+    </div>
+
+    <div class="grid">
+
+        <a class="card" href="gaming.html">
+
+            <div class="icon">
+                🎮
+            </div>
+
+            <h2>
+                Gaming
+            </h2>
+
+            <p>
+                Lore de Halo, Warhammer 40K y Star Wars.
+            </p>
+
+        </a>
+
+        <a class="card" href="tech.html">
+
+            <div class="icon">
+                💼
+            </div>
+
+            <h2>
+                Tech News
+            </h2>
+
+            <p>
+                Datos estratégicos de Oracle, NVIDIA y Microsoft.
+            </p>
+
+        </a>
+
+        <a class="card" href="empresa.html">
+
+            <div class="icon">
+                🏢
+            </div>
+
+            <h2>
+                Mi Empresa
+            </h2>
+
+            <p>
+                Servicios, proyectos, automatización, Oracle y seguridad.
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker
+    .register("service-worker.js")
+
+    .then(() => {
+
+        console.log("Service Worker registrado");
+
+    })
+
+    .catch(error => {
+
+        console.log("Error:", error);
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
