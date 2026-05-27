@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Marines</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background-image:url('warhammerfondo.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    z-index:-1;
+}
+
+.container{
+    width:850px;
+    padding:30px;
+}
+
+.back{
+    color:#93c5fd;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.card{
+    margin-top:20px;
+    background:white;
+    color:black;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+}
+
+.hero{
+    width:100%;
+    height:360px;
+    object-fit:cover;
+}
+
+.content{
+    padding:35px;
+}
+
+.badge{
+    color:#2563eb;
+    font-weight:bold;
+    text-transform:uppercase;
+    margin-bottom:12px;
+}
+
+h1{
+    font-size:54px;
+    margin:0;
+}
+
+.subtitle{
+    color:gray;
+    font-size:22px;
+    margin-top:8px;
+}
+
+.section-title{
+    margin-top:35px;
+    font-size:34px;
+    font-weight:bold;
+}
+
+.text{
+    margin-top:15px;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.buttons{
+    margin-top:35px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 24px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.wiki{
+    background:#111827;
+    color:white;
+}
+
+.amazon{
+    background:#f59e0b;
+    color:black;
+}
+
+.footer{
+    margin-top:35px;
+    color:#6b7280;
+    font-size:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a class="back" href="Gaming.html">
+← Volver a Gaming
+</a>
+
+<div class="card">
+
+<img 
+class="hero"
+src="https://static.wikia.nocookie.net/warhammer40k/images/5/56/Space_Marines_Battle.jpg"
+alt="Space Marines"
+>
+
+<div class="content">
+
+<div class="badge">
+WARHAMMER 40K / IMPERIUM
+</div>
+
+<h1>Space Marines</h1>
+
+<div class="subtitle">
+Adeptus Astartes
+</div>
+
+<div class="section-title">
+Resumen
+</div>
+
+<div class="text">
+Los Space Marines son supersoldados modificados genéticamente creados
+para defender al Imperio de la Humanidad. Son considerados los guerreros
+más poderosos del Imperium y representan una de las fuerzas militares más
+icónicas de Warhammer 40K.
+</div>
+
+<div class="section-title">
+Capítulos
+</div>
+
+<div class="text">
+Existen numerosos capítulos Space Marines como Ultramarines,
+Blood Angels, Dark Angels, Black Templars, Salamanders y
+Space Wolves. Cada uno posee tradiciones, armaduras,
+doctrinas y héroes únicos.
+</div>
+
+<div class="section-title">
+Dato curioso
+</div>
+
+<div class="text">
+Los Space Marines fueron creados usando material genético
+de los Primarchs, seres legendarios diseñados directamente
+por el Emperador de la Humanidad.
+</div>
+
+<div class="buttons">
+
+<a 
+class="btn wiki"
+href="https://warhammer40k.fandom.com/wiki/Space_Marines"
+target="_blank"
+>
+📖 Saber más en la Wiki
+</a>
+
+<a 
+class="btn amazon"
+href="https://www.amazon.com.mx/Armageddon-Battalion-Deathwatch-miniaturas-incluyendo/dp/B0GXX3NQ1V/ref=sr_1_4?sr=8-4"
+target="_blank"
+>
+🛒 ¿Te interesa adquirir piezas?
+</a>
+
+</div>
+
+<div class="footer">
+Contenido basado en información pública de Warhammer 40K Wiki.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
