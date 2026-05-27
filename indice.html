@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#2563eb">
 
 <title>Chucknorismo</title>
@@ -16,7 +15,7 @@
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:linear-gradient(135deg,#020617,#111827,#1e293b);
     color:white;
     min-height:100vh;
@@ -102,65 +101,65 @@ body{
 
 <div class="container">
 
-    <div class="logo">
-        CHUCKNORISMO
-    </div>
+<div class="logo">
+CHUCKNORISMO
+</div>
 
-    <div class="subtitle">
-        Portal de conocimiento geek, tecnología empresarial y proyectos propios
-    </div>
+<div class="subtitle">
+Portal de conocimiento geek, tecnología empresarial y proyectos propios
+</div>
 
-    <div class="grid">
+<div class="grid">
 
-        <a class="card" href="Gaming.html">
+<a class="card" href="./Gaming.html">
 
-            <div class="icon">
-                🎮
-            </div>
+<div class="icon">
+🎮
+</div>
 
-            <h2>
-                Gaming
-            </h2>
+<h2>
+Gaming
+</h2>
 
-            <p>
-                Lore de Halo, Warhammer 40K y Star Wars.
-            </p>
+<p>
+Lore de Halo, Warhammer 40K y Star Wars.
+</p>
 
-        </a>
+</a>
 
-        <a class="card" href="tech.html">
+<a class="card" href="./tech.html">
 
-            <div class="icon">
-                💼
-            </div>
+<div class="icon">
+💼
+</div>
 
-            <h2>
-                Tech News
-            </h2>
+<h2>
+Tech News
+</h2>
 
-            <p>
-                Datos estratégicos de Oracle, NVIDIA y Microsoft.
-            </p>
+<p>
+Datos estratégicos de Oracle, NVIDIA y Microsoft.
+</p>
 
-        </a>
+</a>
 
-        <a class="card" href="empresa.html">
+<a class="card" href="./empresa.html">
 
-            <div class="icon">
-                🏢
-            </div>
+<div class="icon">
+🏢
+</div>
 
-            <h2>
-                Mi Empresa
-            </h2>
+<h2>
+Mi Empresa
+</h2>
 
-            <p>
-                Servicios, proyectos, automatización, Oracle y seguridad.
-            </p>
+<p>
+Servicios, proyectos, automatización, Oracle y seguridad.
+</p>
 
-        </a>
+</a>
 
-    </div>
+</div>
 
 </div>
 
@@ -168,25 +167,24 @@ body{
 
 if ("serviceWorker" in navigator) {
 
-    navigator.serviceWorker
-    .register("service-worker.js")
+navigator.serviceWorker
+.register("./service-worker.js")
 
-    .then(() => {
+.then(() => {
 
-        console.log("Service Worker registrado");
+console.log("Service Worker registrado");
 
-    })
+})
 
-    .catch(error => {
+.catch(error => {
 
-        console.log("Error:", error);
+console.log("Error:", error);
 
-    });
+});
 
 }
 
 </script>
 
 </body>
-
 </html>
