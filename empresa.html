@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chuck Noris Enterprise</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, sans-serif;
+
+    background:
+    linear-gradient(
+    135deg,
+    #020617,
+    #0f172a,
+    #1e293b);
+
+    color:white;
+
+    min-height:100vh;
+
+    padding:50px;
+}
+
+.container{
+
+    max-width:1200px;
+    margin:auto;
+}
+
+.logo{
+
+    text-align:center;
+
+    font-size:64px;
+
+    font-weight:900;
+
+    color:#60a5fa;
+
+    text-shadow:
+    0 0 20px #2563eb,
+    0 0 50px #2563eb;
+
+    margin-bottom:20px;
+}
+
+.slogan{
+
+    text-align:center;
+
+    font-size:22px;
+
+    color:#cbd5e1;
+
+    margin-bottom:60px;
+}
+
+.hero{
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:30px;
+
+    padding:40px;
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+    box-shadow:
+    0 15px 50px rgba(0,0,0,0.5);
+}
+
+.hero h2{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+}
+
+.hero p{
+
+    font-size:20px;
+
+    color:#d1d5db;
+
+    line-height:1.8;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:25px;
+
+    margin-top:40px;
+}
+
+.card{
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border:
+    1px solid rgba(255,255,255,0.15);
+
+    border-radius:25px;
+
+    padding:30px;
+
+    transition:0.4s;
+
+    backdrop-filter:blur(12px);
+}
+
+.card:hover{
+
+    transform:
+    translateY(-8px);
+
+    background:
+    rgba(37,99,235,0.25);
+}
+
+.icon{
+
+    font-size:55px;
+
+    margin-bottom:15px;
+}
+
+.card h3{
+
+    margin-bottom:15px;
+
+    font-size:28px;
+}
+
+.card p{
+
+    color:#d1d5db;
+
+    line-height:1.7;
+}
+
+.section{
+
+    margin-top:60px;
+}
+
+.section h2{
+
+    text-align:center;
+
+    font-size:42px;
+
+    margin-bottom:30px;
+
+    color:#60a5fa;
+}
+
+.mission{
+
+    background:
+    rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    margin-bottom:30px;
+}
+
+.mission p{
+
+    line-height:1.8;
+
+    color:#e5e7eb;
+}
+
+.ask{
+
+    text-align:center;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8);
+
+    margin-top:40px;
+}
+
+.ask h2{
+
+    margin-bottom:15px;
+}
+
+.ask p{
+
+    font-size:18px;
+}
+
+.footer{
+
+    margin-top:80px;
+
+    text-align:center;
+
+    color:#94a3b8;
+}
+
+.btn{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:15px 25px;
+
+    border-radius:15px;
+
+    background:white;
+
+    color:#1e40af;
+
+    text-decoration:none;
+
+    font-weight:bold;
+}
+
+.btn:hover{
+
+    background:#e2e8f0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        CHUCK NORIS ENTERPRISE
+    </div>
+
+    <div class="slogan">
+        Knowledge • Technology • Automation
+    </div>
+
+    <div class="hero">
+
+        <h2>
+            Transformando conocimiento en innovación
+        </h2>
+
+        <p>
+            Chuck Noris Enterprise es una empresa tecnológica
+            especializada en Oracle, Inteligencia Artificial,
+            Automatización, Seguridad y Transformación Digital.
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="icon">☁️</div>
+
+            <h3>
+                Oracle Solutions
+            </h3>
+
+            <p>
+                Oracle Database, RAC,
+                Data Guard, OCI,
+                WebLogic y Oracle Linux.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon"></div>
+
+            <h3>
+                AI Labs
+            </h3>
+
+            <p>
+                Desarrollo de asistentes
+                inteligentes y automatización
+                impulsada por IA.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">⚙️</div>
+
+            <h3>
+                Automation Factory
+            </h3>
+
+            <p>
+                Automatización mediante
+                Python, Bash, Ansible,
+                Kubernetes y OCNE.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon"></div>
+
+            <h3>
+                Cyber Security
+            </h3>
+
+            <p>
+                Hardening Oracle,
+                auditorías de seguridad,
+                cumplimiento y evaluación
+                de riesgos.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon"></div>
+
+            <h3>
+                BPM Solutions
+            </h3>
+
+            <p>
+                Modelado de procesos,
+                automatización documental
+                y transformación digital.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">🎮</div>
+
+            <h3>
+                Chucknorismo Gaming
+            </h3>
+
+            <p>
+                Portal de conocimiento geek,
+                Halo, Warhammer 40K,
+                Star Wars y ciencia ficción.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>
+            Misión
+        </h2>
+
+        <div class="mission">
+
+            <p>
+                Transformar conocimiento técnico
+                en soluciones empresariales que
+                generen valor mediante Oracle,
+                Automatización e Inteligencia Artificial.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>
+            Visión
+        </h2>
+
+        <div class="mission">
+
+            <p>
+                Ser una referencia tecnológica
+                en Latinoamérica en soluciones
+                Oracle, IA y Automatización.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="ask">
+
+        <h2>
+          ASK EBS
+        </h2>
+
+        <p>
+            AI-Powered Natural Language Query
+            for Oracle E-Business Suite
+        </p>
+
+        <a href="#" class="btn">
+            Próximamente
+        </a>
+
+    </div>
+
+    <div class="footer">
+
+        © 2026 Chuck Noris Enterprise
+
+    </div>
+
+</div>
+
+</body>
+</html>
