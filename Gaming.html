@@ -1,555 +1,1061 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chucknorismo</title>
+    <meta charset="UTF-8">
 
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background-image:url('halofondor.jpg');
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    transition:1s;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(2,6,23,0.72);
-    z-index:-1;
-}
+    <link rel="manifest" href="manifest.json">
 
-.container{
-    width:430px;
-    padding:20px;
-}
+    <meta name="theme-color" content="#2563eb">
 
-.logo{
-    text-align:center;
-    font-size:48px;
-    font-weight:900;
-    margin-bottom:10px;
-    color:#60a5fa;
-    text-shadow:0 0 10px #2563eb, 0 0 30px #2563eb;
-}
+    <title>Series y Juegos | Chucknorismo</title>
 
-.subtitle{
-    text-align:center;
-    color:#e5e7eb;
-    margin-bottom:25px;
-}
+    <style>
+        :root {
+            --background-primary: #020617;
+            --background-secondary: #111827;
+            --background-tertiary: #1e293b;
 
-.menu{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
-}
+            --blue-primary: #2563eb;
+            --blue-light: #60a5fa;
+            --blue-dark: #1d4ed8;
 
-.menuBtn{
-    background:#1e293b;
-    color:white;
-    border:none;
-    padding:12px 15px;
-    border-radius:14px;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:bold;
-}
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
 
-.menuBtn:hover{
-    background:#2563eb;
-}
+            --card-background: rgba(255, 255, 255, 0.09);
+            --card-border: rgba(255, 255, 255, 0.16);
 
-.card{
-    background:white;
-    color:black;
-    border-radius:28px;
-    padding:25px;
-    box-shadow:0 15px 50px rgba(0,0,0,0.5);
-}
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
 
-.loreImage{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    border-radius:18px;
-    margin-bottom:20px;
-    background:#111827;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-.universe{
-    color:#2563eb;
-    font-weight:bold;
-    font-size:14px;
-    text-transform:uppercase;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-.title{
-    font-size:34px;
-    font-weight:bold;
-    margin-top:8px;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
 
-.type{
-    color:gray;
-    margin-top:5px;
-}
+            font-family: Arial, Helvetica, sans-serif;
 
-.section{
-    margin-top:20px;
-}
+            color: var(--text-primary);
 
-.section h3{
-    margin-bottom:10px;
-}
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37, 99, 235, 0.22),
+                    transparent 38%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 42%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--background-primary),
+                    var(--background-secondary),
+                    var(--background-tertiary)
+                );
+        }
 
-p{
-    line-height:1.6;
-}
+        button,
+        a {
+            font-family: inherit;
+        }
 
-.source{
-    margin-top:18px;
-    font-size:12px;
-    color:#6b7280;
-}
+        .page {
+            width: 100%;
+            min-height: 100vh;
+        }
 
-.source a{
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:bold;
-}
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
 
-.mainBtn{
-    width:100%;
-    margin-top:25px;
-    padding:16px;
-    border:none;
-    border-radius:16px;
-    background:#2563eb;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
 
-.mainBtn:hover{
-    background:#1d4ed8;
-}
-</style>
+            padding: 18px 32px;
+
+            background: rgba(2, 6, 23, 0.84);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .brand {
+            color: var(--blue-light);
+
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            text-decoration: none;
+
+            text-shadow:
+                0 0 12px rgba(37, 99, 235, 0.85),
+                0 0 30px rgba(37, 99, 235, 0.55);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            min-height: 42px;
+            padding: 10px 18px;
+
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+
+            background: rgba(37, 99, 235, 0.30);
+            border-color: rgba(96, 165, 250, 0.65);
+        }
+
+        .main {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+
+        .hero {
+            max-width: 850px;
+            margin: 0 auto 50px;
+
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 18px;
+            padding: 9px 16px;
+
+            color: #bfdbfe;
+            font-size: 14px;
+            font-weight: 700;
+
+            background: rgba(37, 99, 235, 0.18);
+            border: 1px solid rgba(96, 165, 250, 0.32);
+            border-radius: 999px;
+        }
+
+        .hero h1 {
+            margin: 0 0 16px;
+
+            font-size: clamp(38px, 7vw, 70px);
+            line-height: 1;
+            letter-spacing: -2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #93c5fd,
+                    #60a5fa
+                );
+
+            background-clip: text;
+            -webkit-background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto;
+
+            color: var(--text-secondary);
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .series-card {
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+
+            min-height: 560px;
+
+            background: var(--card-background);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.38);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .series-card:hover {
+            transform: translateY(-8px);
+
+            border-color: rgba(96, 165, 250, 0.55);
+
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.50),
+                0 0 30px rgba(37, 99, 235, 0.14);
+        }
+
+        .series-cover {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 235px;
+
+            overflow: hidden;
+        }
+
+        .series-cover::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    transparent 15%,
+                    rgba(2, 6, 23, 0.20) 58%,
+                    rgba(2, 6, 23, 0.92) 100%
+                );
+        }
+
+        .series-cover::after {
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
+
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 50%;
+
+            filter: blur(1px);
+        }
+
+        .dexter-cover {
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(239, 68, 68, 0.75),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    135deg,
+                    #450a0a,
+                    #991b1b,
+                    #020617
+                );
+        }
+
+        .mentalist-cover {
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(245, 158, 11, 0.72),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    135deg,
+                    #451a03,
+                    #b45309,
+                    #020617
+                );
+        }
+
+        .supernatural-cover {
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(59, 130, 246, 0.70),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #1e40af,
+                    #020617
+                );
+        }
+
+        .cover-symbol {
+            position: relative;
+            z-index: 2;
+
+            font-size: 88px;
+
+            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+        }
+
+        .series-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            padding: 8px 26px 28px;
+        }
+
+        .series-category {
+            display: inline-flex;
+            align-self: flex-start;
+
+            margin-bottom: 12px;
+            padding: 7px 11px;
+
+            color: #bfdbfe;
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+
+            background: rgba(37, 99, 235, 0.18);
+            border: 1px solid rgba(96, 165, 250, 0.26);
+            border-radius: 999px;
+        }
+
+        .series-card h2 {
+            margin: 0 0 12px;
+
+            font-size: 31px;
+            line-height: 1.1;
+        }
+
+        .series-description {
+            margin: 0 0 24px;
+
+            color: var(--text-secondary);
+
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .season-title {
+            margin: auto 0 12px;
+
+            color: #e2e8f0;
+
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+        }
+
+        .season-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .season-button {
+            min-height: 48px;
+            padding: 12px 10px;
+
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37, 99, 235, 0.62),
+                    rgba(29, 78, 216, 0.40)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.50);
+            border-radius: 14px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .season-button:hover {
+            transform: translateY(-2px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37, 99, 235, 0.95),
+                    rgba(29, 78, 216, 0.78)
+                );
+
+            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
+        }
+
+        .season-button:focus-visible,
+        .close-modal:focus-visible,
+        .back-button:focus-visible {
+            outline: 3px solid rgba(96, 165, 250, 0.85);
+            outline-offset: 3px;
+        }
+
+        .footer {
+            padding: 28px 20px;
+
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(2, 6, 23, 0.82);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            position: relative;
+
+            width: min(640px, 100%);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+
+            padding: 32px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30, 41, 59, 0.98),
+                    rgba(15, 23, 42, 0.98)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.30);
+            border-radius: 26px;
+
+            box-shadow:
+                0 30px 90px rgba(0, 0, 0, 0.65),
+                0 0 40px rgba(37, 99, 235, 0.17);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+
+            width: 42px;
+            height: 42px;
+
+            color: white;
+            font-size: 24px;
+            line-height: 1;
+
+            cursor: pointer;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+        }
+
+        .close-modal:hover {
+            background: rgba(239, 68, 68, 0.30);
+            border-color: rgba(248, 113, 113, 0.55);
+        }
+
+        .modal-icon {
+            margin-bottom: 16px;
+
+            font-size: 58px;
+        }
+
+        .modal-label {
+            display: inline-flex;
+
+            margin-bottom: 13px;
+            padding: 7px 12px;
+
+            color: #bfdbfe;
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+
+            background: rgba(37, 99, 235, 0.18);
+            border: 1px solid rgba(96, 165, 250, 0.30);
+            border-radius: 999px;
+        }
+
+        .modal h3 {
+            margin: 0 50px 14px 0;
+
+            font-size: 34px;
+        }
+
+        .modal p {
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .modal-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 24px;
+            padding: 14px 16px;
+
+            color: #dcfce7;
+            font-size: 14px;
+            font-weight: 700;
+
+            background: rgba(34, 197, 94, 0.11);
+            border: 1px solid rgba(34, 197, 94, 0.28);
+            border-radius: 14px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+
+            flex: 0 0 auto;
+
+            background: var(--success);
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.75);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        @media (max-width: 980px) {
+            .series-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .series-card:last-child {
+                grid-column: 1 / -1;
+                width: min(560px, 100%);
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .header {
+                padding: 15px 18px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .back-button {
+                padding: 9px 13px;
+            }
+
+            .main {
+                width: min(100% - 24px, 1180px);
+                padding-top: 42px;
+            }
+
+            .hero {
+                margin-bottom: 35px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .series-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .series-card:last-child {
+                grid-column: auto;
+                width: 100%;
+            }
+
+            .series-card {
+                min-height: auto;
+            }
+
+            .modal {
+                padding: 28px 22px;
+            }
+
+            .modal h3 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .back-button span {
+                display: none;
+            }
+
+            .season-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .series-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="page">
 
-    <div class="logo">CHUCKNORISMO</div>
+        <header class="header">
 
-    <div class="subtitle">
-        La biblioteca del conocimiento geek
+            <a class="brand" href="./index.html">
+                CHUCKNORISMO
+            </a>
+
+            <a class="back-button" href="./index.html">
+                <strong>←</strong>
+                <span>Volver al inicio</span>
+            </a>
+
+        </header>
+
+        <main class="main">
+
+            <section class="hero">
+
+                <div class="hero-badge">
+                    🎬 Biblioteca de series
+                </div>
+
+                <h1>
+                    Series y Juegos
+                </h1>
+
+                <p>
+                    Explora historias de investigación, suspenso,
+                    crimen y fenómenos sobrenaturales. Cada serie
+                    contiene únicamente sus dos primeras temporadas.
+                </p>
+
+            </section>
+
+            <section
+                class="series-grid"
+                aria-label="Listado de series"
+            >
+
+                <!-- DEXTER -->
+
+                <article class="series-card">
+
+                    <div class="series-cover dexter-cover">
+
+                        <div class="cover-symbol">
+                            🩸
+                        </div>
+
+                    </div>
+
+                    <div class="series-content">
+
+                        <span class="series-category">
+                            Crimen y suspenso
+                        </span>
+
+                        <h2>
+                            Dexter
+                        </h2>
+
+                        <p class="series-description">
+                            Dexter Morgan trabaja como especialista forense
+                            mientras oculta una vida secreta marcada por su
+                            propio código y una peligrosa doble identidad.
+                        </p>
+
+                        <div class="season-title">
+                            Temporadas disponibles
+                        </div>
+
+                        <div class="season-buttons">
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="Dexter"
+                                data-season="Temporada 1"
+                                data-icon="🩸"
+                                data-description="Dexter Morgan lleva una doble vida como analista forense y justiciero secreto. La aparición de un asesino que parece comprender su verdadera naturaleza lo obliga a enfrentar recuerdos de su pasado."
+                            >
+                                Temporada 1
+                            </button>
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="Dexter"
+                                data-season="Temporada 2"
+                                data-icon="🩸"
+                                data-description="La investigación de varios cuerpos amenaza con revelar el secreto de Dexter. Mientras la policía se acerca a la verdad, él debe controlar las consecuencias de sus acciones y proteger su identidad."
+                            >
+                                Temporada 2
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- EL MENTALISTA -->
+
+                <article class="series-card">
+
+                    <div class="series-cover mentalist-cover">
+
+                        <div class="cover-symbol">
+                            🧠
+                        </div>
+
+                    </div>
+
+                    <div class="series-content">
+
+                        <span class="series-category">
+                            Investigación
+                        </span>
+
+                        <h2>
+                            El Mentalista
+                        </h2>
+
+                        <p class="series-description">
+                            Patrick Jane utiliza su capacidad de observación,
+                            deducción y manipulación psicológica para ayudar
+                            a resolver investigaciones criminales.
+                        </p>
+
+                        <div class="season-title">
+                            Temporadas disponibles
+                        </div>
+
+                        <div class="season-buttons">
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="El Mentalista"
+                                data-season="Temporada 1"
+                                data-icon="🧠"
+                                data-description="Patrick Jane colabora con el equipo de investigación utilizando su extraordinaria capacidad para leer a las personas. Al mismo tiempo, continúa buscando al responsable de la tragedia que cambió su vida."
+                            >
+                                Temporada 1
+                            </button>
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="El Mentalista"
+                                data-season="Temporada 2"
+                                data-icon="🧠"
+                                data-description="Jane y el equipo enfrentan nuevos casos mientras la búsqueda de Red John se vuelve más intensa. Sus métodos poco convencionales generan resultados, pero también aumentan los riesgos."
+                            >
+                                Temporada 2
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- SUPERNATURAL -->
+
+                <article class="series-card">
+
+                    <div class="series-cover supernatural-cover">
+
+                        <div class="cover-symbol">
+                            👻
+                        </div>
+
+                    </div>
+
+                    <div class="series-content">
+
+                        <span class="series-category">
+                            Terror y fantasía
+                        </span>
+
+                        <h2>
+                            Supernatural
+                        </h2>
+
+                        <p class="series-description">
+                            Los hermanos Winchester recorren distintos
+                            lugares investigando criaturas, leyendas,
+                            espíritus y amenazas de origen sobrenatural.
+                        </p>
+
+                        <div class="season-title">
+                            Temporadas disponibles
+                        </div>
+
+                        <div class="season-buttons">
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="Supernatural"
+                                data-season="Temporada 1"
+                                data-icon="👻"
+                                data-description="Sam y Dean Winchester recorren el país investigando fenómenos paranormales mientras buscan a su padre y enfrentan a la fuerza sobrenatural relacionada con la historia de su familia."
+                            >
+                                Temporada 1
+                            </button>
+
+                            <button
+                                class="season-button"
+                                type="button"
+                                data-series="Supernatural"
+                                data-season="Temporada 2"
+                                data-icon="👻"
+                                data-description="Los hermanos Winchester continúan cazando criaturas y descubriendo los planes de una amenaza demoníaca. La conexión de Sam con otros jóvenes especiales se vuelve cada vez más importante."
+                            >
+                                Temporada 2
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            Chucknorismo · Series, tecnología y proyectos propios
+        </footer>
+
     </div>
 
-    <div class="menu">
-        <button class="menuBtn" onclick="filterUniverse('Halo')">HALO</button>
-        <button class="menuBtn" onclick="filterUniverse('Warhammer 40K')">WARHAMMER</button>
-        <button class="menuBtn" onclick="filterUniverse('Star Wars')">STAR WARS</button>
-    </div>
+    <!-- MODAL DE TEMPORADA -->
 
-    <div class="card">
+    <div
+        class="modal-overlay"
+        id="seasonModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
 
-        <img id="image" class="loreImage" alt="Imagen del lore">
+        <div class="modal">
 
-        <div class="universe" id="universe">HALO</div>
-        <div class="title" id="title">Cargando...</div>
-        <div class="type" id="type">Dato Geek</div>
+            <button
+                class="close-modal"
+                id="closeModal"
+                type="button"
+                aria-label="Cerrar ventana"
+            >
+                ×
+            </button>
 
-        <div class="section">
-            <h3>Resumen</h3>
-            <p id="summary">Cargando información...</p>
+            <div
+                class="modal-icon"
+                id="modalIcon"
+            >
+                🎬
+            </div>
+
+            <div
+                class="modal-label"
+                id="modalSeason"
+            >
+                Temporada
+            </div>
+
+            <h3 id="modalTitle">
+                Serie
+            </h3>
+
+            <p id="modalDescription">
+                Información de la temporada.
+            </p>
+
+            <div class="modal-status">
+
+                <span class="status-dot"></span>
+
+                Temporada disponible en Chucknorismo
+
+            </div>
+
         </div>
 
-        <div class="section">
-            <h3>Dato curioso</h3>
-            <p id="fact">Preparando dato...</p>
-        </div>
-
-        <div class="source" id="source"></div>
-
-        <button class="mainBtn" onclick="randomLore()">Otro dato</button>
-
     </div>
 
-</div>
+    <script>
+        "use strict";
 
-<script>
-let currentUniverse = "Halo";
-let lastTitle = "";
+        const modalOverlay = document.getElementById("seasonModal");
+        const closeModalButton = document.getElementById("closeModal");
 
-const lore = [
-    {
-        universe:"Halo",
-        title:"Master Chief",
-        wikiTitle:"Master_Chief",
-        type:"Personaje / Aliado",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Master_Chief",
-        backupSummary:"Master Chief, también conocido como John-117, es un supersoldado Spartan-II y uno de los personajes principales del universo Halo.",
-        backupFact:"Es reconocido por su armadura Mjolnir y por su papel clave en la guerra contra el Covenant."
-    },
-    {
-        universe:"Halo",
-        title:"Cortana",
-        wikiTitle:"Cortana",
-        type:"Inteligencia Artificial / Aliada",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Cortana",
-        backupSummary:"Cortana es una inteligencia artificial avanzada creada para apoyar operaciones militares y estratégicas del UNSC.",
-        backupFact:"Su relación con Master Chief es uno de los pilares narrativos de Halo."
-    },
-    {
-        universe:"Halo",
-        title:"The Flood",
-        wikiTitle:"Flood",
-        type:"Enemigo / Amenaza biológica",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Flood",
-        backupSummary:"El Flood es una forma de vida parasitaria capaz de consumir y asimilar organismos vivos.",
-        backupFact:"Es una de las amenazas más peligrosas del universo Halo."
-    },
-    {
-        universe:"Halo",
-        title:"Covenant",
-        wikiTitle:"Covenant",
-        type:"Facción enemiga",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Covenant",
-        backupSummary:"El Covenant es una alianza alienígena religiosa y militar que declaró la guerra a la humanidad.",
-        backupFact:"Está formado por varias especies como Élites, Grunts, Jackals y Profetas."
-    },
-    {
-        universe:"Halo",
-        title:"UNSC",
-        wikiTitle:"United_Nations_Space_Command",
-        type:"Organización / Aliados",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/United_Nations_Space_Command",
-        backupSummary:"El UNSC es la principal fuerza militar humana dentro del universo Halo.",
-        backupFact:"Fue clave en la defensa de la humanidad durante la guerra contra el Covenant."
-    },
-    {
-        universe:"Halo",
-        title:"Energy Sword",
-        wikiTitle:"Energy_Sword",
-        type:"Arma",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Energy_Sword",
-        backupSummary:"La Energy Sword es un arma cuerpo a cuerpo usada principalmente por los Sangheili.",
-        backupFact:"Es una de las armas más icónicas del Covenant."
-    },
-    {
-        universe:"Halo",
-        title:"Halo Array",
-        wikiTitle:"Halo_Array",
-        type:"Tecnología / Megaconstrucción",
-        image:"halofondor.jpg",
-        wiki:"https://halo.fandom.com/api.php",
-        source:"https://halo.fandom.com/wiki/Halo_Array",
-        backupSummary:"El Halo Array es un conjunto de anillos creados como arma extrema contra el Flood.",
-        backupFact:"Su activación puede eliminar vida sensible a gran escala."
-    },
+        const modalIcon = document.getElementById("modalIcon");
+        const modalSeason = document.getElementById("modalSeason");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
 
-    {
-        universe:"Warhammer 40K",
-        title:"Space Marines",
-        wikiTitle:"Space_Marines",
-        type:"Facción / Aliados del Imperio",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Space_Marines",
-        backupSummary:"Los Space Marines son guerreros modificados genéticamente al servicio del Imperio de la Humanidad.",
-        backupFact:"También son conocidos como Adeptus Astartes."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"El Emperador",
-        wikiTitle:"Emperor_of_Mankind",
-        type:"Personaje / Figura central",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Emperor_of_Mankind",
-        backupSummary:"El Emperador de la Humanidad es la figura central del Imperio en Warhammer 40K.",
-        backupFact:"Permanece conectado al Trono Dorado para sostener al Imperio."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"Orkos",
-        wikiTitle:"Orks",
-        type:"Enemigos / Facción",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Orks",
-        backupSummary:"Los Orkos son una especie brutal, numerosa y extremadamente guerrera.",
-        backupFact:"Su tecnología funciona de manera extraña, influenciada por su creencia colectiva."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"Necrons",
-        wikiTitle:"Necrons",
-        type:"Enemigos / Raza antigua",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Necrons",
-        backupSummary:"Los Necrons son una raza ancestral de guerreros mecánicos que despiertan de tumbas milenarias.",
-        backupFact:"Son una de las civilizaciones más antiguas y peligrosas de la galaxia."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"Tyranids",
-        wikiTitle:"Tyranids",
-        type:"Enemigos / Enjambre biológico",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Tyranids",
-        backupSummary:"Los Tyranids son una amenaza extragaláctica que consume mundos enteros para alimentar su enjambre.",
-        backupFact:"Actúan bajo una mente colmena conocida como Hive Mind."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"Bolter",
-        wikiTitle:"Bolter",
-        type:"Arma",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Bolter",
-        backupSummary:"El Bolter es un arma icónica del Imperio, usada especialmente por los Space Marines.",
-        backupFact:"Dispara proyectiles autopropulsados de alto poder destructivo."
-    },
-    {
-        universe:"Warhammer 40K",
-        title:"Imperio de la Humanidad",
-        wikiTitle:"Imperium_of_Man",
-        type:"Civilización / Facción",
-        image:"warhammerfondo.jpg",
-        wiki:"https://warhammer40k.fandom.com/api.php",
-        source:"https://warhammer40k.fandom.com/wiki/Imperium_of_Man",
-        backupSummary:"El Imperio de la Humanidad domina millones de mundos bajo una estructura militar, religiosa y autoritaria.",
-        backupFact:"Su existencia se sostiene en guerra constante y fe absoluta en el Emperador."
-    },
+        const seasonButtons = document.querySelectorAll(".season-button");
 
-    {
-        universe:"Star Wars",
-        title:"Darth Vader",
-        wikiTitle:"Darth_Vader",
-        type:"Personaje / Enemigo",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Darth_Vader",
-        backupSummary:"Darth Vader fue un antiguo Jedi llamado Anakin Skywalker, corrompido por el lado oscuro y convertido en aprendiz de Darth Sidious.",
-        backupFact:"Es uno de los Sith más reconocidos y temidos de la galaxia."
-    },
-    {
-        universe:"Star Wars",
-        title:"Darth Maul",
-        wikiTitle:"Darth_Maul",
-        type:"Personaje / Sith",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Darth_Maul",
-        backupSummary:"Darth Maul fue un guerrero Sith entrenado por Darth Sidious y conocido por su sable de luz doble.",
-        backupFact:"Su apariencia y estilo de combate lo hicieron uno de los Sith más icónicos."
-    },
-    {
-        universe:"Star Wars",
-        title:"La Fuerza",
-        wikiTitle:"The_Force",
-        type:"Concepto / Energía",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/The_Force",
-        backupSummary:"La Fuerza es un campo de energía místico que conecta a todos los seres vivos de la galaxia.",
-        backupFact:"Los Jedi la usan para equilibrio y defensa; los Sith la usan para poder y dominio."
-    },
-    {
-        universe:"Star Wars",
-        title:"Orden Jedi",
-        wikiTitle:"Jedi_Order",
-        type:"Facción / Aliados",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Jedi_Order",
-        backupSummary:"La Orden Jedi fue una organización de guardianes de la paz entrenados en el uso de la Fuerza.",
-        backupFact:"Su templo principal estuvo en Coruscant."
-    },
-    {
-        universe:"Star Wars",
-        title:"Sith",
-        wikiTitle:"Sith",
-        type:"Facción / Enemigos",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Sith",
-        backupSummary:"Los Sith son usuarios del lado oscuro de la Fuerza enfocados en poder, dominio y ambición.",
-        backupFact:"Históricamente han sido enemigos de los Jedi."
-    },
-    {
-        universe:"Star Wars",
-        title:"Estrella de la Muerte",
-        wikiTitle:"Death_Star",
-        type:"Arma / Estación espacial",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Death_Star",
-        backupSummary:"La Estrella de la Muerte fue una estación espacial imperial capaz de destruir planetas.",
-        backupFact:"Representó el poder militar absoluto del Imperio Galáctico."
-    },
-    {
-        universe:"Star Wars",
-        title:"Millennium Falcon",
-        wikiTitle:"Millennium_Falcon",
-        type:"Nave",
-        image:"starwarsfondor.jpg",
-        wiki:"https://starwars.fandom.com/api.php",
-        source:"https://starwars.fandom.com/wiki/Millennium_Falcon",
-        backupSummary:"El Millennium Falcon es una nave Corelliana modificada, famosa por su velocidad y papel en la Rebelión.",
-        backupFact:"Fue pilotada por Han Solo y Chewbacca."
-    }
-];
+        let lastFocusedElement = null;
 
-function changeBackground(universe){
-    if(universe === "Halo"){
-        document.body.style.backgroundImage = "url('halofondor.jpg')";
-    }
+        function openSeasonModal(button) {
+            const series = button.dataset.series || "Serie";
+            const season = button.dataset.season || "Temporada";
+            const icon = button.dataset.icon || "🎬";
+            const description =
+                button.dataset.description ||
+                "Información no disponible.";
 
-    if(universe === "Warhammer 40K"){
-        document.body.style.backgroundImage = "url('warhammerfondo.jpg')";
-    }
+            lastFocusedElement = button;
 
-    if(universe === "Star Wars"){
-        document.body.style.backgroundImage = "url('starwarsfondor.jpg')";
-    }
-}
+            modalIcon.textContent = icon;
+            modalSeason.textContent = season;
+            modalTitle.textContent = series;
+            modalDescription.textContent = description;
 
-function cleanText(text){
-    if(!text || text.trim() === ""){
-        return "";
-    }
+            modalOverlay.classList.add("active");
+            document.body.classList.add("modal-open");
 
-    return text
-        .replace(/\s+/g, " ")
-        .replace(/\[[0-9]+\]/g, "")
-        .trim();
-}
+            closeModalButton.focus();
+        }
 
-function shortText(text, maxLength){
-    if(!text || text.trim() === ""){
-        return "";
-    }
+        function closeSeasonModal() {
+            modalOverlay.classList.remove("active");
+            document.body.classList.remove("modal-open");
 
-    if(text.length <= maxLength){
-        return text;
-    }
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
+        }
 
-    return text.substring(0, maxLength) + "...";
-}
+        seasonButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                openSeasonModal(button);
+            });
+        });
 
-async function randomLore(){
-    const filteredLore = lore.filter(
-        item => item.universe === currentUniverse
-    );
+        closeModalButton.addEventListener("click", closeSeasonModal);
 
-    let item;
+        modalOverlay.addEventListener("click", (event) => {
+            if (event.target === modalOverlay) {
+                closeSeasonModal();
+            }
+        });
 
-    do{
-        const random = Math.floor(Math.random() * filteredLore.length);
-        item = filteredLore[random];
-    }while(item.title === lastTitle && filteredLore.length > 1);
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                modalOverlay.classList.contains("active")
+            ) {
+                closeSeasonModal();
+            }
+        });
 
-    lastTitle = item.title;
-
-    document.getElementById("image").src = item.image;
-    document.getElementById("image").alt = item.title;
-    document.getElementById("universe").innerText = item.universe;
-    document.getElementById("title").innerText = item.title;
-    document.getElementById("type").innerText = item.type;
-    document.getElementById("summary").innerText = "Consultando wiki...";
-    document.getElementById("fact").innerText = "Preparando dato...";
-    document.getElementById("source").innerHTML = "";
-
-    const url =
-        item.wiki +
-        "?origin=*" +
-        "&action=query" +
-        "&prop=extracts" +
-        "&exintro=1" +
-        "&explaintext=1" +
-        "&format=json" +
-        "&titles=" + encodeURIComponent(item.wikiTitle);
-
-    try{
-        const response = await fetch(url);
-        const data = await response.json();
-
-        const pageId = Object.keys(data.query.pages)[0];
-        const page = data.query.pages[pageId];
-
-        const resumenWiki = cleanText(page.extract);
-        const resumenFinal = resumenWiki || item.backupSummary;
-
-        document.getElementById("summary").innerText =
-            shortText(resumenFinal, 650);
-
-        document.getElementById("fact").innerText =
-            item.backupFact;
-
-        document.getElementById("source").innerHTML =
-            'Fuente: <a href="' + item.source + '" target="_blank">' +
-            item.universe + ' Wiki</a>';
-
-    }catch(error){
-        document.getElementById("summary").innerText =
-            item.backupSummary;
-
-        document.getElementById("fact").innerText =
-            item.backupFact;
-
-        document.getElementById("source").innerHTML =
-            'Fuente: <a href="' + item.source + '" target="_blank">' +
-            item.universe + ' Wiki</a>';
-
-        console.log(error);
-    }
-}
-
-function filterUniverse(universe){
-    currentUniverse = universe;
-    lastTitle = "";
-    changeBackground(universe);
-    randomLore();
-}
-
-changeBackground(currentUniverse);
-randomLore();
-</script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("./service-worker.js")
+                    .then(() => {
+                        console.log("Service Worker registrado");
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error al registrar Service Worker:",
+                            error
+                        );
+                    });
+            });
+        }
+    </script>
 
 </body>
+
 </html>
