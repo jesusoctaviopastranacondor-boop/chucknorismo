@@ -1,1061 +1,1525 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <link rel="manifest" href="manifest.json">
-
-    <meta name="theme-color" content="#2563eb">
-
-    <title>Series y Juegos | Chucknorismo</title>
-
-    <style>
-        :root {
-            --background-primary: #020617;
-            --background-secondary: #111827;
-            --background-tertiary: #1e293b;
-
-            --blue-primary: #2563eb;
-            --blue-light: #60a5fa;
-            --blue-dark: #1d4ed8;
-
-            --text-primary: #ffffff;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-
-            --card-background: rgba(255, 255, 255, 0.09);
-            --card-border: rgba(255, 255, 255, 0.16);
-
-            --success: #22c55e;
-            --danger: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-
-            font-family: Arial, Helvetica, sans-serif;
-
-            color: var(--text-primary);
-
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(37, 99, 235, 0.22),
-                    transparent 38%
-                ),
-                radial-gradient(
-                    circle at bottom right,
-                    rgba(124, 58, 237, 0.18),
-                    transparent 42%
-                ),
-                linear-gradient(
-                    135deg,
-                    var(--background-primary),
-                    var(--background-secondary),
-                    var(--background-tertiary)
-                );
-        }
-
-        button,
-        a {
-            font-family: inherit;
-        }
-
-        .page {
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-
-            padding: 18px 32px;
-
-            background: rgba(2, 6, 23, 0.84);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            color: var(--blue-light);
-
-            font-size: 25px;
-            font-weight: 900;
-            letter-spacing: 1px;
-
-            text-decoration: none;
-
-            text-shadow:
-                0 0 12px rgba(37, 99, 235, 0.85),
-                0 0 30px rgba(37, 99, 235, 0.55);
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            min-height: 42px;
-            padding: 10px 18px;
-
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-
-            text-decoration: none;
-
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 12px;
-
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease,
-                border-color 0.25s ease;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-
-            background: rgba(37, 99, 235, 0.30);
-            border-color: rgba(96, 165, 250, 0.65);
-        }
-
-        .main {
-            width: min(1180px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 60px 0 80px;
-        }
-
-        .hero {
-            max-width: 850px;
-            margin: 0 auto 50px;
-
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            margin-bottom: 18px;
-            padding: 9px 16px;
-
-            color: #bfdbfe;
-            font-size: 14px;
-            font-weight: 700;
-
-            background: rgba(37, 99, 235, 0.18);
-            border: 1px solid rgba(96, 165, 250, 0.32);
-            border-radius: 999px;
-        }
-
-        .hero h1 {
-            margin: 0 0 16px;
-
-            font-size: clamp(38px, 7vw, 70px);
-            line-height: 1;
-            letter-spacing: -2px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #ffffff,
-                    #93c5fd,
-                    #60a5fa
-                );
-
-            background-clip: text;
-            -webkit-background-clip: text;
-
-            color: transparent;
-        }
-
-        .hero p {
-            max-width: 720px;
-            margin: 0 auto;
-
-            color: var(--text-secondary);
-
-            font-size: 18px;
-            line-height: 1.7;
-        }
-
-        .series-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .series-card {
-            position: relative;
-            overflow: hidden;
-
-            display: flex;
-            flex-direction: column;
-
-            min-height: 560px;
-
-            background: var(--card-background);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-
-            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.38);
-
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        .series-card:hover {
-            transform: translateY(-8px);
-
-            border-color: rgba(96, 165, 250, 0.55);
-
-            box-shadow:
-                0 30px 70px rgba(0, 0, 0, 0.50),
-                0 0 30px rgba(37, 99, 235, 0.14);
-        }
-
-        .series-cover {
-            position: relative;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            height: 235px;
-
-            overflow: hidden;
-        }
-
-        .series-cover::before {
-            content: "";
-
-            position: absolute;
-            inset: 0;
-
-            background:
-                linear-gradient(
-                    to bottom,
-                    transparent 15%,
-                    rgba(2, 6, 23, 0.20) 58%,
-                    rgba(2, 6, 23, 0.92) 100%
-                );
-        }
-
-        .series-cover::after {
-            content: "";
-
-            position: absolute;
-
-            width: 170px;
-            height: 170px;
-
-            background: rgba(255, 255, 255, 0.10);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 50%;
-
-            filter: blur(1px);
-        }
-
-        .dexter-cover {
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(239, 68, 68, 0.75),
-                    transparent 48%
-                ),
-                linear-gradient(
-                    135deg,
-                    #450a0a,
-                    #991b1b,
-                    #020617
-                );
-        }
-
-        .mentalist-cover {
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(245, 158, 11, 0.72),
-                    transparent 48%
-                ),
-                linear-gradient(
-                    135deg,
-                    #451a03,
-                    #b45309,
-                    #020617
-                );
-        }
-
-        .supernatural-cover {
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(59, 130, 246, 0.70),
-                    transparent 48%
-                ),
-                linear-gradient(
-                    135deg,
-                    #172554,
-                    #1e40af,
-                    #020617
-                );
-        }
-
-        .cover-symbol {
-            position: relative;
-            z-index: 2;
-
-            font-size: 88px;
-
-            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
-        }
-
-        .series-content {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-
-            padding: 8px 26px 28px;
-        }
-
-        .series-category {
-            display: inline-flex;
-            align-self: flex-start;
-
-            margin-bottom: 12px;
-            padding: 7px 11px;
-
-            color: #bfdbfe;
-
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-
-            background: rgba(37, 99, 235, 0.18);
-            border: 1px solid rgba(96, 165, 250, 0.26);
-            border-radius: 999px;
-        }
-
-        .series-card h2 {
-            margin: 0 0 12px;
-
-            font-size: 31px;
-            line-height: 1.1;
-        }
-
-        .series-description {
-            margin: 0 0 24px;
-
-            color: var(--text-secondary);
-
-            font-size: 15px;
-            line-height: 1.65;
-        }
-
-        .season-title {
-            margin: auto 0 12px;
-
-            color: #e2e8f0;
-
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.7px;
-            text-transform: uppercase;
-        }
-
-        .season-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .season-button {
-            min-height: 48px;
-            padding: 12px 10px;
-
-            color: white;
-            font-size: 14px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(37, 99, 235, 0.62),
-                    rgba(29, 78, 216, 0.40)
-                );
-
-            border: 1px solid rgba(96, 165, 250, 0.50);
-            border-radius: 14px;
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .season-button:hover {
-            transform: translateY(-2px);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(37, 99, 235, 0.95),
-                    rgba(29, 78, 216, 0.78)
-                );
-
-            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.25);
-        }
-
-        .season-button:focus-visible,
-        .close-modal:focus-visible,
-        .back-button:focus-visible {
-            outline: 3px solid rgba(96, 165, 250, 0.85);
-            outline-offset: 3px;
-        }
-
-        .footer {
-            padding: 28px 20px;
-
-            color: var(--text-muted);
-            font-size: 14px;
-            text-align: center;
-
-            border-top: 1px solid rgba(255, 255, 255, 0.09);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 500;
-
-            display: none;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            background: rgba(2, 6, 23, 0.82);
-
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            position: relative;
-
-            width: min(640px, 100%);
-            max-height: calc(100vh - 40px);
-            overflow-y: auto;
-
-            padding: 32px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(30, 41, 59, 0.98),
-                    rgba(15, 23, 42, 0.98)
-                );
-
-            border: 1px solid rgba(96, 165, 250, 0.30);
-            border-radius: 26px;
-
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.65),
-                0 0 40px rgba(37, 99, 235, 0.17);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-
-            width: 42px;
-            height: 42px;
-
-            color: white;
-            font-size: 24px;
-            line-height: 1;
-
-            cursor: pointer;
-
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 12px;
-        }
-
-        .close-modal:hover {
-            background: rgba(239, 68, 68, 0.30);
-            border-color: rgba(248, 113, 113, 0.55);
-        }
-
-        .modal-icon {
-            margin-bottom: 16px;
-
-            font-size: 58px;
-        }
-
-        .modal-label {
-            display: inline-flex;
-
-            margin-bottom: 13px;
-            padding: 7px 12px;
-
-            color: #bfdbfe;
-
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-
-            background: rgba(37, 99, 235, 0.18);
-            border: 1px solid rgba(96, 165, 250, 0.30);
-            border-radius: 999px;
-        }
-
-        .modal h3 {
-            margin: 0 50px 14px 0;
-
-            font-size: 34px;
-        }
-
-        .modal p {
-            margin: 0;
-
-            color: var(--text-secondary);
-
-            font-size: 16px;
-            line-height: 1.75;
-        }
-
-        .modal-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            margin-top: 24px;
-            padding: 14px 16px;
-
-            color: #dcfce7;
-            font-size: 14px;
-            font-weight: 700;
-
-            background: rgba(34, 197, 94, 0.11);
-            border: 1px solid rgba(34, 197, 94, 0.28);
-            border-radius: 14px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-
-            flex: 0 0 auto;
-
-            background: var(--success);
-            border-radius: 50%;
-
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.75);
-        }
-
-        body.modal-open {
-            overflow: hidden;
-        }
-
-        @media (max-width: 980px) {
-            .series-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .series-card:last-child {
-                grid-column: 1 / -1;
-                width: min(560px, 100%);
-                justify-self: center;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .header {
-                padding: 15px 18px;
-            }
-
-            .brand {
-                font-size: 20px;
-            }
-
-            .back-button {
-                padding: 9px 13px;
-            }
-
-            .main {
-                width: min(100% - 24px, 1180px);
-                padding-top: 42px;
-            }
-
-            .hero {
-                margin-bottom: 35px;
-            }
-
-            .hero h1 {
-                letter-spacing: -1px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .series-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .series-card:last-child {
-                grid-column: auto;
-                width: 100%;
-            }
-
-            .series-card {
-                min-height: auto;
-            }
-
-            .modal {
-                padding: 28px 22px;
-            }
-
-            .modal h3 {
-                font-size: 28px;
-            }
-        }
-
-        @media (max-width: 430px) {
-            .back-button span {
-                display: none;
-            }
-
-            .season-buttons {
-                grid-template-columns: 1fr;
-            }
-
-            .series-content {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Series y Juegos | Chucknorismo</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background-image:url('halofondor.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    transition:background-image .8s ease;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(2,6,23,0.76);
+    z-index:-1;
+}
+
+.container{
+    width:min(500px, 100%);
+    padding:24px 18px;
+}
+
+.logo{
+    text-align:center;
+    font-size:48px;
+    font-weight:900;
+    margin-bottom:8px;
+    color:#60a5fa;
+    text-shadow:0 0 10px #2563eb, 0 0 30px #2563eb;
+}
+
+.subtitle{
+    text-align:center;
+    color:#e5e7eb;
+    margin-bottom:22px;
+    line-height:1.5;
+}
+
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.menuBtn{
+    background:#1e293b;
+    color:white;
+    border:1px solid rgba(255,255,255,.12);
+    padding:12px 15px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+    transition:.25s;
+}
+
+.menuBtn:hover,
+.menuBtn.active{
+    background:#2563eb;
+    transform:translateY(-2px);
+}
+
+.card{
+    background:white;
+    color:black;
+    border-radius:28px;
+    padding:25px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.5);
+}
+
+.loreImage{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:20px;
+    background:#111827;
+}
+
+.universe{
+    color:#2563eb;
+    font-weight:bold;
+    font-size:14px;
+    text-transform:uppercase;
+}
+
+.title{
+    font-size:32px;
+    font-weight:bold;
+    margin-top:8px;
+    line-height:1.15;
+}
+
+.type{
+    color:#6b7280;
+    margin-top:7px;
+}
+
+.episodeMeta{
+    display:none;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px;
+    margin-top:18px;
+}
+
+.metaBox{
+    background:#f1f5f9;
+    border-radius:14px;
+    padding:12px;
+}
+
+.metaLabel{
+    display:block;
+    color:#64748b;
+    font-size:11px;
+    font-weight:bold;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.metaValue{
+    color:#0f172a;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section h3{
+    margin-bottom:10px;
+}
+
+p{
+    line-height:1.6;
+}
+
+.source{
+    margin-top:18px;
+    font-size:12px;
+    color:#6b7280;
+}
+
+.source a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.mainBtn{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.mainBtn:hover{
+    background:#1d4ed8;
+}
+
+.backLink{
+    display:block;
+    width:max-content;
+    margin:18px auto 0;
+    color:#dbeafe;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.backLink:hover{
+    color:white;
+}
+
+@media(max-width:520px){
+    .logo{
+        font-size:38px;
+    }
+
+    .title{
+        font-size:27px;
+    }
+
+    .loreImage{
+        height:190px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="page">
+<div class="container">
 
-        <header class="header">
+    <div class="logo">CHUCKNORISMO</div>
 
-            <a class="brand" href="./index.html">
-                CHUCKNORISMO
-            </a>
-
-            <a class="back-button" href="./index.html">
-                <strong>←</strong>
-                <span>Volver al inicio</span>
-            </a>
-
-        </header>
-
-        <main class="main">
-
-            <section class="hero">
-
-                <div class="hero-badge">
-                    🎬 Biblioteca de series
-                </div>
-
-                <h1>
-                    Series y Juegos
-                </h1>
-
-                <p>
-                    Explora historias de investigación, suspenso,
-                    crimen y fenómenos sobrenaturales. Cada serie
-                    contiene únicamente sus dos primeras temporadas.
-                </p>
-
-            </section>
-
-            <section
-                class="series-grid"
-                aria-label="Listado de series"
-            >
-
-                <!-- DEXTER -->
-
-                <article class="series-card">
-
-                    <div class="series-cover dexter-cover">
-
-                        <div class="cover-symbol">
-                            🩸
-                        </div>
-
-                    </div>
-
-                    <div class="series-content">
-
-                        <span class="series-category">
-                            Crimen y suspenso
-                        </span>
-
-                        <h2>
-                            Dexter
-                        </h2>
-
-                        <p class="series-description">
-                            Dexter Morgan trabaja como especialista forense
-                            mientras oculta una vida secreta marcada por su
-                            propio código y una peligrosa doble identidad.
-                        </p>
-
-                        <div class="season-title">
-                            Temporadas disponibles
-                        </div>
-
-                        <div class="season-buttons">
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="Dexter"
-                                data-season="Temporada 1"
-                                data-icon="🩸"
-                                data-description="Dexter Morgan lleva una doble vida como analista forense y justiciero secreto. La aparición de un asesino que parece comprender su verdadera naturaleza lo obliga a enfrentar recuerdos de su pasado."
-                            >
-                                Temporada 1
-                            </button>
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="Dexter"
-                                data-season="Temporada 2"
-                                data-icon="🩸"
-                                data-description="La investigación de varios cuerpos amenaza con revelar el secreto de Dexter. Mientras la policía se acerca a la verdad, él debe controlar las consecuencias de sus acciones y proteger su identidad."
-                            >
-                                Temporada 2
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-                <!-- EL MENTALISTA -->
-
-                <article class="series-card">
-
-                    <div class="series-cover mentalist-cover">
-
-                        <div class="cover-symbol">
-                            🧠
-                        </div>
-
-                    </div>
-
-                    <div class="series-content">
-
-                        <span class="series-category">
-                            Investigación
-                        </span>
-
-                        <h2>
-                            El Mentalista
-                        </h2>
-
-                        <p class="series-description">
-                            Patrick Jane utiliza su capacidad de observación,
-                            deducción y manipulación psicológica para ayudar
-                            a resolver investigaciones criminales.
-                        </p>
-
-                        <div class="season-title">
-                            Temporadas disponibles
-                        </div>
-
-                        <div class="season-buttons">
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="El Mentalista"
-                                data-season="Temporada 1"
-                                data-icon="🧠"
-                                data-description="Patrick Jane colabora con el equipo de investigación utilizando su extraordinaria capacidad para leer a las personas. Al mismo tiempo, continúa buscando al responsable de la tragedia que cambió su vida."
-                            >
-                                Temporada 1
-                            </button>
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="El Mentalista"
-                                data-season="Temporada 2"
-                                data-icon="🧠"
-                                data-description="Jane y el equipo enfrentan nuevos casos mientras la búsqueda de Red John se vuelve más intensa. Sus métodos poco convencionales generan resultados, pero también aumentan los riesgos."
-                            >
-                                Temporada 2
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-                <!-- SUPERNATURAL -->
-
-                <article class="series-card">
-
-                    <div class="series-cover supernatural-cover">
-
-                        <div class="cover-symbol">
-                            👻
-                        </div>
-
-                    </div>
-
-                    <div class="series-content">
-
-                        <span class="series-category">
-                            Terror y fantasía
-                        </span>
-
-                        <h2>
-                            Supernatural
-                        </h2>
-
-                        <p class="series-description">
-                            Los hermanos Winchester recorren distintos
-                            lugares investigando criaturas, leyendas,
-                            espíritus y amenazas de origen sobrenatural.
-                        </p>
-
-                        <div class="season-title">
-                            Temporadas disponibles
-                        </div>
-
-                        <div class="season-buttons">
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="Supernatural"
-                                data-season="Temporada 1"
-                                data-icon="👻"
-                                data-description="Sam y Dean Winchester recorren el país investigando fenómenos paranormales mientras buscan a su padre y enfrentan a la fuerza sobrenatural relacionada con la historia de su familia."
-                            >
-                                Temporada 1
-                            </button>
-
-                            <button
-                                class="season-button"
-                                type="button"
-                                data-series="Supernatural"
-                                data-season="Temporada 2"
-                                data-icon="👻"
-                                data-description="Los hermanos Winchester continúan cazando criaturas y descubriendo los planes de una amenaza demoníaca. La conexión de Sam con otros jóvenes especiales se vuelve cada vez más importante."
-                            >
-                                Temporada 2
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-        </main>
-
-        <footer class="footer">
-            Chucknorismo · Series, tecnología y proyectos propios
-        </footer>
-
+    <div class="subtitle">
+        Series, videojuegos y universos del conocimiento geek
     </div>
 
-    <!-- MODAL DE TEMPORADA -->
+    <div class="menu">
+        <button class="menuBtn active" data-universe="Halo" onclick="filterUniverse('Halo')">HALO</button>
+        <button class="menuBtn" data-universe="Warhammer 40K" onclick="filterUniverse('Warhammer 40K')">WARHAMMER</button>
+        <button class="menuBtn" data-universe="Star Wars" onclick="filterUniverse('Star Wars')">STAR WARS</button>
+        <button class="menuBtn" data-universe="El Mentalista" onclick="filterUniverse('El Mentalista')">EL MENTALISTA</button>
+        <button class="menuBtn" data-universe="Dexter" onclick="filterUniverse('Dexter')">DEXTER</button>
+    </div>
 
-    <div
-        class="modal-overlay"
-        id="seasonModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalTitle"
-    >
+    <div class="card">
 
-        <div class="modal">
+        <img id="image" class="loreImage" alt="Imagen del contenido">
 
-            <button
-                class="close-modal"
-                id="closeModal"
-                type="button"
-                aria-label="Cerrar ventana"
-            >
-                ×
-            </button>
+        <div class="universe" id="universe">HALO</div>
+        <div class="title" id="title">Cargando...</div>
+        <div class="type" id="type">Dato Geek</div>
 
-            <div
-                class="modal-icon"
-                id="modalIcon"
-            >
-                🎬
+        <div class="episodeMeta" id="episodeMeta">
+            <div class="metaBox">
+                <span class="metaLabel">Episodio</span>
+                <span class="metaValue" id="episode"></span>
             </div>
-
-            <div
-                class="modal-label"
-                id="modalSeason"
-            >
-                Temporada
+            <div class="metaBox">
+                <span class="metaLabel">Emisión</span>
+                <span class="metaValue" id="airDate"></span>
             </div>
-
-            <h3 id="modalTitle">
-                Serie
-            </h3>
-
-            <p id="modalDescription">
-                Información de la temporada.
-            </p>
-
-            <div class="modal-status">
-
-                <span class="status-dot"></span>
-
-                Temporada disponible en Chucknorismo
-
-            </div>
-
         </div>
 
+        <div class="section">
+            <h3>Resumen</h3>
+            <p id="summary">Cargando información...</p>
+        </div>
+
+        <div class="section">
+            <h3 id="factTitle">Dato curioso</h3>
+            <p id="fact">Preparando dato...</p>
+        </div>
+
+        <div class="source" id="source"></div>
+
+        <button class="mainBtn" onclick="randomLore()">Mostrar otro</button>
+
     </div>
 
-    <script>
-        "use strict";
+    <a class="backLink" href="./indice.html">← Volver al inicio</a>
 
-        const modalOverlay = document.getElementById("seasonModal");
-        const closeModalButton = document.getElementById("closeModal");
+</div>
 
-        const modalIcon = document.getElementById("modalIcon");
-        const modalSeason = document.getElementById("modalSeason");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalDescription = document.getElementById("modalDescription");
+<script>
+let currentUniverse = "Halo";
+let lastTitle = "";
 
-        const seasonButtons = document.querySelectorAll(".season-button");
+const mentalistaImage =
+    "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+            <defs>
+                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#111827"/>
+                    <stop offset="55%" stop-color="#7f1d1d"/>
+                    <stop offset="100%" stop-color="#020617"/>
+                </linearGradient>
+            </defs>
+            <rect width="1200" height="700" fill="url(#g)"/>
+            <circle cx="930" cy="205" r="135" fill="none" stroke="#dc2626" stroke-width="18" opacity=".55"/>
+            <path d="M850 210 Q930 285 1010 210" fill="none" stroke="#dc2626" stroke-width="18" stroke-linecap="round" opacity=".55"/>
+            <circle cx="885" cy="170" r="14" fill="#dc2626" opacity=".75"/>
+            <circle cx="975" cy="170" r="14" fill="#dc2626" opacity=".75"/>
+            <text x="70" y="330" fill="#ffffff" font-family="Arial, sans-serif" font-size="92" font-weight="700">EL MENTALISTA</text>
+            <text x="76" y="400" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="34">Temporada 1</text>
+        </svg>
+    `);
 
-        let lastFocusedElement = null;
+const dexterImage =
+    "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+            <defs>
+                <linearGradient id="dexterGradient" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#020617"/>
+                    <stop offset="48%" stop-color="#7f1d1d"/>
+                    <stop offset="100%" stop-color="#16070a"/>
+                </linearGradient>
+                <filter id="shadow">
+                    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity=".65"/>
+                </filter>
+            </defs>
+            <rect width="1200" height="700" fill="url(#dexterGradient)"/>
+            <path d="M0 570 C240 500 420 660 660 565 C840 495 1010 540 1200 460 L1200 700 L0 700 Z"
+                  fill="#450a0a" opacity=".72"/>
+            <circle cx="925" cy="225" r="145" fill="none" stroke="#ef4444" stroke-width="12" opacity=".38"/>
+            <path d="M875 185 L975 285 M975 185 L875 285"
+                  stroke="#ef4444" stroke-width="13" stroke-linecap="round" opacity=".38"/>
+            <text x="70" y="335" fill="#ffffff" font-family="Arial, sans-serif"
+                  font-size="112" font-weight="800" letter-spacing="10" filter="url(#shadow)">DEXTER</text>
+            <text x="78" y="410" fill="#fecaca" font-family="Arial, sans-serif"
+                  font-size="34">Temporadas 1 y 2</text>
+        </svg>
+    `);
 
-        function openSeasonModal(button) {
-            const series = button.dataset.series || "Serie";
-            const season = button.dataset.season || "Temporada";
-            const icon = button.dataset.icon || "🎬";
-            const description =
-                button.dataset.description ||
-                "Información no disponible.";
+const lore = [
+    {
+        universe:"Halo",
+        title:"Master Chief",
+        wikiTitle:"Master_Chief",
+        type:"Personaje / Aliado",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Master_Chief",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"Master Chief, también conocido como John-117, es un supersoldado Spartan-II y uno de los personajes principales del universo Halo.",
+        backupFact:"Es reconocido por su armadura Mjolnir y por su papel clave en la guerra contra el Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Cortana",
+        wikiTitle:"Cortana",
+        type:"Inteligencia Artificial / Aliada",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Cortana",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"Cortana es una inteligencia artificial avanzada creada para apoyar operaciones militares y estratégicas del UNSC.",
+        backupFact:"Su relación con Master Chief es uno de los pilares narrativos de Halo."
+    },
+    {
+        universe:"Halo",
+        title:"The Flood",
+        wikiTitle:"Flood",
+        type:"Enemigo / Amenaza biológica",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Flood",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"El Flood es una forma de vida parasitaria capaz de consumir y asimilar organismos vivos.",
+        backupFact:"Es una de las amenazas más peligrosas del universo Halo."
+    },
+    {
+        universe:"Halo",
+        title:"Covenant",
+        wikiTitle:"Covenant",
+        type:"Facción enemiga",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Covenant",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"El Covenant es una alianza alienígena religiosa y militar que declaró la guerra a la humanidad.",
+        backupFact:"Está formado por varias especies como Élites, Grunts, Jackals y Profetas."
+    },
+    {
+        universe:"Halo",
+        title:"UNSC",
+        wikiTitle:"United_Nations_Space_Command",
+        type:"Organización / Aliados",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/United_Nations_Space_Command",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"El UNSC es la principal fuerza militar humana dentro del universo Halo.",
+        backupFact:"Fue clave en la defensa de la humanidad durante la guerra contra el Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Energy Sword",
+        wikiTitle:"Energy_Sword",
+        type:"Arma",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Energy_Sword",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"La Energy Sword es un arma cuerpo a cuerpo usada principalmente por los Sangheili.",
+        backupFact:"Es una de las armas más icónicas del Covenant."
+    },
+    {
+        universe:"Halo",
+        title:"Halo Array",
+        wikiTitle:"Halo_Array",
+        type:"Tecnología / Megaconstrucción",
+        image:"halofondor.jpg",
+        wiki:"https://halo.fandom.com/api.php",
+        source:"https://halo.fandom.com/wiki/Halo_Array",
+        sourceLabel:"Halo Wiki",
+        backupSummary:"El Halo Array es un conjunto de anillos creados como arma extrema contra el Flood.",
+        backupFact:"Su activación puede eliminar vida sensible a gran escala."
+    },
 
-            lastFocusedElement = button;
+    {
+        universe:"Warhammer 40K",
+        title:"Space Marines",
+        wikiTitle:"Space_Marines",
+        type:"Facción / Aliados del Imperio",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Space_Marines",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"Los Space Marines son guerreros modificados genéticamente al servicio del Imperio de la Humanidad.",
+        backupFact:"También son conocidos como Adeptus Astartes."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"El Emperador",
+        wikiTitle:"Emperor_of_Mankind",
+        type:"Personaje / Figura central",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Emperor_of_Mankind",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"El Emperador de la Humanidad es la figura central del Imperio en Warhammer 40K.",
+        backupFact:"Permanece conectado al Trono Dorado para sostener al Imperio."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Orkos",
+        wikiTitle:"Orks",
+        type:"Enemigos / Facción",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Orks",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"Los Orkos son una especie brutal, numerosa y extremadamente guerrera.",
+        backupFact:"Su tecnología funciona de manera extraña, influenciada por su creencia colectiva."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Necrons",
+        wikiTitle:"Necrons",
+        type:"Enemigos / Raza antigua",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Necrons",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"Los Necrons son una raza ancestral de guerreros mecánicos que despiertan de tumbas milenarias.",
+        backupFact:"Son una de las civilizaciones más antiguas y peligrosas de la galaxia."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Tyranids",
+        wikiTitle:"Tyranids",
+        type:"Enemigos / Enjambre biológico",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Tyranids",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"Los Tyranids son una amenaza extragaláctica que consume mundos enteros para alimentar su enjambre.",
+        backupFact:"Actúan bajo una mente colmena conocida como Hive Mind."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Bolter",
+        wikiTitle:"Bolter",
+        type:"Arma",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Bolter",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"El Bolter es un arma icónica del Imperio, usada especialmente por los Space Marines.",
+        backupFact:"Dispara proyectiles autopropulsados de alto poder destructivo."
+    },
+    {
+        universe:"Warhammer 40K",
+        title:"Imperio de la Humanidad",
+        wikiTitle:"Imperium_of_Man",
+        type:"Civilización / Facción",
+        image:"warhammerfondo.jpg",
+        wiki:"https://warhammer40k.fandom.com/api.php",
+        source:"https://warhammer40k.fandom.com/wiki/Imperium_of_Man",
+        sourceLabel:"Warhammer 40K Wiki",
+        backupSummary:"El Imperio de la Humanidad domina millones de mundos bajo una estructura militar, religiosa y autoritaria.",
+        backupFact:"Su existencia se sostiene en guerra constante y fe absoluta en el Emperador."
+    },
 
-            modalIcon.textContent = icon;
-            modalSeason.textContent = season;
-            modalTitle.textContent = series;
-            modalDescription.textContent = description;
+    {
+        universe:"Star Wars",
+        title:"Darth Vader",
+        wikiTitle:"Darth_Vader",
+        type:"Personaje / Enemigo",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Darth_Vader",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"Darth Vader fue un antiguo Jedi llamado Anakin Skywalker, corrompido por el lado oscuro y convertido en aprendiz de Darth Sidious.",
+        backupFact:"Es uno de los Sith más reconocidos y temidos de la galaxia."
+    },
+    {
+        universe:"Star Wars",
+        title:"Darth Maul",
+        wikiTitle:"Darth_Maul",
+        type:"Personaje / Sith",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Darth_Maul",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"Darth Maul fue un guerrero Sith entrenado por Darth Sidious y conocido por su sable de luz doble.",
+        backupFact:"Su apariencia y estilo de combate lo hicieron uno de los Sith más icónicos."
+    },
+    {
+        universe:"Star Wars",
+        title:"La Fuerza",
+        wikiTitle:"The_Force",
+        type:"Concepto / Energía",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/The_Force",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"La Fuerza es un campo de energía místico que conecta a todos los seres vivos de la galaxia.",
+        backupFact:"Los Jedi la usan para equilibrio y defensa; los Sith la usan para poder y dominio."
+    },
+    {
+        universe:"Star Wars",
+        title:"Orden Jedi",
+        wikiTitle:"Jedi_Order",
+        type:"Facción / Aliados",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Jedi_Order",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"La Orden Jedi fue una organización de guardianes de la paz entrenados en el uso de la Fuerza.",
+        backupFact:"Su templo principal estuvo en Coruscant."
+    },
+    {
+        universe:"Star Wars",
+        title:"Sith",
+        wikiTitle:"Sith",
+        type:"Facción / Enemigos",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Sith",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"Los Sith son usuarios del lado oscuro de la Fuerza enfocados en poder, dominio y ambición.",
+        backupFact:"Históricamente han sido enemigos de los Jedi."
+    },
+    {
+        universe:"Star Wars",
+        title:"Estrella de la Muerte",
+        wikiTitle:"Death_Star",
+        type:"Arma / Estación espacial",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Death_Star",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"La Estrella de la Muerte fue una estación espacial imperial capaz de destruir planetas.",
+        backupFact:"Representó el poder militar absoluto del Imperio Galáctico."
+    },
+    {
+        universe:"Star Wars",
+        title:"Millennium Falcon",
+        wikiTitle:"Millennium_Falcon",
+        type:"Nave",
+        image:"starwarsfondor.jpg",
+        wiki:"https://starwars.fandom.com/api.php",
+        source:"https://starwars.fandom.com/wiki/Millennium_Falcon",
+        sourceLabel:"Star Wars Wiki",
+        backupSummary:"El Millennium Falcon es una nave Corelliana modificada, famosa por su velocidad y papel en la Rebelión.",
+        backupFact:"Fue pilotada por Han Solo y Chewbacca."
+    },
 
-            modalOverlay.classList.add("active");
-            document.body.classList.add("modal-open");
+    {
+        universe:"El Mentalista",
+        title:"Pilot",
+        type:"Temporada 1 / Episodio 1",
+        episode:"T1.E1",
+        airDate:"8 ene 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane es un médium cuya esposa e hijo son asesinados por un asesino en serie, John el Rojo. Destrozado, Patrick confiesa que su actuación paranormal es una farsa y usa sus habilidades de observación y análisis para atrapar asesinos.",
+        backupFact:"El episodio presenta a Patrick Jane, al equipo de la CBI y el conflicto central con John el Rojo."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Hair and Silver Tape",
+        type:"Temporada 1 / Episodio 2",
+        episode:"T1.E2",
+        airDate:"30 sept 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane da la espalda a la agente Teresa Lisbon para organizar su propia operación clandestina poco ortodoxa mientras el equipo intenta capturar a un asesino en el Valle de Napa.",
+        backupFact:"Patrick Jane vuelve a demostrar que sus métodos suelen chocar con los procedimientos oficiales de la CBI."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Tide",
+        type:"Temporada 1 / Episodio 3",
+        episode:"T1.E3",
+        airDate:"14 oct 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Cuando el mar devuelve el cuerpo de una adolescente, Patrick Jane idea una trampa de mentalista para que sus amigos surfistas se vuelvan unos contra otros y revelen lo que ocurrió.",
+        backupFact:"El caso se resuelve mediante presión psicológica y observación del comportamiento del grupo."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Ladies in Red",
+        type:"Temporada 1 / Episodio 4",
+        episode:"T1.E4",
+        airDate:"21 oct 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane crea una estratagema psicológica entre los sospechosos del caso de un rico banquero de inversiones que aparece muerto dentro de su caja fuerte cerrada.",
+        backupFact:"El episodio combina un misterio de habitación cerrada con manipulación psicológica."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Redwood",
+        type:"Temporada 1 / Episodio 5",
+        episode:"T1.E5",
+        airDate:"28 oct 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Una joven se convierte en sospechosa del asesinato de su mejor amiga, pero no recuerda lo ocurrido. Jane diseña una arriesgada maniobra para que reviva la noche y recupere la memoria.",
+        backupFact:"La investigación depende de reconstruir recuerdos bloqueados y separar trauma de culpabilidad."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red-Handed",
+        type:"Temporada 1 / Episodio 6",
+        episode:"T1.E6",
+        airDate:"11 nov 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane utiliza su capacidad de observación, lectura de personas y engaño en las mesas de juego de un casino.",
+        backupFact:"El casino permite mostrar de forma directa las habilidades de Jane para detectar patrones y mentiras."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Seeing Red",
+        type:"Temporada 1 / Episodio 7",
+        episode:"T1.E7",
+        airDate:"18 nov 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Decidido a demostrar que una supuesta vidente es un fraude y posiblemente una asesina, Patrick Jane accede a celebrar una sesión de espiritismo para exponer al responsable.",
+        backupFact:"Jane confronta directamente el tipo de engaño paranormal que él mismo practicaba en el pasado."
+    },
+    {
+        universe:"El Mentalista",
+        title:"The Thin Red Line",
+        type:"Temporada 1 / Episodio 8",
+        episode:"T1.E8",
+        airDate:"25 nov 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane descubre un motivo distinto al aparente cuando encuentran asesinados a un testigo estatal de un caso de narcóticos y a su novia.",
+        backupFact:"La investigación obliga al equipo a mirar más allá del móvil criminal más evidente."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Flame Red",
+        type:"Temporada 1 / Episodio 9",
+        episode:"T1.E9",
+        airDate:"2 dic 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane sospecha que el único superviviente de una unidad de la Guardia Nacional es responsable de asesinar a sus compañeros y se hace pasar por policía encubierto para demostrarlo.",
+        backupFact:"Jane usa una identidad falsa y una puesta en escena para provocar al sospechoso."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Brick and Ivy",
+        type:"Temporada 1 / Episodio 10",
+        episode:"T1.E10",
+        airDate:"16 dic 2008",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane se toma personalmente el caso de un profesor envenenado cuando la principal sospechosa resulta ser la esposa de la víctima y antigua psiquiatra de Patrick.",
+        backupFact:"El episodio explora parte del pasado emocional y clínico de Patrick Jane."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red John's Friends",
+        type:"Temporada 1 / Episodio 11",
+        episode:"T1.E11",
+        airDate:"6 ene 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane abandona la CBI para demostrar la inocencia de un asesino convicto después de que el prisionero le promete información sobre John el Rojo.",
+        backupFact:"La obsesión de Jane con John el Rojo lo lleva a poner en riesgo su puesto y actuar por cuenta propia."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Rum",
+        type:"Temporada 1 / Episodio 12",
+        episode:"T1.E12",
+        airDate:"13 ene 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane idea una trampa para descubrir al responsable del asesinato de una estrella de fútbol de instituto relacionada con una joven que se presenta como bruja.",
+        backupFact:"El caso contrapone superstición, conflictos juveniles y manipulación psicológica."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Paint It Red",
+        type:"Temporada 1 / Episodio 13",
+        episode:"T1.E13",
+        airDate:"18 ene 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane y el equipo de la CBI se adentran en el mundo del arte tras el robo de un cuadro valorado en 50 millones de dólares y el hallazgo del cadáver del yerno de un magnate.",
+        backupFact:"El episodio mezcla asesinato, falsificaciones, coleccionismo y ambición."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Crimson Casanova",
+        type:"Temporada 1 / Episodio 14",
+        episode:"T1.E14",
+        airDate:"10 feb 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Con ayuda de Patrick Jane, Cho se transforma en un seductor para atrapar a un asesino y a un manipulador usando sus propias técnicas.",
+        backupFact:"Cho toma un papel poco habitual mientras Jane dirige la estrategia psicológica."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Scarlett Fever",
+        type:"Temporada 1 / Episodio 15",
+        episode:"T1.E15",
+        airDate:"17 feb 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane y el equipo investigan el envenenamiento de la figura dominante de un club campestre y descubren una comunidad llena de secretos, relaciones y abuso de drogas.",
+        backupFact:"La apariencia perfecta del club oculta rivalidades y conflictos personales."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Bloodshot",
+        type:"Temporada 1 / Episodio 16",
+        episode:"T1.E16",
+        airDate:"17 mar 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Cuando Patrick Jane pierde temporalmente la vista a causa de una explosión, debe confiar en sus demás sentidos durante la investigación del asesinato de un asesor financiero.",
+        backupFact:"El episodio pone a prueba la capacidad de observación de Jane sin depender de la vista."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Carnelian, Inc.",
+        type:"Temporada 1 / Episodio 17",
+        episode:"T1.E17",
+        airDate:"24 mar 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Una historia de avaricia y traición enfrenta a Patrick Jane con un grupo de financieros mientras la CBI investiga asesinatos durante una reunión empresarial en Sierra Nevada.",
+        backupFact:"La competencia corporativa y el aislamiento aumentan la tensión entre los sospechosos."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Russet Potatoes",
+        type:"Temporada 1 / Episodio 18",
+        episode:"T1.E18",
+        airDate:"31 mar 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane y el equipo de la CBI persiguen a un manipulador capaz de hipnotizar a personas para que cumplan sus órdenes, incluso asesinar.",
+        backupFact:"La sugestión y la hipnosis se convierten en el centro del misterio."
+    },
+    {
+        universe:"El Mentalista",
+        title:"A Dozen Red Roses",
+        type:"Temporada 1 / Episodio 19",
+        episode:"T1.E19",
+        airDate:"7 abr 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane y el equipo de la CBI viajan a Hollywood para investigar el asesinato de un productor cinematográfico.",
+        backupFact:"El caso expone rivalidades, apariencias y engaños dentro de una producción de cine."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Sauce",
+        type:"Temporada 1 / Episodio 20",
+        episode:"T1.E20",
+        airDate:"28 abr 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane y el equipo investigan el asesinato de un gánster que se encontraba dentro del programa de protección de testigos.",
+        backupFact:"El pasado criminal de la víctima complica la identificación del verdadero móvil."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Miss Red",
+        type:"Temporada 1 / Episodio 21",
+        episode:"T1.E21",
+        airDate:"5 may 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane utiliza sus habilidades para enfrentar a los sospechosos y resolver el asesinato del director ejecutivo de una compañía de software, encontrado muerto en su yate.",
+        backupFact:"El caso combina tecnología, riqueza y manipulación interpersonal."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Blood Brothers",
+        type:"Temporada 1 / Episodio 22",
+        episode:"T1.E22",
+        airDate:"12 may 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Jane debe ganarse la confianza de un grupo de jóvenes problemáticos que participa en un programa en la naturaleza para descubrir qué ocurrió con uno de sus compañeros.",
+        backupFact:"La resolución depende de que los adolescentes confíen en Jane y rompan su silencio."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red John's Footsteps",
+        type:"Temporada 1 / Episodio 23",
+        episode:"T1.E23",
+        airDate:"19 may 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Lisbon teme que John el Rojo esté preparando una trampa para Patrick Jane mientras la CBI investiga el asesinato de una joven y el secuestro de su hermana gemela.",
+        backupFact:"El final de temporada retoma directamente la persecución de John el Rojo y eleva el riesgo personal para Jane."
+    }
+    ,
+    {
+        universe:"El Mentalista",
+        title:"Redemption",
+        type:"Temporada 2 / Episodio 1",
+        episode:"T2.E1",
+        airDate:"24 sept 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Mientras la unidad investiga el asesinato de una mujer que robó un millón de dólares a su empleador, Patrick descubre que él y su equipo han sido apartados del caso de John el Rojo.",
+        backupFact:"El inicio de la segunda temporada muestra a Jane enfrentando la pérdida de acceso al caso que más le importa."
+    },
+    {
+        universe:"El Mentalista",
+        title:"The Scarlet Letter",
+        type:"Temporada 2 / Episodio 2",
+        episode:"T2.E2",
+        airDate:"1 oct 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Mientras la CBI investiga el asesinato de la asistente de un senador estatal de California, Patrick trabaja por su cuenta convencido de que la víctima fue asesinada por su amante.",
+        backupFact:"Jane desafía la línea oficial de investigación y construye su propia teoría a partir del comportamiento de los sospechosos."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Badge",
+        type:"Temporada 2 / Episodio 3",
+        episode:"T2.E3",
+        airDate:"8 oct 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un pedófilo que Lisbon arrestó y envió a prisión aparece asesinado a tiros. Las pruebas apuntan directamente hacia ella y no tiene una coartada que la proteja.",
+        backupFact:"El episodio coloca a Teresa Lisbon como principal sospechosa y obliga al equipo a demostrar su inocencia."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Menace",
+        type:"Temporada 2 / Episodio 4",
+        episode:"T2.E4",
+        airDate:"15 oct 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"El equipo investiga a una peligrosa pandilla de motociclistas para obtener información sobre la muerte del abogado que representaba al grupo.",
+        backupFact:"La investigación obliga a la CBI a introducirse en un entorno cerrado donde la lealtad y la intimidación dominan."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Scare",
+        type:"Temporada 2 / Episodio 5",
+        episode:"T2.E5",
+        airDate:"29 oct 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un arquitecto es asesinado dentro de la antigua mansión que acababa de comprar. La investigación revela rumores sobre una casa embrujada, un tesoro oculto y los descendientes enfurecidos del propietario original.",
+        backupFact:"Jane separa la superstición de los intereses económicos y familiares que rodean a la mansión."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Black Gold and Red Blood",
+        type:"Temporada 2 / Episodio 6",
+        episode:"T2.E6",
+        airDate:"5 nov 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Mientras la CBI investiga un homicidio relacionado aparentemente con una disputa por tierras, Patrick termina en prisión por espiar a Sam Bosco con el propósito de obtener información sobre John el Rojo.",
+        backupFact:"La obsesión de Jane por recuperar el caso de John el Rojo vuelve a llevarlo más allá de los límites legales."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Bulls",
+        type:"Temporada 2 / Episodio 7",
+        episode:"T2.E7",
+        airDate:"12 nov 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick y el resto del equipo de la CBI se ven obligados a trabajar con Sam Bosco, rival de Jane dentro de la oficina, para localizar a una víctima de secuestro.",
+        backupFact:"La tensión entre Jane y Bosco complica una investigación que requiere cooperación inmediata."
+    },
+    {
+        universe:"El Mentalista",
+        title:"His Red Right Hand",
+        type:"Temporada 2 / Episodio 8",
+        episode:"T2.E8",
+        airDate:"19 nov 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"John el Rojo vuelve a atacar, esta vez dentro de las instalaciones de la CBI, dejando tres agentes muertos y a Sam Bosco en condición crítica.",
+        backupFact:"El ataque demuestra que John el Rojo puede alcanzar al equipo incluso dentro de su propio lugar de trabajo."
+    },
+    {
+        universe:"El Mentalista",
+        title:"A Price Above Rubies",
+        type:"Temporada 2 / Episodio 9",
+        episode:"T2.E9",
+        airDate:"10 dic 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"El nuevo esposo de la propietaria de una joyería queda gravemente herido al interrumpir un robo. La CBI sospecha que el golpe contó con ayuda interna, posiblemente de uno de los dos sobrinos de la dueña.",
+        backupFact:"Jane analiza las relaciones familiares y las inconsistencias del robo para descubrir al cómplice."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Throwing Fire",
+        type:"Temporada 2 / Episodio 10",
+        episode:"T2.E10",
+        airDate:"17 dic 2009",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"El fundador de una prestigiosa academia de béisbol es asesinado. Al comenzar la investigación, Jane recibe un golpe en la cabeza con una pelota y revive recuerdos de su padre y de su adolescencia como falso vidente de feria.",
+        backupFact:"El episodio revela más detalles del origen de las habilidades y del pasado familiar de Patrick Jane."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Rose-Colored Glasses",
+        type:"Temporada 2 / Episodio 11",
+        episode:"T2.E11",
+        airDate:"14 ene 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un antiguo estudiante y su esposa son asesinados antes de una reunión escolar. Jane necesita la ayuda de Rigsby para ejecutar una elaborada maniobra y encontrar al asesino.",
+        backupFact:"La reunión de exalumnos permite que viejas rivalidades y secretos vuelvan a salir a la superficie."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Bleeding Heart",
+        type:"Temporada 2 / Episodio 12",
+        episode:"T2.E12",
+        airDate:"21 ene 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Mientras investiga la muerte del enlace de prensa de una alcaldesa, Patrick es secuestrado por un ecoterrorista sospechoso. Al mismo tiempo, el equipo acepta a regañadientes ser filmado para un documental.",
+        backupFact:"Jane debe manipular a su captor mientras el equipo trabaja bajo la presión adicional de las cámaras."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Redline",
+        type:"Temporada 2 / Episodio 13",
+        episode:"T2.E13",
+        airDate:"4 feb 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick Jane y el equipo de la CBI investigan el hallazgo del cadáver de una vendedora de automóviles de lujo dentro de la cajuela de un Bentley en la sala de exhibición.",
+        backupFact:"El caso se desarrolla en un entorno de lujo, competencia comercial y apariencias cuidadosamente construidas."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Blood in, Blood Out",
+        type:"Temporada 2 / Episodio 14",
+        episode:"T2.E14",
+        airDate:"11 feb 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Cuando un integrante de la antigua pandilla de Cho, los Avon Park Playboys, aparece asesinado, Patrick Jane insiste en ayudarlo con una investigación no autorizada.",
+        backupFact:"El episodio profundiza en el pasado de Kimball Cho y en los vínculos que dejó atrás."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Herring",
+        type:"Temporada 2 / Episodio 15",
+        episode:"T2.E15",
+        airDate:"4 mar 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un chef muere envenenado durante una competencia culinaria y la CBI debe encontrar al asesino entre sus rivales, su esposa separada y su ambicioso asistente.",
+        backupFact:"La competencia profesional y los intereses personales convierten a casi todos los participantes en sospechosos."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Code Red",
+        type:"Temporada 2 / Episodio 16",
+        episode:"T2.E16",
+        airDate:"11 mar 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"La fuga de un virus peligroso en un centro de investigación biológica provoca la muerte de una científica. Lisbon y Jane chocan con un funcionario de control de enfermedades al insistir en tratar el caso como homicidio.",
+        backupFact:"La investigación combina un riesgo biológico inmediato con la posibilidad de que alguien haya provocado deliberadamente la exposición."
+    },
+    {
+        universe:"El Mentalista",
+        title:"The Red Box",
+        type:"Temporada 2 / Episodio 17",
+        episode:"T2.E17",
+        airDate:"1 abr 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"El equipo investiga el asesinato de un tutor privado británico cuya verdadera identidad y actividades podrían no ser lo que aparentaban.",
+        backupFact:"Jane descubre que la víctima ocultaba información clave sobre su pasado."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Aingavite Baa",
+        type:"Temporada 2 / Episodio 18",
+        episode:"T2.E18",
+        airDate:"8 abr 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick debe recurrir a una mujer con amnesia para resolver un asesinato ocurrido en una reserva indígena, mientras la agente Hightower exige a Rigsby y Van Pelt una decisión sobre su relación personal.",
+        backupFact:"El caso depende de recuperar recuerdos incompletos mientras el equipo enfrenta tensiones internas."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Blood Money",
+        type:"Temporada 2 / Episodio 19",
+        episode:"T2.E19",
+        airDate:"22 abr 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"La conducta imprudente de Patrick provoca que un caso contra un sicario sea desestimado y que Lisbon sea suspendida. Cuando el sicario aparece asesinado, Jane obtiene una oportunidad para reparar el daño.",
+        backupFact:"Las tácticas de Jane tienen consecuencias legales directas para Lisbon y para toda la investigación."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red All Over",
+        type:"Temporada 2 / Episodio 20",
+        episode:"T2.E20",
+        airDate:"29 abr 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Patrick encuentra un nuevo adversario en un líder de culto carismático y manipulador mientras la CBI investiga la muerte del director ejecutivo de un conglomerado de medios.",
+        backupFact:"Jane se enfrenta a un rival que también domina la persuasión y el control psicológico."
+    },
+    {
+        universe:"El Mentalista",
+        title:"18-5-4",
+        type:"Temporada 2 / Episodio 21",
+        episode:"T2.E21",
+        airDate:"6 may 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un brillante matemático es asesinado a tiros por una persona disfrazada de payaso. El equipo descubre que trabajaba en un dispositivo de descifrado de valor incalculable.",
+        backupFact:"El extraño método del asesinato oculta una investigación relacionada con matemáticas, criptografía y secretos."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Letter",
+        type:"Temporada 2 / Episodio 22",
+        episode:"T2.E22",
+        airDate:"13 may 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"Un hombre es asesinado antes de pronunciar un importante discurso sobre trata de personas. La supuesta vidente Kristina Frye es invitada a ayudar a la CBI, aunque Patrick continúa dudando de sus habilidades.",
+        backupFact:"El caso revive el conflicto de Jane con quienes aseguran poseer poderes paranormales."
+    },
+    {
+        universe:"El Mentalista",
+        title:"Red Sky in the Morning",
+        type:"Temporada 2 / Episodio 23",
+        episode:"T2.E23",
+        airDate:"20 may 2010",
+        image:mentalistaImage,
+        staticContent:true,
+        backupSummary:"La tensión entre Patrick y Kristina aumenta cuando aparece un imitador de John el Rojo y ella ofrece sus servicios a la CBI. El caso provoca el regreso del verdadero John el Rojo, quien se encuentra cara a cara con Patrick por primera vez.",
+        backupFact:"El final de temporada intensifica el enfrentamiento entre Jane y John el Rojo y deja a Kristina directamente expuesta al peligro."
+    }
 
-            closeModalButton.focus();
+    ,
+    {
+        universe:"Dexter",
+        title:"Dexter",
+        type:"Temporada 1 / Episodio 1",
+        episode:"T1.E1",
+        airDate:"1 oct 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"La vida de Dexter cambia cuando otro asesino serial, apodado por los medios como el Asesino del Camión de Hielo, se comunica directamente con él y demuestra conocer su secreto. Mientras tanto, su hermana Debra es transferida a la unidad de Homicidios.",
+        backupFact:"El episodio presenta la doble vida de Dexter Morgan y establece el misterio central del Asesino del Camión de Hielo."
+    },
+    {
+        universe:"Dexter",
+        title:"Crocodile",
+        type:"Temporada 1 / Episodio 2",
+        episode:"T1.E2",
+        airDate:"8 oct 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter continúa enfrentando la amenaza del Asesino del Camión de Hielo mientras intenta mantener oculta su verdadera naturaleza ante sus compañeros y su familia.",
+        backupFact:"La presión aumenta cuando el nuevo asesino demuestra que conoce demasiado sobre Dexter."
+    },
+    {
+        universe:"Dexter",
+        title:"Popping Cherry",
+        type:"Temporada 1 / Episodio 3",
+        episode:"T1.E3",
+        airDate:"15 oct 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter y Debra intentan evitar que su superior persiga a un guardia de seguridad que consideran identificado erróneamente como el Asesino del Camión de Hielo. Al mismo tiempo, Rita recibe la visita no deseada de un conocido de su esposo encarcelado.",
+        backupFact:"Dexter debe proteger la investigación correcta sin revelar cuánto comprende la mente de un asesino."
+    },
+    {
+        universe:"Dexter",
+        title:"Let's Give the Boy a Hand",
+        type:"Temporada 1 / Episodio 4",
+        episode:"T1.E4",
+        airDate:"22 oct 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El Asesino del Camión de Hielo comienza a dejar partes de sus víctimas en lugares relacionados con recuerdos de la infancia de Dexter, obligándolo a confrontar su oscuro pasado.",
+        backupFact:"Las escenas del crimen parecen haber sido diseñadas específicamente para comunicarse con Dexter."
+    },
+    {
+        universe:"Dexter",
+        title:"Love American Style",
+        type:"Temporada 1 / Episodio 5",
+        episode:"T1.E5",
+        airDate:"29 oct 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"La división de Homicidios se moviliza cuando la víctima más reciente del Asesino del Camión de Hielo aparece mutilada pero con vida. Paralelamente, Dexter persigue a un traficante de personas homicida y termina involucrándose más de lo previsto.",
+        backupFact:"Dexter debe equilibrar su propia cacería con una investigación policial cada vez más cercana."
+    },
+    {
+        universe:"Dexter",
+        title:"Return to Sender",
+        type:"Temporada 1 / Episodio 6",
+        episode:"T1.E6",
+        airDate:"5 nov 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El Asesino del Camión de Hielo deja una sorpresa para Dexter en la escena de uno de sus asesinatos recientes, colocándolo directamente bajo la atención de sus propios compañeros de Homicidios.",
+        backupFact:"Por primera vez, las pruebas pueden conectar el secreto de Dexter con una investigación oficial."
+    },
+    {
+        universe:"Dexter",
+        title:"Circle of Friends",
+        type:"Temporada 1 / Episodio 7",
+        episode:"T1.E7",
+        airDate:"12 nov 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"La policía cree haber identificado finalmente al Asesino del Camión de Hielo, pero Dexter desconfía del sospechoso. Además, debe afrontar el regreso amenazante del exesposo de Rita, recientemente puesto en libertad condicional.",
+        backupFact:"Dexter sospecha que la aparente resolución del caso es demasiado sencilla."
+    },
+    {
+        universe:"Dexter",
+        title:"Shrink Wrap",
+        type:"Temporada 1 / Episodio 8",
+        episode:"T1.E8",
+        airDate:"19 nov 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El extraño suicidio de una mujer poderosa lleva a Dexter a sospechar que su psiquiatra es un asesino. Una visita al sospechoso termina revelando secretos perturbadores del pasado de Dexter.",
+        backupFact:"La investigación obliga a Dexter a examinar emociones y recuerdos que normalmente evita."
+    },
+    {
+        universe:"Dexter",
+        title:"Father Knows Best",
+        type:"Temporada 1 / Episodio 9",
+        episode:"T1.E9",
+        airDate:"26 nov 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter viaja con Rita, Debra y Rudy después de enterarse de que su padre biológico, a quien creía muerto desde hacía treinta años, falleció recientemente y le dejó todas sus pertenencias, incluida su casa.",
+        backupFact:"El viaje abre nuevas preguntas sobre los orígenes de Dexter y sobre quién conoce realmente su historia."
+    },
+    {
+        universe:"Dexter",
+        title:"Seeing Red",
+        type:"Temporada 1 / Episodio 10",
+        episode:"T1.E10",
+        airDate:"3 dic 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El Asesino del Camión de Hielo prepara para Dexter una escena del crimen aterradora que lo obliga a enfrentar un recuerdo reprimido de su pasado. Rita, por su parte, debe contratar a un abogado cuando su exesposo solicita la custodia exclusiva de sus hijos.",
+        backupFact:"Dexter comienza a comprender el origen de algunos de sus traumas más profundos."
+    },
+    {
+        universe:"Dexter",
+        title:"Truth Be Told",
+        type:"Temporada 1 / Episodio 11",
+        episode:"T1.E11",
+        airDate:"10 dic 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El Asesino del Camión de Hielo toma medidas extremas y obliga a Dexter a entrar en una trampa que cambiará su vida. Mientras tanto, Doakes comienza a sospechar seriamente del comportamiento extraño de Dexter.",
+        backupFact:"Las dos amenazas principales de Dexter, el asesino y las sospechas de Doakes, convergen al final de la temporada."
+    },
+    {
+        universe:"Dexter",
+        title:"Born Free",
+        type:"Temporada 1 / Episodio 12",
+        episode:"T1.E12",
+        airDate:"17 dic 2006",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"En el final de la primera temporada, Dexter sigue las pistas que el Asesino del Camión de Hielo dejó específicamente para él, mientras Paul intenta convencer a Rita de que Dexter representa un peligro.",
+        backupFact:"El episodio resuelve la identidad y el vínculo personal del Asesino del Camión de Hielo con Dexter."
+    },
+    {
+        universe:"Dexter",
+        title:"It's Alive!",
+        type:"Temporada 2 / Episodio 1",
+        episode:"T2.E1",
+        airDate:"22 sept 2009",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Después del traumático desenlace del caso del Asesino del Camión de Hielo, Dexter descubre que ya no puede matar y se aparta de su código personal con resultados desastrosos. Debra regresa al trabajo, aunque todavía no está completamente preparada.",
+        backupFact:"La segunda temporada comienza con Dexter emocionalmente desestabilizado y con dificultades para mantener el control."
+    },
+    {
+        universe:"Dexter",
+        title:"Waiting to Exhale",
+        type:"Temporada 2 / Episodio 2",
+        episode:"T2.E2",
+        airDate:"7 oct 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter continúa siguiendo a una nueva víctima peligrosa, mientras Debra pierde el control en el trabajo a causa del trauma. Un reconocido agente del FBI llega a Miami para investigar a un asesino serial recién descubierto.",
+        backupFact:"La investigación del FBI introduce una amenaza capaz de acercarse directamente a los secretos de Dexter."
+    },
+    {
+        universe:"Dexter",
+        title:"An Inconvenient Lie",
+        type:"Temporada 2 / Episodio 3",
+        episode:"T2.E3",
+        airDate:"14 oct 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Las dificultades de Dexter para mentir lo llevan a perseguir a un manipulador como su siguiente víctima. Rita sospecha que oculta un problema de drogas y lo obliga a asistir a un programa de doce pasos, donde conoce a Lila.",
+        backupFact:"La llegada de Lila crea una nueva relación basada en la supuesta adicción de Dexter."
+    },
+    {
+        universe:"Dexter",
+        title:"See-Through",
+        type:"Temporada 2 / Episodio 4",
+        episode:"T2.E4",
+        airDate:"21 oct 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Rita se siente amenazada por Lila, la nueva patrocinadora de Dexter, y también enfrenta la visita de su madre. Mientras tanto, Dexter intenta desviar al persistente agente del FBI Frank Lundy de su rastro.",
+        backupFact:"Dexter debe controlar simultáneamente su relación personal y una investigación federal cada vez más peligrosa."
+    },
+    {
+        universe:"Dexter",
+        title:"The Dark Defender",
+        type:"Temporada 2 / Episodio 5",
+        episode:"T2.E5",
+        airDate:"28 oct 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter descubre que el hombre que asesinó a su madre frente a él cuando era niño sigue vivo. Decide confrontarlo como parte de su recuperación, pero comprueba que sus antiguos impulsos no desaparecen con facilidad.",
+        backupFact:"La búsqueda conecta directamente el trauma de la infancia de Dexter con su necesidad de matar."
+    },
+    {
+        universe:"Dexter",
+        title:"Dex, Lies, and Videotape",
+        type:"Temporada 2 / Episodio 6",
+        episode:"T2.E6",
+        airDate:"4 nov 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Un nuevo asesino imitador afirma inspirarse en el Carnicero de la Bahía, lo que irrita a Dexter y lo acerca más a Lila. La situación amenaza con destruir su relación con Rita.",
+        backupFact:"La fama pública del Carnicero de la Bahía comienza a generar imitadores y consecuencias impredecibles."
+    },
+    {
+        universe:"Dexter",
+        title:"That Night, a Forest Grew",
+        type:"Temporada 2 / Episodio 7",
+        episode:"T2.E7",
+        airDate:"11 nov 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Un manifiesto atribuido al Carnicero de la Bahía provoca caos dentro del grupo encargado de capturarlo, exactamente como Dexter había planeado para desviar a Lundy.",
+        backupFact:"Dexter manipula la investigación desde dentro mediante información diseñada para confundir al equipo."
+    },
+    {
+        universe:"Dexter",
+        title:"Morning Comes",
+        type:"Temporada 2 / Episodio 8",
+        episode:"T2.E8",
+        airDate:"18 nov 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter considera que Lila se está volviendo demasiado dependiente y decide que su recuperación no funciona. Debra y Lundy encuentran una pista que indica que el Carnicero de la Bahía podría estar mucho más cerca de ellos de lo imaginado.",
+        backupFact:"La investigación comienza a reducir el círculo de sospechosos alrededor del propio Departamento de Policía de Miami."
+    },
+    {
+        universe:"Dexter",
+        title:"Resistance Is Futile",
+        type:"Temporada 2 / Episodio 9",
+        episode:"T2.E9",
+        airDate:"25 nov 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter intenta alejarse de Lila, pero ella se niega a terminar la relación. La persecución de Lundy lo obliga a mantenerse un paso adelante, hasta que uno de sus mayores enemigos descubre su secreto.",
+        backupFact:"La identidad de Dexter queda expuesta ante una persona capaz de destruir su vida."
+    },
+    {
+        universe:"Dexter",
+        title:"There's Something About Harry",
+        type:"Temporada 2 / Episodio 10",
+        episode:"T2.E10",
+        airDate:"2 dic 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El mundo de Dexter se derrumba cuando Doakes lo sigue hasta la escena de su asesinato más reciente y revela un secreto devastador sobre Harry. La policía de Miami continúa cerrando el cerco sobre el Carnicero de la Bahía.",
+        backupFact:"Dexter descubre que la historia de Harry y su código era más compleja de lo que siempre creyó."
+    },
+    {
+        universe:"Dexter",
+        title:"Left Turn Ahead",
+        type:"Temporada 2 / Episodio 11",
+        episode:"T2.E11",
+        airDate:"9 dic 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"Dexter evita amenazas reales y figuradas mientras debe decidir el destino de las personas que más le importan. Lila intenta chantajearlo y realiza un descubrimiento inesperado.",
+        backupFact:"Todas las decisiones de Dexter comienzan a tener consecuencias simultáneas sobre Doakes, Rita, Lila y su propia seguridad."
+    },
+    {
+        universe:"Dexter",
+        title:"The British Invasion",
+        type:"Temporada 2 / Episodio 12",
+        episode:"T2.E12",
+        airDate:"16 dic 2007",
+        image:dexterImage,
+        staticContent:true,
+        backupSummary:"El agente Lundy y el FBI finalmente dan por resuelto el caso del Carnicero de la Bahía, pero Dexter todavía enfrenta peligro cuando las consecuencias de sus decisiones se cierran literalmente a su alrededor.",
+        backupFact:"El final de temporada concluye la investigación del Carnicero de la Bahía y el conflicto entre Dexter, Doakes y Lila."
+    }
+
+];
+
+function changeBackground(universe){
+    if(universe === "Halo"){
+        document.body.style.backgroundImage = "url('halofondor.jpg')";
+    }else if(universe === "Warhammer 40K"){
+        document.body.style.backgroundImage = "url('warhammerfondo.jpg')";
+    }else if(universe === "Star Wars"){
+        document.body.style.backgroundImage = "url('starwarsfondor.jpg')";
+    }else if(universe === "El Mentalista"){
+        document.body.style.backgroundImage =
+            "linear-gradient(135deg,#020617,#7f1d1d,#111827)";
+    }else if(universe === "Dexter"){
+        document.body.style.backgroundImage =
+            "linear-gradient(135deg,#020617,#450a0a,#7f1d1d,#111827)";
+    }
+}
+
+function setActiveButton(universe){
+    document.querySelectorAll(".menuBtn").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.universe === universe
+        );
+    });
+}
+
+function cleanText(text){
+    if(!text || text.trim() === ""){
+        return "";
+    }
+
+    return text
+        .replace(/\s+/g, " ")
+        .replace(/\[[0-9]+\]/g, "")
+        .trim();
+}
+
+function shortText(text, maxLength){
+    if(!text || text.trim() === ""){
+        return "";
+    }
+
+    if(text.length <= maxLength){
+        return text;
+    }
+
+    return text.substring(0, maxLength) + "...";
+}
+
+function renderEpisodeMeta(item){
+    const meta = document.getElementById("episodeMeta");
+
+    if(item.episode){
+        meta.style.display = "grid";
+        document.getElementById("episode").innerText = item.episode;
+        document.getElementById("airDate").innerText = item.airDate || "—";
+    }else{
+        meta.style.display = "none";
+    }
+}
+
+function renderSource(item){
+    const source = document.getElementById("source");
+
+    if(item.source){
+        source.innerHTML =
+            'Fuente: <a href="' + item.source + '" target="_blank" rel="noopener noreferrer">' +
+            (item.sourceLabel || item.universe + " Wiki") +
+            '</a>';
+    }else{
+        source.innerText = "Información de episodios proporcionada por el usuario.";
+    }
+}
+
+async function randomLore(){
+    const filteredLore = lore.filter(
+        item => item.universe === currentUniverse
+    );
+
+    let item;
+
+    do{
+        const random = Math.floor(Math.random() * filteredLore.length);
+        item = filteredLore[random];
+    }while(item.title === lastTitle && filteredLore.length > 1);
+
+    lastTitle = item.title;
+
+    document.getElementById("image").src = item.image;
+    document.getElementById("image").alt = item.title;
+    document.getElementById("universe").innerText = item.universe;
+    document.getElementById("title").innerText = item.title;
+    document.getElementById("type").innerText = item.type;
+    document.getElementById("summary").innerText = "Cargando información...";
+    document.getElementById("fact").innerText = "Preparando contenido...";
+    document.getElementById("factTitle").innerText =
+        (item.universe === "El Mentalista" || item.universe === "Dexter")
+            ? "Dato destacado"
+            : "Dato curioso";
+
+    renderEpisodeMeta(item);
+    renderSource(item);
+
+    if(item.staticContent || !item.wiki){
+        document.getElementById("summary").innerText = item.backupSummary;
+        document.getElementById("fact").innerText = item.backupFact;
+        return;
+    }
+
+    const url =
+        item.wiki +
+        "?origin=*" +
+        "&action=query" +
+        "&prop=extracts" +
+        "&exintro=1" +
+        "&explaintext=1" +
+        "&format=json" +
+        "&titles=" + encodeURIComponent(item.wikiTitle);
+
+    try{
+        const response = await fetch(url);
+
+        if(!response.ok){
+            throw new Error("Respuesta HTTP no válida: " + response.status);
         }
 
-        function closeSeasonModal() {
-            modalOverlay.classList.remove("active");
-            document.body.classList.remove("modal-open");
+        const data = await response.json();
+        const pageId = Object.keys(data.query.pages)[0];
+        const page = data.query.pages[pageId];
 
-            if (lastFocusedElement) {
-                lastFocusedElement.focus();
-            }
-        }
+        const resumenWiki = cleanText(page.extract);
+        const resumenFinal = resumenWiki || item.backupSummary;
 
-        seasonButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-                openSeasonModal(button);
-            });
-        });
+        document.getElementById("summary").innerText =
+            shortText(resumenFinal, 650);
 
-        closeModalButton.addEventListener("click", closeSeasonModal);
+        document.getElementById("fact").innerText =
+            item.backupFact;
 
-        modalOverlay.addEventListener("click", (event) => {
-            if (event.target === modalOverlay) {
-                closeSeasonModal();
-            }
-        });
+    }catch(error){
+        document.getElementById("summary").innerText =
+            item.backupSummary;
 
-        document.addEventListener("keydown", (event) => {
-            if (
-                event.key === "Escape" &&
-                modalOverlay.classList.contains("active")
-            ) {
-                closeSeasonModal();
-            }
-        });
+        document.getElementById("fact").innerText =
+            item.backupFact;
 
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker
-                    .register("./service-worker.js")
-                    .then(() => {
-                        console.log("Service Worker registrado");
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Error al registrar Service Worker:",
-                            error
-                        );
-                    });
-            });
-        }
-    </script>
+        console.log(error);
+    }
+}
+
+function filterUniverse(universe){
+    currentUniverse = universe;
+    lastTitle = "";
+    changeBackground(universe);
+    setActiveButton(universe);
+    randomLore();
+}
+
+document.getElementById("image").addEventListener("error", function(){
+    this.src = mentalistaImage;
+});
+
+changeBackground(currentUniverse);
+setActiveButton(currentUniverse);
+randomLore();
+</script>
 
 </body>
-
 </html>
