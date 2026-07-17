@@ -2,88 +2,297 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Chucknorismo Business</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnología | El Octoverso</title>
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --accent:#2563eb;
+    --accent-dark:#1d4ed8;
+    --panel:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+}
+
 body{
     margin:0;
-    font-family:Arial;
-    background:#020617;
+    font-family:Arial, sans-serif;
+    background-image:url('oracle.jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
     color:white;
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    transition:background-image .7s ease;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(2,6,23,.80);
+    backdrop-filter:blur(2px);
+    z-index:-1;
 }
 
 .container{
-    width:430px;
-    padding:20px;
+    width:min(620px, 100%);
+    padding:24px 18px 35px;
 }
 
-a{
-    color:#60a5fa;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.logo{
-    text-align:center;
-    font-size:38px;
-    font-weight:900;
-    margin-bottom:10px;
-}
-
-.menu{
+.topBar{
     display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
+    justify-content:flex-start;
+    margin-bottom:18px;
+}
+
+.backBtn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 16px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:14px;
+    background:rgba(15,23,42,.88);
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 8px 24px rgba(0,0,0,.28);
+    transition:.25s;
+}
+
+.backBtn:hover{
+    background:var(--accent);
+    transform:translateY(-2px);
+}
+
+.brand{
+    text-align:center;
     margin-bottom:20px;
 }
 
-button{
-    border:none;
+.logo{
+    font-size:46px;
+    font-weight:900;
+    color:#60a5fa;
+    text-shadow:0 0 10px #2563eb, 0 0 28px #2563eb;
+    line-height:1;
+}
+
+.subtitle{
+    margin-top:10px;
+    color:#e2e8f0;
+    font-size:17px;
+    line-height:1.5;
+}
+
+.mainTabs{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.mainTab{
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:16px;
+    padding:15px;
+    background:rgba(30,41,59,.90);
+    color:white;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.mainTab:hover,
+.mainTab.active{
+    background:var(--accent);
+    transform:translateY(-2px);
+}
+
+.companyMenu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.companyBtn{
+    border:1px solid rgba(255,255,255,.14);
     border-radius:14px;
-    padding:12px 15px;
+    padding:11px 15px;
     background:#1e293b;
     color:white;
     font-weight:bold;
     cursor:pointer;
+    transition:.25s;
 }
 
-button:hover{
-    background:#2563eb;
+.companyBtn:hover,
+.companyBtn.active{
+    background:var(--accent);
+    transform:translateY(-2px);
 }
 
 .card{
-    background:white;
-    color:black;
-    border-radius:25px;
+    background:var(--panel);
+    color:var(--text);
+    border-radius:28px;
     padding:25px;
+    box-shadow:0 18px 55px rgba(0,0,0,.48);
 }
 
-.company{
-    color:#2563eb;
-    font-weight:bold;
+.companyImage{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:18px;
+    background:#e2e8f0;
+    display:block;
+    margin-bottom:20px;
+}
+
+.category{
+    color:var(--accent);
+    font-size:13px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.8px;
 }
 
 .title{
-    font-size:30px;
-    font-weight:bold;
-    margin-top:10px;
+    font-size:31px;
+    font-weight:900;
+    line-height:1.15;
+    margin-top:8px;
 }
 
 .type{
-    color:gray;
+    margin-top:7px;
+    color:var(--muted);
+    font-size:15px;
+}
+
+.section{
+    margin-top:22px;
+}
+
+.section h3{
+    margin:0 0 10px;
+    font-size:20px;
+}
+
+.section p{
+    margin:0;
+    line-height:1.65;
+    color:#1e293b;
+}
+
+.newsMeta{
+    display:none;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    margin-top:18px;
+}
+
+.metaBox{
+    background:#f1f5f9;
+    border-radius:14px;
+    padding:12px;
+}
+
+.metaLabel{
+    display:block;
+    color:#64748b;
+    font-size:11px;
+    font-weight:bold;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.metaValue{
+    color:#0f172a;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.sourceLink{
+    display:none;
+    margin-top:22px;
+}
+
+.sourceLink a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 15px;
+    border-radius:12px;
+    background:#e0ecff;
+    color:#1d4ed8;
+    text-decoration:none;
+    font-weight:bold;
 }
 
 .mainBtn{
     width:100%;
-    background:#2563eb;
+    margin-top:25px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:var(--accent);
     color:white;
-    margin-top:20px;
     font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.mainBtn:hover{
+    background:var(--accent-dark);
+    transform:translateY(-2px);
+}
+
+.emptyNews{
+    display:none;
+    text-align:center;
+    padding:20px 5px 5px;
+    color:#475569;
+}
+
+.emptyNews strong{
+    display:block;
+    font-size:21px;
+    color:#0f172a;
+    margin-bottom:8px;
+}
+
+@media(max-width:560px){
+    .logo{
+        font-size:37px;
+    }
+
+    .title{
+        font-size:27px;
+    }
+
+    .companyImage{
+        height:190px;
+    }
+
+    .mainTabs{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
@@ -92,104 +301,334 @@ button:hover{
 
 <div class="container">
 
-<a href="index.html">← Volver al inicio</a>
+    <div class="topBar">
+        <a class="backBtn" href="./indice.html">← Regresar al inicio</a>
+    </div>
 
-<div class="logo">TECH NEWS</div>
+    <div class="brand">
+        <div class="logo">EL OCTOVERSO</div>
+        <div class="subtitle">
+            Herramientas tecnológicas y noticias empresariales en secciones independientes
+        </div>
+    </div>
 
-<div class="menu">
-    <button onclick="filterCompany('Oracle')">ORACLE</button>
-    <button onclick="filterCompany('NVIDIA')">NVIDIA</button>
-    <button onclick="filterCompany('Microsoft')">MICROSOFT</button>
-</div>
+    <div class="mainTabs">
+        <button class="mainTab active" data-section="tools" onclick="setSection('tools')">
+            🛠️ Herramientas
+        </button>
 
-<div class="card">
-    <div class="company" id="company"></div>
-    <div class="title" id="title"></div>
-    <div class="type" id="type"></div>
+        <button class="mainTab" data-section="news" onclick="setSection('news')">
+            📰 Noticias
+        </button>
+    </div>
 
-    <h3>Resumen</h3>
-    <p id="summary"></p>
+    <div class="companyMenu">
+        <button class="companyBtn active" data-company="Oracle" onclick="filterCompany('Oracle')">ORACLE</button>
+        <button class="companyBtn" data-company="NVIDIA" onclick="filterCompany('NVIDIA')">NVIDIA</button>
+        <button class="companyBtn" data-company="Microsoft" onclick="filterCompany('Microsoft')">MICROSOFT</button>
+    </div>
 
-    <h3>Dato estratégico</h3>
-    <p id="fact"></p>
+    <div class="card">
+        <img id="companyImage" class="companyImage" src="oracle.jpg" alt="Imagen de Oracle">
 
-    <button class="mainBtn" onclick="randomData()">Otro dato</button>
-</div>
+        <div class="category" id="category">HERRAMIENTA</div>
+        <div class="title" id="title">Cargando...</div>
+        <div class="type" id="type"></div>
+
+        <div class="newsMeta" id="newsMeta">
+            <div class="metaBox">
+                <span class="metaLabel">Fuente</span>
+                <span class="metaValue" id="sourceName">—</span>
+            </div>
+
+            <div class="metaBox">
+                <span class="metaLabel">Fecha</span>
+                <span class="metaValue" id="publishedDate">—</span>
+            </div>
+        </div>
+
+        <div id="contentArea">
+            <div class="section">
+                <h3 id="summaryTitle">Resumen</h3>
+                <p id="summary"></p>
+            </div>
+
+            <div class="section">
+                <h3 id="factTitle">Dato estratégico</h3>
+                <p id="fact"></p>
+            </div>
+
+            <div class="sourceLink" id="sourceLink">
+                <a id="sourceAnchor" href="#" target="_blank" rel="noopener noreferrer">
+                    Ver fuente original ↗
+                </a>
+            </div>
+
+            <button class="mainBtn" id="randomBtn" onclick="showRandomItem()">
+                Mostrar otra herramienta
+            </button>
+        </div>
+
+        <div class="emptyNews" id="emptyNews">
+            <strong>Fuentes confiables</strong>
+            Aquí se mostrarán portales oficiales y medios periodísticos reconocidos.
+        </div>
+    </div>
 
 </div>
 
 <script>
+let currentSection = "tools";
 let currentCompany = "Oracle";
 let lastTitle = "";
 
-const data = [
+const companyImages = {
+    Oracle:"oracle.jpg",
+    NVIDIA:"nvidia.png",
+    Microsoft:"microsoft.jpg"
+};
+
+const toolsData = [
     {
         company:"Oracle",
         title:"Oracle Database",
         type:"Base de datos empresarial",
-        summary:"Oracle Database es una de las plataformas de base de datos más usadas en entornos empresariales críticos.",
-        fact:"Es clave en sectores como banca, telecomunicaciones, gobierno y ERP."
+        image:"oracle.jpg",
+        summary:"Oracle Database es una plataforma de gestión de datos diseñada para cargas empresariales críticas, alta disponibilidad, seguridad y procesamiento de grandes volúmenes de información.",
+        fact:"Es utilizada ampliamente en banca, telecomunicaciones, gobierno, manufactura y sistemas ERP de misión crítica."
     },
     {
         company:"Oracle",
         title:"Oracle Cloud Infrastructure",
-        type:"Cloud empresarial",
-        summary:"OCI es la nube empresarial de Oracle orientada a cargas críticas, bases de datos y aplicaciones corporativas.",
-        fact:"Tiene fuerte integración con Oracle Database, Exadata y E-Business Suite."
+        type:"Nube empresarial",
+        image:"oracle.jpg",
+        summary:"Oracle Cloud Infrastructure ofrece cómputo, almacenamiento, redes, bases de datos, integración e inteligencia artificial para aplicaciones empresariales.",
+        fact:"Su integración con Oracle Database, Exadata, Fusion Cloud y E-Business Suite facilita la modernización de plataformas Oracle."
     },
     {
         company:"Oracle",
         title:"Oracle E-Business Suite",
-        type:"ERP",
-        summary:"Oracle EBS es una suite empresarial para finanzas, compras, inventario, recursos humanos y operaciones.",
-        fact:"Muchas empresas grandes la usan para procesos administrativos críticos."
+        type:"ERP empresarial",
+        image:"oracle.jpg",
+        summary:"Oracle E-Business Suite integra procesos de finanzas, compras, inventarios, manufactura, recursos humanos y operaciones dentro de una misma plataforma.",
+        fact:"Muchas organizaciones mantienen EBS como núcleo de procesos críticos mientras avanzan en proyectos de nube, automatización y seguridad."
+    },
+    {
+        company:"Oracle",
+        title:"Oracle Fusion Cloud",
+        type:"Aplicaciones empresariales en la nube",
+        image:"oracle.jpg",
+        summary:"Oracle Fusion Cloud reúne aplicaciones de ERP, HCM, SCM, CX y EPM bajo una arquitectura de servicios en la nube.",
+        fact:"Permite incorporar automatización e inteligencia artificial en procesos empresariales."
     },
     {
         company:"NVIDIA",
-        title:"GPU",
-        type:"Hardware / IA",
-        summary:"NVIDIA es líder en unidades de procesamiento gráfico utilizadas para videojuegos, cómputo científico e inteligencia artificial.",
-        fact:"Sus GPUs son fundamentales para entrenar y ejecutar modelos de IA."
+        title:"GPU Computing",
+        type:"Hardware e inteligencia artificial",
+        image:"nvidia.png",
+        summary:"NVIDIA desarrolla unidades de procesamiento gráfico utilizadas en videojuegos, visualización profesional, centros de datos, simulación e inteligencia artificial.",
+        fact:"Las GPU permiten procesar miles de operaciones en paralelo, acelerando el entrenamiento y la ejecución de modelos de IA."
     },
     {
         company:"NVIDIA",
         title:"CUDA",
-        type:"Plataforma de cómputo",
-        summary:"CUDA permite usar GPUs NVIDIA para procesamiento paralelo de alto rendimiento.",
-        fact:"Es una de las bases técnicas del ecosistema moderno de inteligencia artificial."
+        type:"Plataforma de cómputo paralelo",
+        image:"nvidia.png",
+        summary:"CUDA permite utilizar GPU NVIDIA para cálculos científicos, analítica, simulación e inteligencia artificial.",
+        fact:"Gran parte del ecosistema moderno de aprendizaje profundo aprovecha CUDA para ejecutar cargas aceleradas."
     },
     {
         company:"NVIDIA",
-        title:"Data Center AI",
-        type:"Infraestructura IA",
-        summary:"NVIDIA ofrece plataformas para centros de datos orientados a IA, HPC y análisis avanzado.",
-        fact:"Sus soluciones se usan en supercómputo, modelos generativos y analítica empresarial."
+        title:"NVIDIA Data Center",
+        type:"Infraestructura para IA",
+        image:"nvidia.png",
+        summary:"NVIDIA ofrece plataformas de centro de datos para entrenamiento de modelos, inferencia, cómputo de alto rendimiento y análisis avanzado.",
+        fact:"Sus soluciones son utilizadas en supercómputo, modelos generativos, investigación científica y automatización empresarial."
     },
     {
         company:"Microsoft",
-        title:"Azure",
-        type:"Cloud",
-        summary:"Microsoft Azure es una plataforma cloud para infraestructura, aplicaciones, datos e inteligencia artificial.",
-        fact:"Compite directamente con AWS, Google Cloud y Oracle Cloud."
+        title:"Microsoft Azure",
+        type:"Plataforma de nube",
+        image:"microsoft.jpg",
+        summary:"Microsoft Azure ofrece infraestructura, plataformas de datos, aplicaciones, seguridad, integración e inteligencia artificial desde la nube.",
+        fact:"Se integra estrechamente con Windows Server, Active Directory, Microsoft 365, GitHub y herramientas empresariales."
     },
     {
         company:"Microsoft",
         title:"Microsoft 365",
-        type:"Productividad empresarial",
-        summary:"Microsoft 365 integra Office, Teams, Outlook, SharePoint y servicios de colaboración empresarial.",
-        fact:"Es una de las suites de productividad más usadas en empresas."
+        type:"Productividad y colaboración",
+        image:"microsoft.jpg",
+        summary:"Microsoft 365 reúne herramientas como Word, Excel, PowerPoint, Outlook, Teams, SharePoint y servicios de administración empresarial.",
+        fact:"Es una de las plataformas de productividad y colaboración más utilizadas en organizaciones."
     },
     {
         company:"Microsoft",
         title:"GitHub",
-        type:"Desarrollo de software",
-        summary:"GitHub es una plataforma para control de versiones, colaboración y automatización de desarrollo.",
-        fact:"Es clave para equipos DevOps y desarrollo moderno."
+        type:"Desarrollo y DevOps",
+        image:"microsoft.jpg",
+        summary:"GitHub permite administrar código fuente, colaborar mediante repositorios, automatizar procesos y gestionar el ciclo de vida del desarrollo.",
+        fact:"GitHub Actions facilita la integración y entrega continua directamente desde los repositorios."
     }
 ];
 
-function randomData(){
-    const filtered = data.filter(item => item.company === currentCompany);
+const newsData = [
+    {
+        company:"Oracle",
+        title:"Oracle News",
+        type:"Sala de prensa oficial",
+        image:"oracle.jpg",
+        summary:"Portal oficial de Oracle para consultar comunicados, anuncios de productos, alianzas, casos empresariales y novedades corporativas.",
+        fact:"Es la fuente primaria para confirmar anuncios y cambios publicados directamente por Oracle.",
+        sourceName:"Oracle News",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://www.oracle.com/news/"
+    },
+    {
+        company:"Oracle",
+        title:"Reuters Technology",
+        type:"Medio periodístico independiente",
+        image:"oracle.jpg",
+        summary:"Cobertura periodística internacional sobre empresas de tecnología, inteligencia artificial, nube, regulación, ciberseguridad y mercados.",
+        fact:"Permite contrastar los comunicados corporativos con información periodística independiente.",
+        sourceName:"Reuters Technology",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://www.reuters.com/technology/"
+    },
+    {
+        company:"NVIDIA",
+        title:"NVIDIA Newsroom",
+        type:"Sala de prensa oficial",
+        image:"nvidia.png",
+        summary:"Portal oficial de NVIDIA con comunicados, anuncios de GPU, inteligencia artificial, centros de datos, robótica, videojuegos y alianzas.",
+        fact:"Es la fuente primaria para verificar lanzamientos y anuncios publicados directamente por NVIDIA.",
+        sourceName:"NVIDIA Newsroom",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://nvidianews.nvidia.com/"
+    },
+    {
+        company:"NVIDIA",
+        title:"Reuters Technology",
+        type:"Medio periodístico independiente",
+        image:"nvidia.png",
+        summary:"Cobertura internacional sobre semiconductores, inteligencia artificial, centros de datos, regulación y empresas tecnológicas.",
+        fact:"Ayuda a comparar los anuncios oficiales de NVIDIA con análisis y contexto periodístico independiente.",
+        sourceName:"Reuters Technology",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://www.reuters.com/technology/"
+    },
+    {
+        company:"Microsoft",
+        title:"Microsoft Source",
+        type:"Sala de prensa oficial",
+        image:"microsoft.jpg",
+        summary:"Portal oficial de Microsoft con noticias sobre Azure, Microsoft 365, Copilot, seguridad, inteligencia artificial, productos y novedades corporativas.",
+        fact:"Es la fuente primaria para confirmar anuncios, actualizaciones y comunicados publicados por Microsoft.",
+        sourceName:"Microsoft Source",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://news.microsoft.com/source/view-all/"
+    },
+    {
+        company:"Microsoft",
+        title:"Reuters Technology",
+        type:"Medio periodístico independiente",
+        image:"microsoft.jpg",
+        summary:"Cobertura periodística sobre Microsoft, nube, inteligencia artificial, regulación tecnológica, ciberseguridad y mercados.",
+        fact:"Permite contrastar los anuncios oficiales con una fuente periodística internacional independiente.",
+        sourceName:"Reuters Technology",
+        publishedDate:"Actualización continua",
+        sourceUrl:"https://www.reuters.com/technology/"
+    }
+];
+
+function setActiveSection(section){
+    document.querySelectorAll(".mainTab").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.section === section
+        );
+    });
+}
+
+function setActiveCompany(company){
+    document.querySelectorAll(".companyBtn").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.company === company
+        );
+    });
+}
+
+function changeBackground(company){
+    const image = companyImages[company];
+    document.body.style.backgroundImage = "url('" + image + "')";
+}
+
+function renderTool(item){
+    document.getElementById("category").innerText = "HERRAMIENTA";
+    document.getElementById("title").innerText = item.title;
+    document.getElementById("type").innerText = item.type;
+    document.getElementById("summaryTitle").innerText = "Resumen";
+    document.getElementById("summary").innerText = item.summary;
+    document.getElementById("factTitle").innerText = "Dato estratégico";
+    document.getElementById("fact").innerText = item.fact;
+
+    document.getElementById("newsMeta").style.display = "none";
+    document.getElementById("sourceLink").style.display = "none";
+    document.getElementById("contentArea").style.display = "block";
+    document.getElementById("emptyNews").style.display = "none";
+
+    document.getElementById("randomBtn").innerText =
+        "Mostrar otra herramienta";
+}
+
+function renderNews(item){
+    document.getElementById("category").innerText = "FUENTE CONFIABLE";
+    document.getElementById("title").innerText = item.title;
+    document.getElementById("type").innerText = item.type || "Actualidad tecnológica";
+    document.getElementById("summaryTitle").innerText = "Resumen";
+    document.getElementById("summary").innerText = item.summary;
+    document.getElementById("factTitle").innerText = "Por qué confiar";
+    document.getElementById("fact").innerText = item.fact;
+
+    document.getElementById("sourceName").innerText = item.sourceName;
+    document.getElementById("publishedDate").innerText = item.publishedDate;
+    document.getElementById("newsMeta").style.display = "grid";
+
+    const sourceLink = document.getElementById("sourceLink");
+    const sourceAnchor = document.getElementById("sourceAnchor");
+    sourceAnchor.href = item.sourceUrl;
+    sourceLink.style.display = "block";
+
+    document.getElementById("contentArea").style.display = "block";
+    document.getElementById("emptyNews").style.display = "none";
+
+    document.getElementById("randomBtn").innerText =
+        "Mostrar otra fuente";
+}
+
+function renderEmptyNews(){
+    document.getElementById("category").innerText = "NOTICIAS";
+    document.getElementById("title").innerText = currentCompany;
+    document.getElementById("type").innerText = "Fuentes oficiales y medios públicos";
+    document.getElementById("newsMeta").style.display = "none";
+    document.getElementById("contentArea").style.display = "none";
+    document.getElementById("emptyNews").style.display = "block";
+}
+
+function showRandomItem(){
+    const source =
+        currentSection === "tools"
+            ? toolsData
+            : newsData;
+
+    const filtered = source.filter(
+        item => item.company === currentCompany
+    );
+
+    if(filtered.length === 0){
+        renderEmptyNews();
+        return;
+    }
 
     let item;
 
@@ -199,20 +638,41 @@ function randomData(){
 
     lastTitle = item.title;
 
-    document.getElementById("company").innerText = item.company;
-    document.getElementById("title").innerText = item.title;
-    document.getElementById("type").innerText = item.type;
-    document.getElementById("summary").innerText = item.summary;
-    document.getElementById("fact").innerText = item.fact;
+    const image = document.getElementById("companyImage");
+    image.style.display = "block";
+    image.src = item.image || companyImages[currentCompany];
+    image.alt = "Imagen de " + currentCompany;
+
+    if(currentSection === "tools"){
+        renderTool(item);
+    }else{
+        renderNews(item);
+    }
+}
+
+function setSection(section){
+    currentSection = section;
+    lastTitle = "";
+    setActiveSection(section);
+    showRandomItem();
 }
 
 function filterCompany(company){
     currentCompany = company;
     lastTitle = "";
-    randomData();
+    setActiveCompany(company);
+    changeBackground(company);
+    showRandomItem();
 }
 
-randomData();
+document.getElementById("companyImage").addEventListener("error", function(){
+    this.style.display = "none";
+});
+
+setActiveSection(currentSection);
+setActiveCompany(currentCompany);
+changeBackground(currentCompany);
+showRandomItem();
 </script>
 
 </body>
