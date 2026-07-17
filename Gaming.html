@@ -3,47 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Series y Juegos | Chucknorismo</title>
+<title>Juegos y Series | El Octoverso</title>
 
 <style>
 *{
     box-sizing:border-box;
 }
 
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --panel:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+}
+
 body{
     margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
     font-family:Arial, sans-serif;
+    color:white;
     background-image:url('halofondo.jpeg');
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    transition:background-image .8s ease;
+    transition:background-image .7s ease;
 }
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    background:rgba(2,6,23,0.76);
     z-index:-1;
+    background:rgba(2,6,23,.80);
+    backdrop-filter:blur(2px);
 }
 
 .container{
-    width:min(500px, 100%);
-    padding:24px 18px;
+    width:min(620px,100%);
+    padding:24px 18px 42px;
 }
-
 
 .topBack{
     display:inline-flex;
     align-items:center;
     gap:8px;
-    margin-bottom:18px;
+    margin-bottom:20px;
     padding:11px 16px;
     border:1px solid rgba(255,255,255,.18);
     border-radius:14px;
@@ -51,187 +59,231 @@ body::before{
     color:white;
     text-decoration:none;
     font-size:14px;
-    font-weight:bold;
+    font-weight:800;
     box-shadow:0 8px 24px rgba(0,0,0,.28);
     transition:.25s;
 }
 
 .topBack:hover{
-    background:#2563eb;
+    background:var(--primary);
     transform:translateY(-2px);
 }
 
-.logo{
+.brand{
     text-align:center;
-    font-size:48px;
-    font-weight:900;
-    margin-bottom:8px;
+    margin-bottom:22px;
+}
+
+.logo{
+    font-size:clamp(38px,8vw,54px);
+    font-weight:950;
     color:#60a5fa;
-    text-shadow:0 0 10px #2563eb, 0 0 30px #2563eb;
+    text-shadow:0 0 10px #2563eb,0 0 30px #2563eb;
 }
 
 .subtitle{
-    text-align:center;
-    color:#e5e7eb;
-    margin-bottom:22px;
+    margin-top:9px;
+    color:#e2e8f0;
     line-height:1.5;
 }
 
-.menu{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
+.categoryTabs{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:16px;
 }
 
-.menuBtn{
-    background:#1e293b;
+.categoryBtn{
+    padding:15px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:16px;
+    background:rgba(30,41,59,.92);
     color:white;
-    border:1px solid rgba(255,255,255,.12);
-    padding:12px 15px;
-    border-radius:14px;
+    font-size:16px;
+    font-weight:900;
     cursor:pointer;
-    font-size:13px;
-    font-weight:bold;
     transition:.25s;
 }
 
-.menuBtn:hover,
-.menuBtn.active{
-    background:#2563eb;
+.categoryBtn:hover,
+.categoryBtn.active{
+    background:var(--primary);
+    transform:translateY(-2px);
+}
+
+.universeMenu{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.universeMenu[hidden]{
+    display:none;
+}
+
+.universeBtn{
+    padding:11px 14px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;
+    background:#1e293b;
+    color:white;
+    font-size:13px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.universeBtn:hover,
+.universeBtn.active{
+    background:var(--primary);
     transform:translateY(-2px);
 }
 
 .card{
-    background:white;
-    color:black;
-    border-radius:28px;
     padding:25px;
-    box-shadow:0 15px 50px rgba(0,0,0,0.5);
+    border-radius:28px;
+    background:var(--panel);
+    color:var(--text);
+    box-shadow:0 18px 55px rgba(0,0,0,.50);
 }
 
 .loreImage{
     width:100%;
-    height:220px;
+    height:260px;
     object-fit:cover;
-    border-radius:18px;
+    object-position:center;
+    display:block;
     margin-bottom:20px;
+    border-radius:18px;
     background:#111827;
 }
 
+.cardHeader{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+}
+
 .universe{
-    color:#2563eb;
-    font-weight:bold;
-    font-size:14px;
+    color:var(--primary);
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.6px;
     text-transform:uppercase;
 }
 
+.contentCount{
+    flex-shrink:0;
+    padding:7px 9px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:#1d4ed8;
+    font-size:11px;
+    font-weight:900;
+}
+
 .title{
-    font-size:32px;
-    font-weight:bold;
     margin-top:8px;
-    line-height:1.15;
+    font-size:clamp(28px,6vw,36px);
+    font-weight:950;
+    line-height:1.12;
 }
 
 .type{
-    color:#6b7280;
     margin-top:7px;
+    color:var(--muted);
 }
 
 .episodeMeta{
     display:none;
-    grid-template-columns:repeat(2, minmax(0, 1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:10px;
     margin-top:18px;
 }
 
 .metaBox{
-    background:#f1f5f9;
-    border-radius:14px;
     padding:12px;
+    border-radius:14px;
+    background:#f1f5f9;
 }
 
 .metaLabel{
     display:block;
+    margin-bottom:5px;
     color:#64748b;
     font-size:11px;
-    font-weight:bold;
+    font-weight:900;
     text-transform:uppercase;
-    margin-bottom:5px;
 }
 
 .metaValue{
     color:#0f172a;
     font-size:14px;
-    font-weight:bold;
+    font-weight:900;
 }
 
 .section{
-    margin-top:20px;
+    margin-top:22px;
 }
 
 .section h3{
-    margin-bottom:10px;
+    margin:0 0 10px;
+    font-size:20px;
 }
 
-p{
-    line-height:1.6;
+.section p{
+    margin:0;
+    color:#1e293b;
+    line-height:1.68;
 }
 
 .source{
     margin-top:18px;
+    color:#64748b;
     font-size:12px;
-    color:#6b7280;
+    line-height:1.5;
 }
 
 .source a{
-    color:#2563eb;
+    color:var(--primary);
     text-decoration:none;
-    font-weight:bold;
+    font-weight:900;
 }
 
 .mainBtn{
     width:100%;
     margin-top:25px;
     padding:16px;
-    border:none;
+    border:0;
     border-radius:16px;
-    background:#2563eb;
+    background:var(--primary);
     color:white;
     font-size:18px;
-    font-weight:bold;
+    font-weight:900;
     cursor:pointer;
+    transition:.25s;
 }
 
 .mainBtn:hover{
-    background:#1d4ed8;
+    background:var(--primary-dark);
+    transform:translateY(-2px);
 }
 
-.backLink{
-    display:block;
-    width:max-content;
-    margin:18px auto 0;
-    color:#dbeafe;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.backLink:hover{
-    color:white;
-}
-
-@media(max-width:520px){
-    .logo{
-        font-size:38px;
-    }
-
-    .title{
-        font-size:27px;
+@media(max-width:560px){
+    .categoryTabs{
+        grid-template-columns:1fr;
     }
 
     .loreImage{
-        height:190px;
+        height:210px;
+    }
+
+    .cardHeader{
+        flex-direction:column;
     }
 }
 </style>
@@ -243,33 +295,62 @@ p{
 
     <a class="topBack" href="./indice.html">← Regresar al inicio</a>
 
-    <div class="logo">CHUCKNORISMO</div>
+    <header class="brand">
+        <div class="logo">EL OCTOVERSO</div>
+        <div class="subtitle">
+            Explora videojuegos, universos, series y episodios destacados
+        </div>
+    </header>
 
-    <div class="subtitle">
-        Series, videojuegos y universos del conocimiento geek
+    <div class="categoryTabs">
+        <button
+            class="categoryBtn active"
+            data-category="Juegos"
+            onclick="setCategory('Juegos')"
+        >
+            🎮 JUEGOS
+        </button>
+
+        <button
+            class="categoryBtn"
+            data-category="Series"
+            onclick="setCategory('Series')"
+        >
+            📺 SERIES
+        </button>
     </div>
 
-    <div class="menu">
-        <button class="menuBtn active" data-universe="Halo" onclick="filterUniverse('Halo')">HALO</button>
-        <button class="menuBtn" data-universe="Warhammer 40K" onclick="filterUniverse('Warhammer 40K')">WARHAMMER</button>
-        <button class="menuBtn" data-universe="Star Wars" onclick="filterUniverse('Star Wars')">STAR WARS</button>
-        <button class="menuBtn" data-universe="El Mentalista" onclick="filterUniverse('El Mentalista')">EL MENTALISTA</button>
-        <button class="menuBtn" data-universe="Dexter" onclick="filterUniverse('Dexter')">DEXTER</button>
+    <div class="universeMenu" id="gamesMenu">
+        <button class="universeBtn active" data-universe="Halo" onclick="filterUniverse('Halo')">HALO</button>
+        <button class="universeBtn" data-universe="Warhammer 40K" onclick="filterUniverse('Warhammer 40K')">WARHAMMER</button>
+        <button class="universeBtn" data-universe="Star Wars" onclick="filterUniverse('Star Wars')">STAR WARS</button>
     </div>
 
-    <div class="card">
+    <div class="universeMenu" id="seriesMenu" hidden>
+        <button class="universeBtn" data-universe="El Mentalista" onclick="filterUniverse('El Mentalista')">EL MENTALISTA</button>
+        <button class="universeBtn" data-universe="Dexter" onclick="filterUniverse('Dexter')">DEXTER</button>
+    </div>
+
+    <article class="card">
 
         <img id="image" class="loreImage" alt="Imagen del contenido">
 
-        <div class="universe" id="universe">HALO</div>
-        <div class="title" id="title">Cargando...</div>
-        <div class="type" id="type">Dato Geek</div>
+        <div class="cardHeader">
+            <div>
+                <div class="universe" id="universe">HALO</div>
+                <div class="title" id="title">Cargando...</div>
+                <div class="type" id="type">Dato geek</div>
+            </div>
+
+            <div class="contentCount" id="contentCount">0 contenidos</div>
+        </div>
 
         <div class="episodeMeta" id="episodeMeta">
             <div class="metaBox">
                 <span class="metaLabel">Episodio</span>
                 <span class="metaValue" id="episode"></span>
             </div>
+
             <div class="metaBox">
                 <span class="metaLabel">Emisión</span>
                 <span class="metaValue" id="airDate"></span>
@@ -283,68 +364,51 @@ p{
 
         <div class="section">
             <h3 id="factTitle">Dato curioso</h3>
-            <p id="fact">Preparando dato...</p>
+            <p id="fact">Preparando contenido...</p>
         </div>
 
         <div class="source" id="source"></div>
 
-        <button class="mainBtn" onclick="randomLore()">Mostrar otro</button>
+        <button class="mainBtn" id="mainBtn" onclick="randomLore()">
+            Mostrar otro dato
+        </button>
 
-    </div>
-
-    <a class="backLink" href="./indice.html">← Volver al inicio</a>
+    </article>
 
 </div>
 
 <script>
+let currentCategory = "Juegos";
 let currentUniverse = "Halo";
 let lastTitle = "";
 
-const mentalistaImage =
-    "data:image/svg+xml;charset=UTF-8," +
-    encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
-            <defs>
-                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#111827"/>
-                    <stop offset="55%" stop-color="#7f1d1d"/>
-                    <stop offset="100%" stop-color="#020617"/>
-                </linearGradient>
-            </defs>
-            <rect width="1200" height="700" fill="url(#g)"/>
-            <circle cx="930" cy="205" r="135" fill="none" stroke="#dc2626" stroke-width="18" opacity=".55"/>
-            <path d="M850 210 Q930 285 1010 210" fill="none" stroke="#dc2626" stroke-width="18" stroke-linecap="round" opacity=".55"/>
-            <circle cx="885" cy="170" r="14" fill="#dc2626" opacity=".75"/>
-            <circle cx="975" cy="170" r="14" fill="#dc2626" opacity=".75"/>
-            <text x="70" y="330" fill="#ffffff" font-family="Arial, sans-serif" font-size="92" font-weight="700">EL MENTALISTA</text>
-            <text x="76" y="400" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="34">Temporada 1</text>
-        </svg>
-    `);
+const backgroundImages = {
+    "Halo":"halofondo.jpeg",
+    "Warhammer 40K":"warhammerfondo.jpg",
+    "Star Wars":"starwarsfondo.jpg",
+    "El Mentalista":"mentalista.jpg",
+    "Dexter":"ViT5R8V-dexter-hd-wallpaper.jpg"
+};
 
-const dexterImage =
+const fallbackImage =
     "data:image/svg+xml;charset=UTF-8," +
     encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
             <defs>
-                <linearGradient id="dexterGradient" x1="0" x2="1" y1="0" y2="1">
+                <linearGradient id="fallback" x1="0" x2="1">
                     <stop offset="0%" stop-color="#020617"/>
-                    <stop offset="48%" stop-color="#7f1d1d"/>
-                    <stop offset="100%" stop-color="#16070a"/>
+                    <stop offset="100%" stop-color="#2563eb"/>
                 </linearGradient>
-                <filter id="shadow">
-                    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity=".65"/>
-                </filter>
             </defs>
-            <rect width="1200" height="700" fill="url(#dexterGradient)"/>
-            <path d="M0 570 C240 500 420 660 660 565 C840 495 1010 540 1200 460 L1200 700 L0 700 Z"
-                  fill="#450a0a" opacity=".72"/>
-            <circle cx="925" cy="225" r="145" fill="none" stroke="#ef4444" stroke-width="12" opacity=".38"/>
-            <path d="M875 185 L975 285 M975 185 L875 285"
-                  stroke="#ef4444" stroke-width="13" stroke-linecap="round" opacity=".38"/>
-            <text x="70" y="335" fill="#ffffff" font-family="Arial, sans-serif"
-                  font-size="112" font-weight="800" letter-spacing="10" filter="url(#shadow)">DEXTER</text>
-            <text x="78" y="410" fill="#fecaca" font-family="Arial, sans-serif"
-                  font-size="34">Temporadas 1 y 2</text>
+            <rect width="1200" height="700" fill="url(#fallback)"/>
+            <text x="600" y="320" text-anchor="middle" fill="white"
+                  font-family="Arial" font-size="72" font-weight="700">
+                EL OCTOVERSO
+            </text>
+            <text x="600" y="390" text-anchor="middle" fill="#bfdbfe"
+                  font-family="Arial" font-size="30">
+                Juegos y Series
+            </text>
         </svg>
     `);
 
@@ -1380,24 +1444,30 @@ const lore = [
 
 ];
 
-function changeBackground(universe){
-    if(universe === "Halo"){
-        document.body.style.backgroundImage = "url('halofondo.jpeg')";
-    }else if(universe === "Warhammer 40K"){
-        document.body.style.backgroundImage = "url('warhammerfondo.jpg')";
-    }else if(universe === "Star Wars"){
-        document.body.style.backgroundImage = "url('starwarsfondo.jpg')";
-    }else if(universe === "El Mentalista"){
-        document.body.style.backgroundImage =
-            "url('mentalista.jpg')";
-    }else if(universe === "Dexter"){
-        document.body.style.backgroundImage =
-            "url('ViT5R8V-dexter-hd-wallpaper.jpg')";
-    }
+function setCategory(category){
+    currentCategory = category;
+    lastTitle = "";
+
+    document.querySelectorAll(".categoryBtn").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.category === category
+        );
+    });
+
+    document.getElementById("gamesMenu").hidden = category !== "Juegos";
+    document.getElementById("seriesMenu").hidden = category !== "Series";
+
+    filterUniverse(category === "Juegos" ? "Halo" : "El Mentalista");
 }
 
-function setActiveButton(universe){
-    document.querySelectorAll(".menuBtn").forEach(button => {
+function changeBackground(universe){
+    const image = backgroundImages[universe];
+    document.body.style.backgroundImage = "url('" + image + "')";
+}
+
+function setActiveUniverse(universe){
+    document.querySelectorAll(".universeBtn").forEach(button => {
         button.classList.toggle(
             "active",
             button.dataset.universe === universe
@@ -1411,21 +1481,19 @@ function cleanText(text){
     }
 
     return text
-        .replace(/\s+/g, " ")
-        .replace(/\[[0-9]+\]/g, "")
+        .replace(/\s+/g," ")
+        .replace(/\[[0-9]+\]/g,"")
         .trim();
 }
 
-function shortText(text, maxLength){
+function shortText(text,maxLength){
     if(!text || text.trim() === ""){
         return "";
     }
 
-    if(text.length <= maxLength){
-        return text;
-    }
-
-    return text.substring(0, maxLength) + "...";
+    return text.length <= maxLength
+        ? text
+        : text.substring(0,maxLength) + "...";
 }
 
 function renderEpisodeMeta(item){
@@ -1445,11 +1513,13 @@ function renderSource(item){
 
     if(item.source){
         source.innerHTML =
-            'Fuente: <a href="' + item.source + '" target="_blank" rel="noopener noreferrer">' +
+            'Fuente: <a href="' + item.source +
+            '" target="_blank" rel="noopener noreferrer">' +
             (item.sourceLabel || item.universe + " Wiki") +
             '</a>';
     }else{
-        source.innerText = "Información de episodios proporcionada por el usuario.";
+        source.innerText =
+            "Contenido de episodios preparado para El Octoverso.";
     }
 }
 
@@ -1458,33 +1528,57 @@ async function randomLore(){
         item => item.universe === currentUniverse
     );
 
+    if(filteredLore.length === 0){
+        return;
+    }
+
     let item;
 
     do{
-        const random = Math.floor(Math.random() * filteredLore.length);
-        item = filteredLore[random];
+        item = filteredLore[
+            Math.floor(Math.random() * filteredLore.length)
+        ];
     }while(item.title === lastTitle && filteredLore.length > 1);
 
     lastTitle = item.title;
 
-    document.getElementById("image").src = item.image;
-    document.getElementById("image").alt = item.title;
+    const image = document.getElementById("image");
+    image.dataset.fallbackApplied = "";
+    image.style.display = "block";
+    image.src = item.image;
+    image.alt = item.title;
+
     document.getElementById("universe").innerText = item.universe;
     document.getElementById("title").innerText = item.title;
     document.getElementById("type").innerText = item.type;
-    document.getElementById("summary").innerText = "Cargando información...";
-    document.getElementById("fact").innerText = "Preparando contenido...";
+    document.getElementById("contentCount").innerText =
+        filteredLore.length +
+        (filteredLore.length === 1 ? " contenido" : " contenidos");
+
+    document.getElementById("summary").innerText =
+        "Cargando información...";
+
+    document.getElementById("fact").innerText =
+        "Preparando contenido...";
+
+    const isSeries = currentCategory === "Series";
+
     document.getElementById("factTitle").innerText =
-        (item.universe === "El Mentalista" || item.universe === "Dexter")
-            ? "Dato destacado"
-            : "Dato curioso";
+        isSeries ? "Dato destacado" : "Dato curioso";
+
+    document.getElementById("mainBtn").innerText =
+        isSeries ? "Mostrar otro episodio" : "Mostrar otro dato";
 
     renderEpisodeMeta(item);
     renderSource(item);
 
     if(item.staticContent || !item.wiki){
-        document.getElementById("summary").innerText = item.backupSummary;
-        document.getElementById("fact").innerText = item.backupFact;
+        document.getElementById("summary").innerText =
+            item.backupSummary;
+
+        document.getElementById("fact").innerText =
+            item.backupFact;
+
         return;
     }
 
@@ -1509,11 +1603,11 @@ async function randomLore(){
         const pageId = Object.keys(data.query.pages)[0];
         const page = data.query.pages[pageId];
 
-        const resumenWiki = cleanText(page.extract);
-        const resumenFinal = resumenWiki || item.backupSummary;
+        const wikiSummary = cleanText(page.extract);
+        const finalSummary = wikiSummary || item.backupSummary;
 
         document.getElementById("summary").innerText =
-            shortText(resumenFinal, 650);
+            shortText(finalSummary,650);
 
         document.getElementById("fact").innerText =
             item.backupFact;
@@ -1532,21 +1626,20 @@ async function randomLore(){
 function filterUniverse(universe){
     currentUniverse = universe;
     lastTitle = "";
+
     changeBackground(universe);
-    setActiveButton(universe);
+    setActiveUniverse(universe);
     randomLore();
 }
 
-document.getElementById("image").addEventListener("error", function(){
+document.getElementById("image").addEventListener("error",function(){
     if(!this.dataset.fallbackApplied){
         this.dataset.fallbackApplied = "true";
-        this.src = "fondo_juegos.jpg";
+        this.src = fallbackImage;
     }
 });
 
-changeBackground(currentUniverse);
-setActiveButton(currentUniverse);
-randomLore();
+setCategory("Juegos");
 </script>
 
 </body>
