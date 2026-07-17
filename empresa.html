@@ -1,454 +1,1148 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Chuck Noris Enterprise</title>
+<meta
+    name="description"
+    content="Chuck Noris Enterprise: soluciones Oracle, inteligencia artificial, automatización, ciberseguridad y transformación digital."
+>
 
 <style>
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
+}
+
+:root{
+    --bg:#020617;
+    --bg-soft:#0f172a;
+    --panel:rgba(255,255,255,.08);
+    --panel-strong:rgba(15,23,42,.92);
+    --border:rgba(255,255,255,.14);
+    --primary:#2563eb;
+    --primary-light:#60a5fa;
+    --text:#f8fafc;
+    --muted:#cbd5e1;
+    --soft:#94a3b8;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-
-    font-family:Arial, sans-serif;
-
-    background:
-    linear-gradient(
-    135deg,
-    #020617,
-    #0f172a,
-    #1e293b);
-
-    color:white;
-
     min-height:100vh;
+    font-family:Arial, sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(37,99,235,.24), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(14,165,233,.16), transparent 30%),
+        linear-gradient(135deg,#020617,#0f172a,#1e293b);
+}
 
-    padding:50px;
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), transparent);
 }
 
 .container{
-
-    max-width:1200px;
+    position:relative;
+    width:min(1180px, 100%);
     margin:auto;
+    padding:28px 22px 50px;
+}
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:34px;
+}
+
+.backBtn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 16px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,42,.82);
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+    transition:.25s;
+    box-shadow:0 8px 24px rgba(0,0,0,.24);
+}
+
+.backBtn:hover{
+    background:var(--primary);
+    transform:translateY(-2px);
+}
+
+.topLinks{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.topLinks a{
+    color:#dbeafe;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:700;
+    padding:10px 12px;
+    border-radius:12px;
+    transition:.25s;
+}
+
+.topLinks a:hover{
+    background:rgba(255,255,255,.08);
+    color:white;
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:38px;
 }
 
 .logo{
-
-    text-align:center;
-
-    font-size:64px;
-
-    font-weight:900;
-
-    color:#60a5fa;
-
+    font-size:clamp(42px,7vw,72px);
+    font-weight:950;
+    letter-spacing:-2px;
+    color:var(--primary-light);
     text-shadow:
-    0 0 20px #2563eb,
-    0 0 50px #2563eb;
-
-    margin-bottom:20px;
+        0 0 18px rgba(37,99,235,.95),
+        0 0 48px rgba(37,99,235,.55);
 }
 
 .slogan{
-
-    text-align:center;
-
-    font-size:22px;
-
-    color:#cbd5e1;
-
-    margin-bottom:60px;
+    margin-top:12px;
+    font-size:clamp(16px,2.5vw,22px);
+    color:var(--muted);
+    letter-spacing:1px;
 }
 
 .hero{
-
+    position:relative;
+    overflow:hidden;
+    padding:clamp(34px,6vw,64px);
+    border:1px solid var(--border);
+    border-radius:32px;
     background:
-    rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(15px);
-
-    border-radius:30px;
-
-    padding:40px;
-
-    text-align:center;
-
-    margin-bottom:40px;
-
-    box-shadow:
-    0 15px 50px rgba(0,0,0,0.5);
+        linear-gradient(135deg,rgba(37,99,235,.24),rgba(15,23,42,.88)),
+        rgba(255,255,255,.06);
+    backdrop-filter:blur(16px);
+    box-shadow:0 24px 70px rgba(0,0,0,.48);
 }
 
-.hero h2{
+.hero::after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-90px;
+    top:-100px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(96,165,250,.30),transparent 68%);
+}
 
-    font-size:42px;
+.heroContent{
+    position:relative;
+    z-index:1;
+    max-width:820px;
+}
 
+.heroBadge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
     margin-bottom:20px;
+    border:1px solid rgba(147,197,253,.35);
+    border-radius:999px;
+    background:rgba(37,99,235,.18);
+    color:#bfdbfe;
+    font-size:13px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+}
+
+.hero h1{
+    max-width:900px;
+    font-size:clamp(38px,6vw,68px);
+    line-height:1.02;
+    letter-spacing:-2px;
 }
 
 .hero p{
-
-    font-size:20px;
-
-    color:#d1d5db;
-
-    line-height:1.8;
+    max-width:820px;
+    margin-top:22px;
+    color:#dbeafe;
+    font-size:clamp(17px,2.3vw,21px);
+    line-height:1.75;
 }
 
-.grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
-
-    gap:25px;
-
-    margin-top:40px;
-}
-
-.card{
-
-    background:
-    rgba(255,255,255,0.08);
-
-    border:
-    1px solid rgba(255,255,255,0.15);
-
-    border-radius:25px;
-
-    padding:30px;
-
-    transition:0.4s;
-
-    backdrop-filter:blur(12px);
-}
-
-.card:hover{
-
-    transform:
-    translateY(-8px);
-
-    background:
-    rgba(37,99,235,0.25);
-}
-
-.icon{
-
-    font-size:55px;
-
-    margin-bottom:15px;
-}
-
-.card h3{
-
-    margin-bottom:15px;
-
-    font-size:28px;
-}
-
-.card p{
-
-    color:#d1d5db;
-
-    line-height:1.7;
-}
-
-.section{
-
-    margin-top:60px;
-}
-
-.section h2{
-
-    text-align:center;
-
-    font-size:42px;
-
-    margin-bottom:30px;
-
-    color:#60a5fa;
-}
-
-.mission{
-
-    background:
-    rgba(255,255,255,0.08);
-
-    border-radius:25px;
-
-    padding:35px;
-
-    margin-bottom:30px;
-}
-
-.mission p{
-
-    line-height:1.8;
-
-    color:#e5e7eb;
-}
-
-.ask{
-
-    text-align:center;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    background:
-    linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8);
-
-    margin-top:40px;
-}
-
-.ask h2{
-
-    margin-bottom:15px;
-}
-
-.ask p{
-
-    font-size:18px;
-}
-
-.footer{
-
-    margin-top:80px;
-
-    text-align:center;
-
-    color:#94a3b8;
+.heroActions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:28px;
 }
 
 .btn{
-
-    display:inline-block;
-
-    margin-top:20px;
-
-    padding:15px 25px;
-
-    border-radius:15px;
-
-    background:white;
-
-    color:#1e40af;
-
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 20px;
+    border-radius:14px;
     text-decoration:none;
-
-    font-weight:bold;
+    font-weight:900;
+    transition:.25s;
 }
 
-.btn:hover{
+.btnPrimary{
+    background:white;
+    color:#1e40af;
+}
 
+.btnPrimary:hover{
+    transform:translateY(-2px);
     background:#e2e8f0;
 }
 
-</style>
+.btnSecondary{
+    color:white;
+    border:1px solid rgba(255,255,255,.20);
+    background:rgba(15,23,42,.58);
+}
 
+.btnSecondary:hover{
+    transform:translateY(-2px);
+    background:rgba(37,99,235,.42);
+}
+
+.section{
+    margin-top:70px;
+}
+
+.sectionHeader{
+    max-width:760px;
+    margin:0 auto 32px;
+    text-align:center;
+}
+
+.sectionTag{
+    display:block;
+    margin-bottom:10px;
+    color:#93c5fd;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.section h2{
+    font-size:clamp(32px,4.5vw,48px);
+    color:var(--primary-light);
+}
+
+.sectionHeader p{
+    margin-top:14px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:17px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+    min-height:280px;
+    padding:28px;
+    border:1px solid var(--border);
+    border-radius:26px;
+    background:var(--panel);
+    backdrop-filter:blur(14px);
+    transition:.3s;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-65px;
+    bottom:-70px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.25),transparent 70%);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(96,165,250,.48);
+    background:rgba(37,99,235,.18);
+    box-shadow:0 18px 45px rgba(0,0,0,.28);
+}
+
+.icon{
+    width:64px;
+    height:64px;
+    display:grid;
+    place-items:center;
+    margin-bottom:20px;
+    border-radius:18px;
+    background:rgba(37,99,235,.20);
+    font-size:34px;
+}
+
+.card h3{
+    position:relative;
+    z-index:1;
+    margin-bottom:14px;
+    font-size:26px;
+}
+
+.card p{
+    position:relative;
+    z-index:1;
+    color:#d1d5db;
+    line-height:1.7;
+}
+
+.card ul{
+    position:relative;
+    z-index:1;
+    margin-top:16px;
+    padding-left:20px;
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+.valuesGrid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:22px;
+}
+
+.valueBox{
+    padding:32px;
+    border:1px solid var(--border);
+    border-radius:26px;
+    background:var(--panel);
+    backdrop-filter:blur(14px);
+}
+
+.valueBox h3{
+    margin-bottom:14px;
+    color:#93c5fd;
+    font-size:28px;
+}
+
+.valueBox p{
+    color:#e2e8f0;
+    line-height:1.8;
+    font-size:17px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer{
+    margin-top:76px;
+    padding-top:28px;
+    border-top:1px solid var(--border);
+    text-align:center;
+    color:var(--soft);
+    line-height:1.7;
+}
+
+@media(max-width:920px){
+    .grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:680px){
+    .container{
+        padding:20px 16px 38px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .topLinks{
+        width:100%;
+    }
+
+    .topLinks a{
+        flex:1;
+        text-align:center;
+        background:rgba(15,23,42,.55);
+    }
+
+    .grid,
+    .valuesGrid{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        min-height:auto;
+    }
+
+    .heroActions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+}
+
+.companyName{
+    margin-top:10px;
+    color:#ffffff;
+    font-size:clamp(20px,3vw,30px);
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.directionGrid{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:18px;
+}
+
+.bossCard{
+    padding:24px 18px;
+    border:1px solid var(--border);
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(14px);
+    text-align:center;
+    transition:.3s;
+}
+
+.bossCard:hover{
+    transform:translateY(-7px);
+    background:rgba(37,99,235,.20);
+    border-color:rgba(96,165,250,.50);
+}
+
+.bossAvatar{
+    width:92px;
+    height:92px;
+    display:grid;
+    place-items:center;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle at 35% 25%,#93c5fd,#2563eb 48%,#172554 100%);
+    border:3px solid rgba(255,255,255,.28);
+    box-shadow:0 12px 30px rgba(0,0,0,.34);
+    font-size:44px;
+}
+
+.bossCard h3{
+    margin-bottom:8px;
+    font-size:21px;
+}
+
+.bossRole{
+    color:#93c5fd;
+    font-size:14px;
+    font-weight:900;
+    line-height:1.45;
+}
+
+.bossArea{
+    margin-top:10px;
+    color:#cbd5e1;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.principlesGrid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:20px;
+}
+
+.principleCard{
+    min-height:210px;
+    padding:26px;
+    border:1px solid var(--border);
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(14px);
+}
+
+.principleNumber{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    margin-bottom:17px;
+    border-radius:13px;
+    background:#2563eb;
+    color:white;
+    font-weight:900;
+}
+
+.principleCard h3{
+    margin-bottom:12px;
+    color:#93c5fd;
+    font-size:23px;
+}
+
+.principleCard p{
+    color:#e2e8f0;
+    line-height:1.75;
+}
+
+@media(max-width:1050px){
+    .directionGrid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:800px){
+    .principlesGrid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:680px){
+    .directionGrid{
+        grid-template-columns:1fr;
+    }
+}
+
+
+.bossPhoto{
+    width:92px;
+    height:92px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center;
+    border:3px solid rgba(255,255,255,.28);
+    box-shadow:0 12px 30px rgba(0,0,0,.34);
+    display:block;
+}
+
+
+.randomBoard{
+    max-width:720px;
+    margin:0 auto;
+}
+
+.randomTabs{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.randomTab{
+    padding:12px 16px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:14px;
+    background:#1e293b;
+    color:white;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.randomTab:hover,
+.randomTab.active{
+    background:#2563eb;
+    transform:translateY(-2px);
+}
+
+.randomCard{
+    padding:25px;
+    border-radius:28px;
+    background:white;
+    color:#0f172a;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.randomImage{
+    width:100%;
+    height:330px;
+    display:block;
+    object-fit:cover;
+    object-position:center 24%;
+    margin-bottom:22px;
+    border-radius:20px;
+    background:#0f172a;
+}
+
+.randomCategory{
+    color:#2563eb;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+}
+
+.randomTitle{
+    margin-top:8px;
+    font-size:clamp(30px,5vw,42px);
+    font-weight:950;
+    line-height:1.1;
+}
+
+.randomRole{
+    margin-top:9px;
+    color:#64748b;
+    font-size:17px;
+    font-weight:800;
+}
+
+.randomNumber{
+    display:none;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    margin-top:18px;
+}
+
+.randomMeta{
+    padding:12px;
+    border-radius:14px;
+    background:#f1f5f9;
+}
+
+.randomMetaLabel{
+    display:block;
+    margin-bottom:5px;
+    color:#64748b;
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.randomMetaValue{
+    color:#0f172a;
+    font-size:14px;
+    font-weight:900;
+}
+
+.randomSection{
+    margin-top:22px;
+}
+
+.randomSection h3{
+    margin-bottom:10px;
+    font-size:20px;
+}
+
+.randomSection p{
+    color:#1e293b;
+    font-size:17px;
+    line-height:1.7;
+}
+
+.randomButton{
+    width:100%;
+    margin-top:25px;
+    padding:16px;
+    border:0;
+    border-radius:16px;
+    background:#2563eb;
+    color:white;
+    font-size:17px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.randomButton:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+@media(max-width:680px){
+    .randomImage{
+        height:245px;
+    }
+
+    .randomNumber{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <div class="logo">
-        CHUCK NORIS ENTERPRISE
+    <div class="topbar">
+        <a class="backBtn" href="./indice.html">← Regresar al inicio</a>
+
+        <div class="topLinks">
+            <a href="./Gaming.html">Series y Juegos</a>
+            <a href="./tech.html">Tecnología</a>
+        </div>
     </div>
 
-    <div class="slogan">
+    <header class="brand">
+        <div class="logo">EL OCTOVERSO</div>
+        <div class="companyName">Chuck Noris Enterprise</div>
+        <div class="slogan">Knowledge • Technology • Automation</div>
+    </header>
+
+    <section class="hero">
+        <div class="heroContent">
+            <div class="heroBadge">Innovación empresarial</div>
+
+            <h1>
+                Transformamos conocimiento técnico en soluciones de negocio
+            </h1>
+
+            <p>
+                Chuck Noris Enterprise desarrolla soluciones enfocadas en Oracle,
+                inteligencia artificial, automatización, seguridad y transformación
+                digital para ambientes empresariales críticos.
+            </p>
+
+            <div class="heroActions">
+                <a class="btn btnPrimary" href="#servicios">
+                    Conocer capacidades
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="servicios">
+        <div class="sectionHeader">
+            <span class="sectionTag">Capacidades</span>
+            <h2>Servicios tecnológicos</h2>
+            <p>
+                Un portafolio orientado a infraestructura, aplicaciones,
+                automatización, datos y seguridad empresarial.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <article class="card">
+                <div class="icon">☁️</div>
+                <h3>Oracle Solutions</h3>
+                <p>
+                    Arquitectura, operación, modernización y soporte para plataformas Oracle.
+                </p>
+                <ul>
+                    <li>Oracle Database y RAC</li>
+                    <li>Data Guard y alta disponibilidad</li>
+                    <li>OCI, WebLogic y Oracle Linux</li>
+                    <li>E-Business Suite y Fusion Cloud</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="icon">🧠</div>
+                <h3>AI Labs</h3>
+                <p>
+                    Diseño de asistentes, agentes y soluciones inteligentes para procesos empresariales.
+                </p>
+                <ul>
+                    <li>Asistentes especializados</li>
+                    <li>Agentes de inteligencia artificial</li>
+                    <li>Procesamiento de lenguaje natural</li>
+                    <li>Integración con sistemas corporativos</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="icon">⚙️</div>
+                <h3>Automation Factory</h3>
+                <p>
+                    Automatización operativa para reducir tareas manuales y mejorar la trazabilidad.
+                </p>
+                <ul>
+                    <li>Python y Bash</li>
+                    <li>Ansible y GitHub Actions</li>
+                    <li>Kubernetes y OCNE</li>
+                    <li>Monitoreo y ejecución programada</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="icon">🛡️</div>
+                <h3>Cyber Security</h3>
+                <p>
+                    Evaluación y fortalecimiento de plataformas Oracle, Linux y aplicaciones empresariales.
+                </p>
+                <ul>
+                    <li>Hardening y cumplimiento</li>
+                    <li>Auditorías técnicas</li>
+                    <li>Evaluación de riesgos</li>
+                    <li>Gestión de evidencias</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="icon">🔄</div>
+                <h3>BPM Solutions</h3>
+                <p>
+                    Optimización de flujos, aprobaciones y procesos documentales.
+                </p>
+                <ul>
+                    <li>Modelado de procesos</li>
+                    <li>Flujos de aprobación</li>
+                    <li>Integración de aplicaciones</li>
+                    <li>Transformación digital</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="icon">🎮</div>
+                <h3>El Octoverso</h3>
+                <p>
+                    Portal creativo de series, videojuegos, tecnología, ciencia ficción y cultura geek.
+                </p>
+                <ul>
+                    <li>Halo</li>
+                    <li>Warhammer 40K</li>
+                    <li>Star Wars</li>
+                    <li>Series y ciencia ficción</li>
+                </ul>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="section" id="direccion">
+        <div class="sectionHeader">
+            <span class="sectionTag">Dirección de El Octoverso</span>
+            <h2>Equipo, misiones y visiones</h2>
+            <p>
+                Selecciona una categoría y descubre aleatoriamente a los jefes de área,
+                las misiones y las visiones de Chuck Noris Enterprise.
+            </p>
+        </div>
+
+        <div class="randomBoard">
+
+            <div class="randomTabs">
+                <button class="randomTab active" data-group="Jefes" onclick="filterCorporateData('Jefes')">
+                    JEFES DE ÁREA
+                </button>
+
+                <button class="randomTab" data-group="Misiones" onclick="filterCorporateData('Misiones')">
+                    MISIONES
+                </button>
+
+                <button class="randomTab" data-group="Visiones" onclick="filterCorporateData('Visiones')">
+                    VISIONES
+                </button>
+            </div>
+
+            <div class="randomCard">
+                <img
+                    id="corporateImage"
+                    class="randomImage"
+                    src="./chuck.png"
+                    alt="Chucknoris"
+                >
+
+                <div class="randomCategory" id="corporateCategory">EQUIPO DIRECTIVO</div>
+                <div class="randomTitle" id="corporateTitle">Chucknoris</div>
+                <div class="randomRole" id="corporateRole">Director General</div>
+
+                <div class="randomNumber" id="corporateMeta">
+                    <div class="randomMeta">
+                        <span class="randomMetaLabel">Categoría</span>
+                        <span class="randomMetaValue" id="corporateGroup">Jefes de área</span>
+                    </div>
+
+                    <div class="randomMeta">
+                        <span class="randomMetaLabel">Elemento</span>
+                        <span class="randomMetaValue" id="corporateNumber">1 de 5</span>
+                    </div>
+                </div>
+
+                <div class="randomSection">
+                    <h3 id="corporateSummaryTitle">Responsabilidad</h3>
+                    <p id="corporateSummary">
+                        Dirección estratégica y coordinación general de El Octoverso.
+                    </p>
+                </div>
+
+                <div class="randomSection">
+                    <h3 id="corporateFactTitle">Objetivo principal</h3>
+                    <p id="corporateFact">
+                        Alinear las áreas de la empresa y dirigir su crecimiento.
+                    </p>
+                </div>
+
+                <button class="randomButton" onclick="showRandomCorporateData()">
+                    Mostrar otro
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <footer class="footer">
+        © 2026 El Octoverso · Chuck Noris Enterprise<br>
         Knowledge • Technology • Automation
-    </div>
-
-    <div class="hero">
-
-        <h2>
-            Transformando conocimiento en innovación
-        </h2>
-
-        <p>
-            Chuck Noris Enterprise es una empresa tecnológica
-            especializada en Oracle, Inteligencia Artificial,
-            Automatización, Seguridad y Transformación Digital.
-        </p>
-
-    </div>
-
-    <div class="grid">
-
-        <div class="card">
-
-            <div class="icon">☁️</div>
-
-            <h3>
-                Oracle Solutions
-            </h3>
-
-            <p>
-                Oracle Database, RAC,
-                Data Guard, OCI,
-                WebLogic y Oracle Linux.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon"></div>
-
-            <h3>
-                AI Labs
-            </h3>
-
-            <p>
-                Desarrollo de asistentes
-                inteligentes y automatización
-                impulsada por IA.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon">⚙️</div>
-
-            <h3>
-                Automation Factory
-            </h3>
-
-            <p>
-                Automatización mediante
-                Python, Bash, Ansible,
-                Kubernetes y OCNE.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon"></div>
-
-            <h3>
-                Cyber Security
-            </h3>
-
-            <p>
-                Hardening Oracle,
-                auditorías de seguridad,
-                cumplimiento y evaluación
-                de riesgos.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon"></div>
-
-            <h3>
-                BPM Solutions
-            </h3>
-
-            <p>
-                Modelado de procesos,
-                automatización documental
-                y transformación digital.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="icon">🎮</div>
-
-            <h3>
-                Chucknorismo Gaming
-            </h3>
-
-            <p>
-                Portal de conocimiento geek,
-                Halo, Warhammer 40K,
-                Star Wars y ciencia ficción.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="section">
-
-        <h2>
-            Misión
-        </h2>
-
-        <div class="mission">
-
-            <p>
-                Transformar conocimiento técnico
-                en soluciones empresariales que
-                generen valor mediante Oracle,
-                Automatización e Inteligencia Artificial.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="section">
-
-        <h2>
-            Visión
-        </h2>
-
-        <div class="mission">
-
-            <p>
-                Ser una referencia tecnológica
-                en Latinoamérica en soluciones
-                Oracle, IA y Automatización.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="ask">
-
-        <h2>
-          ASK EBS
-        </h2>
-
-        <p>
-            AI-Powered Natural Language Query
-            for Oracle E-Business Suite
-        </p>
-
-        <a href="#" class="btn">
-            Próximamente
-        </a>
-
-    </div>
-
-    <div class="footer">
-
-        © 2026 Chuck Noris Enterprise
-
-    </div>
+    </footer>
 
 </div>
+
+
+<script>
+let currentCorporateGroup = "Jefes";
+let lastCorporateKey = "";
+
+const corporateData = [
+    {
+        group:"Jefes",
+        key:"director-general",
+        category:"Equipo directivo",
+        title:"Chucknoris",
+        role:"Director General",
+        number:"1 de 5",
+        summaryTitle:"Responsabilidad",
+        summary:"Dirige la empresa, define la estrategia y coordina el crecimiento general de El Octoverso.",
+        factTitle:"Objetivo principal",
+        fact:"Alinear las áreas de tecnología, operación, innovación y seguridad bajo una misma dirección."
+    },
+    {
+        group:"Jefes",
+        key:"estrategia-innovacion",
+        category:"Equipo directivo",
+        title:"Chucknoris",
+        role:"Jefe de Estrategia e Innovación",
+        number:"2 de 5",
+        summaryTitle:"Responsabilidad",
+        summary:"Impulsa nuevos productos, inteligencia artificial, investigación y evolución tecnológica.",
+        factTitle:"Objetivo principal",
+        fact:"Convertir ideas en soluciones digitales que aporten valor a empresas y comunidades."
+    },
+    {
+        group:"Jefes",
+        key:"operaciones",
+        category:"Equipo directivo",
+        title:"Chucknoris",
+        role:"Jefe de Operaciones",
+        number:"3 de 5",
+        summaryTitle:"Responsabilidad",
+        summary:"Supervisa continuidad operativa, infraestructura, ejecución de proyectos y control de procesos.",
+        factTitle:"Objetivo principal",
+        fact:"Mantener servicios estables, medibles y preparados para atender ambientes empresariales críticos."
+    },
+    {
+        group:"Jefes",
+        key:"tecnologia-automatizacion",
+        category:"Equipo directivo",
+        title:"Chucknoris",
+        role:"Jefe de Tecnología y Automatización",
+        number:"4 de 5",
+        summaryTitle:"Responsabilidad",
+        summary:"Lidera plataformas, arquitectura digital, automatización, desarrollo e integración tecnológica.",
+        factTitle:"Objetivo principal",
+        fact:"Reducir trabajo manual y construir herramientas escalables, seguras y fáciles de operar."
+    },
+    {
+        group:"Jefes",
+        key:"ciberseguridad",
+        category:"Equipo directivo",
+        title:"Chucknoris",
+        role:"Jefe de Ciberseguridad",
+        number:"5 de 5",
+        summaryTitle:"Responsabilidad",
+        summary:"Gestiona seguridad, cumplimiento, riesgos y protección de plataformas empresariales.",
+        factTitle:"Objetivo principal",
+        fact:"Prevenir incidentes y fortalecer la confianza mediante controles, evidencias y evaluación continua."
+    },
+
+    {
+        group:"Misiones",
+        key:"transformar-conocimiento",
+        category:"Dirección estratégica",
+        title:"Transformar conocimiento",
+        role:"Misión 1",
+        number:"1 de 3",
+        summaryTitle:"Compromiso",
+        summary:"Convertir experiencia técnica en soluciones empresariales claras, útiles y alineadas con necesidades reales.",
+        factTitle:"Resultado esperado",
+        fact:"Que el conocimiento especializado se traduzca en decisiones, procesos y servicios de valor."
+    },
+    {
+        group:"Misiones",
+        key:"automatizar-proposito",
+        category:"Dirección estratégica",
+        title:"Automatizar con propósito",
+        role:"Misión 2",
+        number:"2 de 3",
+        summaryTitle:"Compromiso",
+        summary:"Reducir tareas manuales, mejorar la trazabilidad y fortalecer la operación mediante automatización, datos e inteligencia artificial.",
+        factTitle:"Resultado esperado",
+        fact:"Procesos más rápidos, medibles, repetibles y con menos riesgos operativos."
+    },
+    {
+        group:"Misiones",
+        key:"proteger-operacion",
+        category:"Dirección estratégica",
+        title:"Proteger la operación",
+        role:"Misión 3",
+        number:"3 de 3",
+        summaryTitle:"Compromiso",
+        summary:"Diseñar soluciones confiables, seguras y sostenibles para Oracle, nube, aplicaciones y plataformas empresariales.",
+        factTitle:"Resultado esperado",
+        fact:"Mayor continuidad, cumplimiento y capacidad de respuesta ante riesgos tecnológicos."
+    },
+
+    {
+        group:"Visiones",
+        key:"referencia-tecnologica",
+        category:"Futuro",
+        title:"Referencia tecnológica",
+        role:"Visión 1",
+        number:"1 de 3",
+        summaryTitle:"Objetivo",
+        summary:"Ser reconocidos en Latinoamérica por soluciones Oracle, automatización, inteligencia artificial y seguridad empresarial.",
+        factTitle:"Proyección",
+        fact:"Construir una reputación basada en calidad técnica, innovación y resultados comprobables."
+    },
+    {
+        group:"Visiones",
+        key:"ecosistema-integrado",
+        category:"Futuro",
+        title:"Ecosistema integrado",
+        role:"Visión 2",
+        number:"2 de 3",
+        summaryTitle:"Objetivo",
+        summary:"Consolidar El Octoverso como un espacio que conecte tecnología, conocimiento, creatividad, entretenimiento y proyectos propios.",
+        factTitle:"Proyección",
+        fact:"Unificar distintas áreas y contenidos dentro de una misma identidad digital."
+    },
+    {
+        group:"Visiones",
+        key:"productos-propios",
+        category:"Futuro",
+        title:"Productos propios",
+        role:"Visión 3",
+        number:"3 de 3",
+        summaryTitle:"Objetivo",
+        summary:"Desarrollar herramientas y servicios digitales capaces de crecer, adaptarse y generar valor.",
+        factTitle:"Proyección",
+        fact:"Evolucionar de proyectos experimentales hacia soluciones reutilizables y sostenibles."
+    }
+];
+
+function setCorporateActiveButton(group){
+    document.querySelectorAll(".randomTab").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.group === group
+        );
+    });
+}
+
+function showRandomCorporateData(){
+    const filtered = corporateData.filter(
+        item => item.group === currentCorporateGroup
+    );
+
+    let item;
+
+    do{
+        item = filtered[Math.floor(Math.random() * filtered.length)];
+    }while(item.key === lastCorporateKey && filtered.length > 1);
+
+    lastCorporateKey = item.key;
+
+    document.getElementById("corporateImage").src = "./chuck.png";
+    document.getElementById("corporateImage").alt =
+        item.group === "Jefes"
+            ? item.title + " " + item.role
+            : item.title;
+
+    document.getElementById("corporateCategory").innerText = item.category;
+    document.getElementById("corporateTitle").innerText = item.title;
+    document.getElementById("corporateRole").innerText = item.role;
+    document.getElementById("corporateGroup").innerText = item.group;
+    document.getElementById("corporateNumber").innerText = item.number;
+    document.getElementById("corporateSummaryTitle").innerText = item.summaryTitle;
+    document.getElementById("corporateSummary").innerText = item.summary;
+    document.getElementById("corporateFactTitle").innerText = item.factTitle;
+    document.getElementById("corporateFact").innerText = item.fact;
+
+    document.getElementById("corporateMeta").style.display = "grid";
+}
+
+function filterCorporateData(group){
+    currentCorporateGroup = group;
+    lastCorporateKey = "";
+    setCorporateActiveButton(group);
+    showRandomCorporateData();
+}
+
+document.getElementById("corporateImage").addEventListener("error", function(){
+    this.style.display = "none";
+});
+
+setCorporateActiveButton(currentCorporateGroup);
+showRandomCorporateData();
+</script>
 
 </body>
 </html>
