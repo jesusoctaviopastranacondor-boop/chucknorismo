@@ -12,6 +12,18 @@
 >
 <meta name="theme-color" content="#2563eb">
 
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+<meta name="application-name" content="El Octoverso">
+<meta name="apple-mobile-web-app-title" content="El Octoverso">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+
+
 <style>
 *{
     box-sizing:border-box;
@@ -283,6 +295,63 @@ body::before{
         padding:23px;
     }
 }
+
+.installArea{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:26px;
+}
+
+.installButton{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:14px 20px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:15px;
+    background:#ffffff;
+    color:#1e40af;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 12px 32px rgba(0,0,0,.28);
+    transition:.25s;
+}
+
+.installButton:hover{
+    transform:translateY(-3px);
+    background:#dbeafe;
+}
+
+.installNote{
+    max-width:430px;
+    color:#bfdbfe;
+    font-size:13px;
+    line-height:1.55;
+}
+
+.installMessage{
+    display:none;
+    max-width:720px;
+    margin:18px auto 0;
+    padding:14px 16px;
+    border:1px solid rgba(147,197,253,.30);
+    border-radius:15px;
+    background:rgba(15,23,42,.86);
+    color:#e0f2fe;
+    font-size:14px;
+    line-height:1.6;
+    text-align:left;
+}
+
+.installMessage.show{
+    display:block;
+}
+
 </style>
 </head>
 
@@ -299,6 +368,19 @@ body::before{
             Un espacio para descubrir videojuegos, series, tecnología,
             actualizaciones y proyectos empresariales.
         </p>
+
+        <div class="installArea">
+            <button class="installButton" id="installAppButton" type="button">
+                📲 Instalar El Octoverso
+            </button>
+
+            <span class="installNote">
+                Agrégala a tu pantalla de inicio y ábrela como una aplicación.
+            </span>
+        </div>
+
+        <div class="installMessage" id="installMessage" role="status"></div>
+
     </header>
 
     <main>
@@ -384,6 +466,68 @@ body::before{
     </footer>
 
 </div>
+
+
+<script>
+let deferredInstallPrompt = null;
+
+const installButton = document.getElementById("installAppButton");
+const installMessage = document.getElementById("installMessage");
+
+function showInstallMessage(message){
+    installMessage.textContent = message;
+    installMessage.classList.add("show");
+}
+
+window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+});
+
+installButton.addEventListener("click", async () => {
+    if(deferredInstallPrompt){
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+
+        if(choice.outcome === "accepted"){
+            showInstallMessage(
+                "El Octoverso se está instalando. En unos segundos aparecerá en tu pantalla de inicio."
+            );
+        }
+
+        deferredInstallPrompt = null;
+        return;
+    }
+
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+    if(isIOS){
+        showInstallMessage(
+            "En iPhone o iPad: abre esta página en Safari, toca Compartir, selecciona “Agregar a Inicio”, activa “Abrir como app web” y pulsa Agregar."
+        );
+    }else{
+        showInstallMessage(
+            "En Android: abre el menú del navegador y selecciona “Instalar aplicación” o “Agregar a pantalla principal”."
+        );
+    }
+});
+
+window.addEventListener("appinstalled", () => {
+    showInstallMessage("El Octoverso quedó instalada correctamente.");
+    installButton.style.display = "none";
+});
+
+if("serviceWorker" in navigator){
+    window.addEventListener("load", async () => {
+        try{
+            await navigator.serviceWorker.register("./service-worker.js");
+            console.log("Service Worker registrado.");
+        }catch(error){
+            console.error("No se pudo registrar el Service Worker:", error);
+        }
+    });
+}
+</script>
 
 </body>
 </html>

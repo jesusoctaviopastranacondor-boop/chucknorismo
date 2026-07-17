@@ -1,0 +1,25 @@
+EL OCTOVERSO — INSTALACIÓN COMO APP
+
+Sube estos archivos a la raíz del repositorio:
+
+- indice.html
+- manifest.json
+- service-worker.js
+- icon-192.png
+- icon-512.png
+- apple-touch-icon.png
+
+Conserva también:
+Gaming.html, tech.html, empresa.html y todas sus imágenes.
+
+Después:
+1. Haz Commit changes.
+2. Abre GitHub Pages y actualiza con Ctrl + F5.
+3. Android: Chrome > menú > Instalar aplicación.
+4. iPhone: Safari > Compartir > Agregar a Inicio > Abrir como app web.
+
+Cuando actualices la app, cambia:
+el-octoverso-v1
+por:
+el-octoverso-v2
+en service-worker.js para renovar la caché.
