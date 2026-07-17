@@ -294,6 +294,78 @@ body::before{
         grid-template-columns:1fr;
     }
 }
+
+.versionGrid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+    margin-top:18px;
+}
+
+.versionBox{
+    background:#f1f5f9;
+    border-radius:14px;
+    padding:12px;
+    min-height:88px;
+}
+
+.versionLabel{
+    display:block;
+    color:#64748b;
+    font-size:10px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    margin-bottom:7px;
+}
+
+.versionValue{
+    color:#0f172a;
+    font-size:14px;
+    font-weight:800;
+    line-height:1.35;
+}
+
+.supportBadge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:900;
+    line-height:1.3;
+}
+
+.supportActive{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.supportLimited{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.toolNote{
+    margin-top:13px;
+    padding:12px 14px;
+    border-left:4px solid #2563eb;
+    border-radius:10px;
+    background:#eff6ff;
+    color:#334155;
+    font-size:13px;
+    line-height:1.5;
+}
+
+@media(max-width:560px){
+    .versionGrid{
+        grid-template-columns:1fr;
+    }
+
+    .versionBox{
+        min-height:auto;
+    }
+}
+
 </style>
 </head>
 
@@ -308,7 +380,10 @@ body::before{
     <div class="brand">
         <div class="logo">EL OCTOVERSO</div>
         <div class="subtitle">
-            Herramientas tecnológicas y noticias empresariales en secciones independientes
+            Herramientas tecnológicas, versiones vigentes, adopción empresarial y estado de soporte
+        </div>
+        <div style="margin-top:8px;color:#cbd5e1;font-size:13px;">
+            Información revisada el 16 de julio de 2026
         </div>
     </div>
 
@@ -318,7 +393,7 @@ body::before{
         </button>
 
         <button class="mainTab" data-section="news" onclick="setSection('news')">
-            📰 Noticias
+            🔄 Actualizaciones
         </button>
     </div>
 
@@ -334,6 +409,27 @@ body::before{
         <div class="category" id="category">HERRAMIENTA</div>
         <div class="title" id="title">Cargando...</div>
         <div class="type" id="type"></div>
+
+        <div class="versionGrid" id="versionGrid">
+            <div class="versionBox">
+                <span class="versionLabel">Versión más actual</span>
+                <span class="versionValue" id="currentVersion">—</span>
+            </div>
+
+            <div class="versionBox">
+                <span class="versionLabel">Adopción amplia</span>
+                <span class="versionValue" id="commonVersion">—</span>
+            </div>
+
+            <div class="versionBox">
+                <span class="versionLabel">Estado de soporte</span>
+                <span class="supportBadge supportActive" id="supportStatus">—</span>
+            </div>
+        </div>
+
+        <div class="toolNote" id="toolNote">
+            “Adopción amplia” es una referencia práctica empresarial y no un ranking mundial exacto de instalaciones.
+        </div>
 
         <div class="newsMeta" id="newsMeta">
             <div class="metaBox">
@@ -370,8 +466,8 @@ body::before{
         </div>
 
         <div class="emptyNews" id="emptyNews">
-            <strong>Fuentes confiables</strong>
-            Aquí se mostrarán portales oficiales y medios periodísticos reconocidos.
+            <strong>Actualizaciones en preparación</strong>
+            Aquí se mostrarán nuevas actualizaciones verificadas con fuente oficial, fecha y enlace original.
         </div>
     </div>
 
@@ -391,152 +487,342 @@ const companyImages = {
 const toolsData = [
     {
         company:"Oracle",
-        title:"Oracle Database",
-        type:"Base de datos empresarial",
+        title:"Oracle AI Database",
+        type:"Base de datos empresarial y capacidades de IA",
         image:"oracle.jpg",
-        summary:"Oracle Database es una plataforma de gestión de datos diseñada para cargas empresariales críticas, alta disponibilidad, seguridad y procesamiento de grandes volúmenes de información.",
-        fact:"Es utilizada ampliamente en banca, telecomunicaciones, gobierno, manufactura y sistemas ERP de misión crítica."
+        currentVersion:"26ai · versión LTS actual",
+        commonVersion:"19c · ampliamente desplegada",
+        supportStatus:"Sí · 26ai y 19c soportadas",
+        supportClass:"supportActive",
+        supportNote:"Oracle AI Database 26ai es la siguiente versión de soporte a largo plazo y sustituye gradualmente a 19c. Para fechas exactas por plataforma y contrato debe revisarse My Oracle Support.",
+        summary:"Oracle AI Database combina procesamiento relacional, JSON, analítica, alta disponibilidad y búsqueda vectorial para aplicaciones empresariales y de inteligencia artificial.",
+        fact:"Para instalaciones nuevas conviene evaluar 26ai; en ambientes existentes, 19c continúa siendo una base empresarial muy extendida y con rutas oficiales de actualización.",
+        sourceName:"Oracle AI Database 26ai Documentation",
+        sourceUrl:"https://docs.oracle.com/en/database/oracle/oracle-database/26/"
     },
     {
         company:"Oracle",
         title:"Oracle Cloud Infrastructure",
         type:"Nube empresarial",
         image:"oracle.jpg",
-        summary:"Oracle Cloud Infrastructure ofrece cómputo, almacenamiento, redes, bases de datos, integración e inteligencia artificial para aplicaciones empresariales.",
-        fact:"Su integración con Oracle Database, Exadata, Fusion Cloud y E-Business Suite facilita la modernización de plataformas Oracle."
+        currentVersion:"Servicio continuo · sin versión única",
+        commonVersion:"Servicios administrados de OCI",
+        supportStatus:"Sí · servicio activo",
+        supportClass:"supportActive",
+        supportNote:"OCI se actualiza continuamente. La vigencia depende del servicio contratado, la región, el nivel de soporte y el cumplimiento de los requisitos publicados.",
+        summary:"Oracle Cloud Infrastructure ofrece cómputo, almacenamiento, redes, bases de datos, integración, observabilidad, seguridad e inteligencia artificial.",
+        fact:"En servicios cloud es más importante revisar las notas de versión y anuncios de cada servicio que buscar un número único de versión.",
+        sourceName:"OCI Documentation",
+        sourceUrl:"https://docs.oracle.com/en-us/iaas/Content/home.htm"
     },
     {
         company:"Oracle",
         title:"Oracle E-Business Suite",
         type:"ERP empresarial",
         image:"oracle.jpg",
-        summary:"Oracle E-Business Suite integra procesos de finanzas, compras, inventarios, manufactura, recursos humanos y operaciones dentro de una misma plataforma.",
-        fact:"Muchas organizaciones mantienen EBS como núcleo de procesos críticos mientras avanzan en proyectos de nube, automatización y seguridad."
+        currentVersion:"12.2.15",
+        commonVersion:"12.2.x",
+        supportStatus:"Sí · Premier al menos hasta 2037",
+        supportClass:"supportActive",
+        supportNote:"Oracle mantiene E-Business Suite 12.2 bajo el modelo de innovación continua y amplió Premier Support al menos hasta 2037.",
+        summary:"Oracle E-Business Suite integra finanzas, compras, inventarios, manufactura, recursos humanos y operaciones empresariales.",
+        fact:"Las organizaciones en 12.2 deben mantenerse al día con Release Update Packs, Critical Patch Updates y certificaciones de tecnología.",
+        sourceName:"Oracle E-Business Suite 12.2.15",
+        sourceUrl:"https://docs.oracle.com/en/applications/e-business-suite/readiness/index.html"
     },
     {
         company:"Oracle",
-        title:"Oracle Fusion Cloud",
-        type:"Aplicaciones empresariales en la nube",
+        title:"Oracle Fusion Cloud Applications",
+        type:"ERP, HCM, SCM, CX y EPM en la nube",
         image:"oracle.jpg",
-        summary:"Oracle Fusion Cloud reúne aplicaciones de ERP, HCM, SCM, CX y EPM bajo una arquitectura de servicios en la nube.",
-        fact:"Permite incorporar automatización e inteligencia artificial en procesos empresariales."
+        currentVersion:"Servicio SaaS con actualizaciones trimestrales",
+        commonVersion:"Versión administrada vigente",
+        supportStatus:"Sí · servicio continuo",
+        supportClass:"supportActive",
+        supportNote:"Fusion Cloud no utiliza una sola versión permanente. Oracle entrega actualizaciones periódicas y mantiene el servicio mientras la suscripción y los requisitos estén vigentes.",
+        summary:"Oracle Fusion Cloud reúne aplicaciones empresariales para finanzas, capital humano, cadena de suministro, experiencia del cliente y planeación.",
+        fact:"La preparación debe centrarse en leer las notas de cada actualización trimestral, validar pruebas y revisar funciones opcionales.",
+        sourceName:"Oracle Fusion Cloud Applications Documentation",
+        sourceUrl:"https://docs.oracle.com/en/cloud/saas/index.html"
+    },
+    {
+        company:"Oracle",
+        title:"Oracle WebLogic Server",
+        type:"Servidor empresarial Java y Jakarta EE",
+        image:"oracle.jpg",
+        currentVersion:"15.1.1 · LTS para uso independiente",
+        commonVersion:"12.2.1.4 y 14.1.2",
+        supportStatus:"Sí · versiones activas",
+        supportClass:"supportActive",
+        supportNote:"Para Fusion Middleware, Oracle identifica 12.2.1.4 y 14.1.2 como versiones activamente soportadas. Para WebLogic independiente, 15.1.1 es la versión LTS más reciente.",
+        summary:"Oracle WebLogic Server ejecuta aplicaciones empresariales Java y Jakarta EE en entornos locales, cloud, contenedores y Kubernetes.",
+        fact:"La migración a 15.1.1 requiere revisar el cambio al espacio de nombres jakarta.* y las certificaciones de Java y productos Fusion Middleware.",
+        sourceName:"Oracle WebLogic Server 15.1.1 Documentation",
+        sourceUrl:"https://docs.oracle.com/en/middleware/standalone/weblogic-server/15.1.1/"
+    },
+    {
+        company:"Oracle",
+        title:"Java SE",
+        type:"Plataforma y lenguaje de desarrollo",
+        image:"oracle.jpg",
+        currentVersion:"JDK 26.0.1 · versión de características",
+        commonVersion:"JDK 17 y 21 LTS",
+        supportStatus:"Sí · JDK 25 es la LTS actual",
+        supportClass:"supportActive",
+        supportNote:"JDK 25 LTS tiene Premier Support hasta septiembre de 2030; JDK 21 hasta septiembre de 2028. JDK 26 es una versión no LTS y será sustituida por JDK 27.",
+        summary:"Java SE es una plataforma para desarrollar y ejecutar aplicaciones empresariales, servicios, herramientas y componentes de middleware.",
+        fact:"Para producción suele preferirse una versión LTS compatible con el producto empresarial, en lugar de adoptar automáticamente la versión de características más reciente.",
+        sourceName:"Oracle Java SE Support Roadmap",
+        sourceUrl:"https://www.oracle.com/java/technologies/java-se-support-roadmap.html"
+    },
+    {
+        company:"Oracle",
+        title:"Oracle SQLcl",
+        type:"Cliente de línea de comandos para Oracle Database",
+        image:"oracle.jpg",
+        currentVersion:"26.2",
+        commonVersion:"25.x y 26.x",
+        supportStatus:"Sí · 26.2 hasta enero de 2028",
+        supportClass:"supportActive",
+        supportNote:"Oracle indica que cada versión de SQLcl recibe soporte durante 18 meses después de su disponibilidad general.",
+        summary:"Oracle SQLcl permite ejecutar SQL y PL/SQL, crear scripts, exportar información y automatizar tareas de administración y desarrollo.",
+        fact:"Conviene actualizar regularmente porque SQLcl tiene un ciclo de soporte más corto que Oracle Database.",
+        sourceName:"Oracle SQLcl Support Policy",
+        sourceUrl:"https://www.oracle.com/tools/sqlcl/support.html"
     },
     {
         company:"NVIDIA",
-        title:"GPU Computing",
-        type:"Hardware e inteligencia artificial",
+        title:"CUDA Toolkit",
+        type:"Cómputo paralelo y desarrollo para GPU",
         image:"nvidia.png",
-        summary:"NVIDIA desarrolla unidades de procesamiento gráfico utilizadas en videojuegos, visualización profesional, centros de datos, simulación e inteligencia artificial.",
-        fact:"Las GPU permiten procesar miles de operaciones en paralelo, acelerando el entrenamiento y la ejecución de modelos de IA."
+        currentVersion:"13.3.0",
+        commonVersion:"12.x y 13.x según GPU y driver",
+        supportStatus:"Sí · versión activa",
+        supportClass:"supportActive",
+        supportNote:"CUDA 13.x requiere controladores compatibles de la rama R580 o posterior. Equipos Maxwell, Pascal y Volta deben revisar las limitaciones de compatibilidad antes de migrar.",
+        summary:"CUDA Toolkit incluye compiladores, bibliotecas, runtimes y herramientas para desarrollar aplicaciones aceleradas por GPU.",
+        fact:"La versión adecuada depende de la arquitectura de la GPU, el controlador, el sistema operativo y la compatibilidad de los frameworks de IA.",
+        sourceName:"NVIDIA CUDA Toolkit Release Notes",
+        sourceUrl:"https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/"
     },
     {
         company:"NVIDIA",
-        title:"CUDA",
-        type:"Plataforma de cómputo paralelo",
+        title:"NVIDIA AI Enterprise",
+        type:"Plataforma empresarial de inteligencia artificial",
         image:"nvidia.png",
-        summary:"CUDA permite utilizar GPU NVIDIA para cálculos científicos, analítica, simulación e inteligencia artificial.",
-        fact:"Gran parte del ecosistema moderno de aprendizaje profundo aprovecha CUDA para ejecutar cargas aceleradas."
+        currentVersion:"Infra 8.1 · Production Branch 6",
+        commonVersion:"Infra 7.7 · rama LTSB",
+        supportStatus:"Sí · ramas activas",
+        supportClass:"supportActive",
+        supportNote:"Infra 8.1 tiene fin de vida planificado en abril de 2027. La rama Infra 7 LTSB permanece planificada hasta julio de 2028.",
+        summary:"NVIDIA AI Enterprise reúne software, controladores, frameworks y componentes validados para implementar inteligencia artificial en empresas.",
+        fact:"Para estabilidad de largo plazo puede convenir una rama LTSB; para nuevas funciones puede utilizarse la rama de producción vigente.",
+        sourceName:"NVIDIA AI Enterprise Lifecycle",
+        sourceUrl:"https://docs.nvidia.com/ai-enterprise/index.html"
     },
     {
         company:"NVIDIA",
         title:"NVIDIA Data Center",
-        type:"Infraestructura para IA",
+        type:"Infraestructura acelerada para IA y HPC",
         image:"nvidia.png",
-        summary:"NVIDIA ofrece plataformas de centro de datos para entrenamiento de modelos, inferencia, cómputo de alto rendimiento y análisis avanzado.",
-        fact:"Sus soluciones son utilizadas en supercómputo, modelos generativos, investigación científica y automatización empresarial."
+        currentVersion:"Plataforma continua · depende de GPU y software",
+        commonVersion:"Arquitecturas Hopper y Blackwell",
+        supportStatus:"Sí · sujeto a matriz de compatibilidad",
+        supportClass:"supportActive",
+        supportNote:"No existe una sola versión del producto. El soporte depende de la GPU, firmware, controlador, sistema operativo, hipervisor y rama de NVIDIA AI Enterprise.",
+        summary:"NVIDIA Data Center combina GPU, redes, sistemas y software para entrenamiento, inferencia, simulación y cómputo de alto rendimiento.",
+        fact:"Antes de actualizar debe revisarse la matriz de compatibilidad completa y no únicamente el número del controlador.",
+        sourceName:"NVIDIA Data Center",
+        sourceUrl:"https://www.nvidia.com/en-us/data-center/"
+    },
+    {
+        company:"NVIDIA",
+        title:"NVIDIA Developer Tools",
+        type:"Nsight Systems, Nsight Compute y herramientas de optimización",
+        image:"nvidia.png",
+        currentVersion:"Incluidas y actualizadas con CUDA 13.x",
+        commonVersion:"Versiones compatibles con CUDA 12.x y 13.x",
+        supportStatus:"Sí · desarrollo activo",
+        supportClass:"supportActive",
+        supportNote:"NVIDIA retiró herramientas antiguas como nvprof y Visual Profiler en CUDA 13. Para análisis moderno se recomiendan Nsight Systems y Nsight Compute.",
+        summary:"Las herramientas NVIDIA Developer permiten perfilar CPU y GPU, analizar kernels, diagnosticar rendimiento y optimizar aplicaciones aceleradas.",
+        fact:"La versión debe coincidir con el toolkit, controlador, arquitectura GPU y entorno de desarrollo.",
+        sourceName:"NVIDIA CUDA Developer Tools",
+        sourceUrl:"https://developer.nvidia.com/tools-overview"
     },
     {
         company:"Microsoft",
         title:"Microsoft Azure",
         type:"Plataforma de nube",
         image:"microsoft.jpg",
-        summary:"Microsoft Azure ofrece infraestructura, plataformas de datos, aplicaciones, seguridad, integración e inteligencia artificial desde la nube.",
-        fact:"Se integra estrechamente con Windows Server, Active Directory, Microsoft 365, GitHub y herramientas empresariales."
+        currentVersion:"Servicio continuo · sin versión única",
+        commonVersion:"Servicios administrados vigentes",
+        supportStatus:"Sí · ciclo de vida moderno",
+        supportClass:"supportActive",
+        supportNote:"Azure se mantiene bajo servicios y políticas específicas. Es necesario permanecer actualizado y revisar avisos de retiro o cambios de cada servicio.",
+        summary:"Microsoft Azure ofrece infraestructura, aplicaciones, datos, integración, seguridad e inteligencia artificial desde la nube.",
+        fact:"El soporte depende del servicio, la región, el nivel contratado y el cumplimiento de las versiones admitidas.",
+        sourceName:"Microsoft Learn: Azure",
+        sourceUrl:"https://learn.microsoft.com/en-us/azure/"
     },
     {
         company:"Microsoft",
         title:"Microsoft 365",
         type:"Productividad y colaboración",
         image:"microsoft.jpg",
-        summary:"Microsoft 365 reúne herramientas como Word, Excel, PowerPoint, Outlook, Teams, SharePoint y servicios de administración empresarial.",
-        fact:"Es una de las plataformas de productividad y colaboración más utilizadas en organizaciones."
+        currentVersion:"Servicio continuo",
+        commonVersion:"Canal empresarial administrado",
+        supportStatus:"Sí · ciclo de vida moderno",
+        supportClass:"supportActive",
+        supportNote:"Microsoft 365 aparece como producto en soporte bajo la política de ciclo de vida moderno. Los clientes deben mantenerse en versiones y canales admitidos.",
+        summary:"Microsoft 365 integra Word, Excel, PowerPoint, Outlook, Teams, SharePoint y servicios de administración y seguridad.",
+        fact:"En lugar de una versión anual única, Microsoft utiliza canales y actualizaciones continuas.",
+        sourceName:"Microsoft 365 Lifecycle",
+        sourceUrl:"https://learn.microsoft.com/en-us/lifecycle/products/microsoft-365"
+    },
+    {
+        company:"Microsoft",
+        title:".NET",
+        type:"Plataforma de desarrollo multiplataforma",
+        image:"microsoft.jpg",
+        currentVersion:".NET 10 · LTS",
+        commonVersion:".NET 8 · LTS",
+        supportStatus:"Sí · 10 hasta nov 2028",
+        supportClass:"supportActive",
+        supportNote:".NET 10 LTS tiene soporte hasta noviembre de 2028. .NET 8 LTS continúa soportado hasta noviembre de 2026.",
+        summary:".NET permite desarrollar aplicaciones web, APIs, servicios, escritorio, nube y cargas empresariales en Windows, Linux y macOS.",
+        fact:"Para proyectos nuevos conviene evaluar .NET 10 LTS; las aplicaciones en .NET 8 todavía cuentan con soporte, pero deben preparar su actualización.",
+        sourceName:".NET Releases and Support",
+        sourceUrl:"https://learn.microsoft.com/en-us/dotnet/core/releases-and-support"
+    },
+    {
+        company:"Microsoft",
+        title:"PowerShell",
+        type:"Automatización y administración",
+        image:"microsoft.jpg",
+        currentVersion:"PowerShell 7.6.3 · LTS",
+        commonVersion:"7.4 LTS y Windows PowerShell 5.1",
+        supportStatus:"Sí · 7.6 hasta nov 2028",
+        supportClass:"supportActive",
+        supportNote:"PowerShell 7.4 y 7.5 permanecen soportados hasta noviembre de 2026. Windows PowerShell 5.1 depende del ciclo de soporte del sistema operativo.",
+        summary:"PowerShell permite administrar sistemas, servicios cloud, servidores, automatizaciones, APIs y tareas DevOps.",
+        fact:"Para automatización multiplataforma conviene utilizar PowerShell 7; algunos módulos antiguos todavía dependen de Windows PowerShell 5.1.",
+        sourceName:"PowerShell Support Lifecycle",
+        sourceUrl:"https://learn.microsoft.com/en-us/powershell/scripting/install/powershell-support-lifecycle"
+    },
+    {
+        company:"Microsoft",
+        title:"Windows Server",
+        type:"Sistema operativo para servidores",
+        image:"microsoft.jpg",
+        currentVersion:"Windows Server 2025",
+        commonVersion:"Windows Server 2022",
+        supportStatus:"Sí · 2025 hasta nov 2034",
+        supportClass:"supportActive",
+        supportNote:"Windows Server 2025 tiene soporte estándar hasta noviembre de 2029 y extendido hasta noviembre de 2034. Windows Server 2022 tiene soporte extendido hasta octubre de 2031.",
+        summary:"Windows Server proporciona servicios de identidad, archivos, virtualización, redes, contenedores y aplicaciones empresariales.",
+        fact:"Windows Server 2022 sigue siendo una base muy extendida, mientras 2025 es la versión LTSC más reciente.",
+        sourceName:"Windows Server 2025 Lifecycle",
+        sourceUrl:"https://learn.microsoft.com/en-us/lifecycle/products/windows-server-2025"
+    },
+    {
+        company:"Microsoft",
+        title:"SQL Server",
+        type:"Base de datos empresarial",
+        image:"microsoft.jpg",
+        currentVersion:"SQL Server 2025",
+        commonVersion:"SQL Server 2022",
+        supportStatus:"Sí · 2025 hasta ene 2036",
+        supportClass:"supportActive",
+        supportNote:"SQL Server 2025 tiene soporte estándar hasta enero de 2031 y extendido hasta enero de 2036. SQL Server 2022 tiene soporte extendido hasta enero de 2033.",
+        summary:"SQL Server es una plataforma de base de datos relacional disponible para Windows y Linux, con capacidades empresariales, analítica e integración cloud.",
+        fact:"SQL Server 2022 continúa soportado y ampliamente desplegado; 2025 es la versión principal más reciente.",
+        sourceName:"SQL Server 2025 Lifecycle",
+        sourceUrl:"https://learn.microsoft.com/en-us/lifecycle/products/sql-server-2025"
     },
     {
         company:"Microsoft",
         title:"GitHub",
-        type:"Desarrollo y DevOps",
+        type:"Control de versiones, colaboración y DevOps",
         image:"microsoft.jpg",
-        summary:"GitHub permite administrar código fuente, colaborar mediante repositorios, automatizar procesos y gestionar el ciclo de vida del desarrollo.",
-        fact:"GitHub Actions facilita la integración y entrega continua directamente desde los repositorios."
+        currentVersion:"GitHub.com · servicio continuo",
+        commonVersion:"GitHub.com y GitHub Actions",
+        supportStatus:"Sí · servicio activo",
+        supportClass:"supportActive",
+        supportNote:"GitHub.com se actualiza continuamente. GitHub Enterprise Server utiliza versiones con ventanas de mantenimiento propias que deben revisarse antes de actualizar.",
+        summary:"GitHub permite administrar repositorios, solicitudes de cambio, automatizaciones, seguridad de código y procesos CI/CD.",
+        fact:"Para GitHub Pages y Actions no existe una sola versión local; lo importante es revisar cambios de plataforma, acciones utilizadas y dependencias.",
+        sourceName:"GitHub Documentation",
+        sourceUrl:"https://docs.github.com/"
     }
 ];
 
 const newsData = [
     {
         company:"Oracle",
-        title:"Oracle News",
-        type:"Sala de prensa oficial",
+        title:"Nueva experiencia AI-native para crear aplicaciones agénticas en Oracle Fusion",
+        type:"Actualización de Oracle Fusion Applications",
         image:"oracle.jpg",
-        summary:"Portal oficial de Oracle para consultar comunicados, anuncios de productos, alianzas, casos empresariales y novedades corporativas.",
-        fact:"Es la fuente primaria para confirmar anuncios y cambios publicados directamente por Oracle.",
+        summary:"Oracle presentó una nueva experiencia de desarrollo dentro de Oracle AI Agent Studio para Fusion Applications. Permite crear aplicaciones agénticas con opciones no-code, low-code y pro-code, integradas con objetos de negocio, flujos, aprobaciones, seguridad y auditoría de Fusion.",
+        fact:"La actualización busca facilitar que clientes y socios lleven agentes de IA desde prototipos hasta procesos empresariales reales con controles integrados.",
         sourceName:"Oracle News",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://www.oracle.com/news/"
+        publishedDate:"14 jul 2026",
+        sourceUrl:"https://www.oracle.com/latam/news/announcement/oracle-introduces-ai-native-builder-experience-2026-07-14/"
     },
     {
         company:"Oracle",
-        title:"Reuters Technology",
-        type:"Medio periodístico independiente",
+        title:"Oracle Fusion Cloud HCM impulsará la modernización de recursos humanos del gobierno federal de EE. UU.",
+        type:"Actualización de adopción empresarial",
         image:"oracle.jpg",
-        summary:"Cobertura periodística internacional sobre empresas de tecnología, inteligencia artificial, nube, regulación, ciberseguridad y mercados.",
-        fact:"Permite contrastar los comunicados corporativos con información periodística independiente.",
-        sourceName:"Reuters Technology",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://www.reuters.com/technology/"
+        summary:"La Oficina de Administración de Personal de Estados Unidos seleccionó Oracle Fusion Cloud HCM como plataforma central para modernizar y consolidar la gestión de recursos humanos de más de dos millones de empleados federales.",
+        fact:"El proyecto sustituirá múltiples sistemas separados por una plataforma unificada orientada a mejorar eficiencia, seguridad e interoperabilidad.",
+        sourceName:"Oracle News",
+        publishedDate:"11 jun 2026",
+        sourceUrl:"https://www.oracle.com/news/announcement/us-office-of-personnel-management-selects-oracle-to-power-federal-workforce-modernization-2026-06-11/"
     },
     {
         company:"NVIDIA",
-        title:"NVIDIA Newsroom",
-        type:"Sala de prensa oficial",
+        title:"NVIDIA y Japón anuncian infraestructura nacional para IA física",
+        type:"Actualización de infraestructura de IA",
         image:"nvidia.png",
-        summary:"Portal oficial de NVIDIA con comunicados, anuncios de GPU, inteligencia artificial, centros de datos, robótica, videojuegos y alianzas.",
-        fact:"Es la fuente primaria para verificar lanzamientos y anuncios publicados directamente por NVIDIA.",
+        summary:"NVIDIA anunció una colaboración con Noetra y líderes industriales de Japón para construir una fábrica de IA basada en la arquitectura Vera Rubin, destinada a modelos multimodales, agentes de IA, gemelos digitales, robótica e inteligencia artificial física.",
+        fact:"La infraestructura está planteada como una base nacional para impulsar manufactura, logística, salud, telecomunicaciones y robótica.",
         sourceName:"NVIDIA Newsroom",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://nvidianews.nvidia.com/"
+        publishedDate:"16 jul 2026",
+        sourceUrl:"https://nvidianews.nvidia.com/news/japan-government-industrial-leaders-and-nvidia-launch-the-worlds-first-national-ai-infrastructure"
     },
     {
         company:"NVIDIA",
-        title:"Reuters Technology",
-        type:"Medio periodístico independiente",
+        title:"NVIDIA presenta nuevos módulos Jetson Thor para robótica y edge AI",
+        type:"Actualización de hardware y software",
         image:"nvidia.png",
-        summary:"Cobertura internacional sobre semiconductores, inteligencia artificial, centros de datos, regulación y empresas tecnológicas.",
-        fact:"Ayuda a comparar los anuncios oficiales de NVIDIA con análisis y contexto periodístico independiente.",
-        sourceName:"Reuters Technology",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://www.reuters.com/technology/"
+        summary:"NVIDIA presentó los módulos Jetson T3000 y T2000, basados en la arquitectura Thor, para ejecutar modelos de IA, visión y robótica directamente en dispositivos compactos y de bajo consumo.",
+        fact:"La actualización amplía las opciones para robots, sistemas autónomos y cargas de inteligencia artificial en el borde.",
+        sourceName:"NVIDIA Blog",
+        publishedDate:"15 jul 2026",
+        sourceUrl:"https://blogs.nvidia.com/blog/jetson-thor-robotics-edge-ai-agent/"
     },
     {
         company:"Microsoft",
-        title:"Microsoft Source",
-        type:"Sala de prensa oficial",
+        title:"Microsoft y 3M amplían su colaboración para infraestructura de centros de datos e IA",
+        type:"Actualización de infraestructura y alianza",
         image:"microsoft.jpg",
-        summary:"Portal oficial de Microsoft con noticias sobre Azure, Microsoft 365, Copilot, seguridad, inteligencia artificial, productos y novedades corporativas.",
-        fact:"Es la fuente primaria para confirmar anuncios, actualizaciones y comunicados publicados por Microsoft.",
+        summary:"Microsoft y 3M anunciaron una alianza enfocada en infraestructura para centros de datos de inteligencia artificial y transformación empresarial. Microsoft utilizará tecnología óptica de 3M en entornos Azure y 3M adoptará capacidades digitales y de IA de Microsoft.",
+        fact:"La colaboración combina infraestructura cloud, conectividad óptica y automatización empresarial para soportar cargas de IA a mayor escala.",
         sourceName:"Microsoft Source",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://news.microsoft.com/source/view-all/"
+        publishedDate:"15 jul 2026",
+        sourceUrl:"https://news.microsoft.com/source/2026/07/15/3m-and-microsoft-announce-strategic-partnership-to-advance-ai-data-center-infrastructure-and-enterprise-transformation/"
     },
     {
         company:"Microsoft",
-        title:"Reuters Technology",
-        type:"Medio periodístico independiente",
+        title:"Las passkeys pasan a ser el método predeterminado en Microsoft Entra ID",
+        type:"Actualización de identidad y seguridad",
         image:"microsoft.jpg",
-        summary:"Cobertura periodística sobre Microsoft, nube, inteligencia artificial, regulación tecnológica, ciberseguridad y mercados.",
-        fact:"Permite contrastar los anuncios oficiales con una fuente periodística internacional independiente.",
-        sourceName:"Reuters Technology",
-        publishedDate:"Actualización continua",
-        sourceUrl:"https://www.reuters.com/technology/"
+        summary:"Microsoft anunció que Entra ID impulsará las passkeys como experiencia predeterminada de autenticación para reducir la dependencia de métodos vulnerables al phishing, como SMS y llamadas de voz.",
+        fact:"Las organizaciones deberán preparar la migración de usuarios hacia métodos resistentes al phishing antes de los cambios programados para 2026 y 2027.",
+        sourceName:"Microsoft Learn",
+        publishedDate:"13 jul 2026",
+        sourceUrl:"https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sms-voice-retirement"
     }
 ];
 
@@ -569,11 +855,43 @@ function renderTool(item){
     document.getElementById("type").innerText = item.type;
     document.getElementById("summaryTitle").innerText = "Resumen";
     document.getElementById("summary").innerText = item.summary;
-    document.getElementById("factTitle").innerText = "Dato estratégico";
+    document.getElementById("factTitle").innerText = "Recomendación práctica";
     document.getElementById("fact").innerText = item.fact;
 
+    document.getElementById("currentVersion").innerText =
+        item.currentVersion || "Servicio continuo";
+
+    document.getElementById("commonVersion").innerText =
+        item.commonVersion || "No aplica";
+
+    const supportStatus = document.getElementById("supportStatus");
+    supportStatus.innerText = item.supportStatus || "Consultar fabricante";
+    supportStatus.className =
+        "supportBadge " + (item.supportClass || "supportActive");
+
+    document.getElementById("versionGrid").style.display = "grid";
+
+    const toolNote = document.getElementById("toolNote");
+    toolNote.style.display = "block";
+    toolNote.innerText =
+        (item.supportNote || "") +
+        " “Adopción amplia” es una referencia práctica empresarial y no un ranking mundial exacto de instalaciones.";
+
     document.getElementById("newsMeta").style.display = "none";
-    document.getElementById("sourceLink").style.display = "none";
+
+    const sourceLink = document.getElementById("sourceLink");
+    const sourceAnchor = document.getElementById("sourceAnchor");
+
+    if(item.sourceUrl){
+        sourceAnchor.href = item.sourceUrl;
+        sourceAnchor.innerText =
+            "Ver documentación o ciclo de vida oficial: " +
+            item.sourceName + " ↗";
+        sourceLink.style.display = "block";
+    }else{
+        sourceLink.style.display = "none";
+    }
+
     document.getElementById("contentArea").style.display = "block";
     document.getElementById("emptyNews").style.display = "none";
 
@@ -582,12 +900,14 @@ function renderTool(item){
 }
 
 function renderNews(item){
-    document.getElementById("category").innerText = "FUENTE CONFIABLE";
+    document.getElementById("versionGrid").style.display = "none";
+    document.getElementById("toolNote").style.display = "none";
+    document.getElementById("category").innerText = "ACTUALIZACIÓN";
     document.getElementById("title").innerText = item.title;
     document.getElementById("type").innerText = item.type || "Actualidad tecnológica";
     document.getElementById("summaryTitle").innerText = "Resumen";
     document.getElementById("summary").innerText = item.summary;
-    document.getElementById("factTitle").innerText = "Por qué confiar";
+    document.getElementById("factTitle").innerText = "Impacto";
     document.getElementById("fact").innerText = item.fact;
 
     document.getElementById("sourceName").innerText = item.sourceName;
@@ -597,17 +917,18 @@ function renderNews(item){
     const sourceLink = document.getElementById("sourceLink");
     const sourceAnchor = document.getElementById("sourceAnchor");
     sourceAnchor.href = item.sourceUrl;
+    sourceAnchor.innerText = "Ver fuente original ↗";
     sourceLink.style.display = "block";
 
     document.getElementById("contentArea").style.display = "block";
     document.getElementById("emptyNews").style.display = "none";
 
     document.getElementById("randomBtn").innerText =
-        "Mostrar otra fuente";
+        "Mostrar otra actualización";
 }
 
 function renderEmptyNews(){
-    document.getElementById("category").innerText = "NOTICIAS";
+    document.getElementById("category").innerText = "ACTUALIZACIONES";
     document.getElementById("title").innerText = currentCompany;
     document.getElementById("type").innerText = "Fuentes oficiales y medios públicos";
     document.getElementById("newsMeta").style.display = "none";
